@@ -18,7 +18,10 @@ class VideoCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => VideoPlayerScreen(videoId: videoId),
+              builder: (_) => VideoPlayerScreen(
+                videoId: videoId,
+                videoTitle: title,
+              ),
             ),
           );
         },
@@ -27,7 +30,7 @@ class VideoCard extends StatelessWidget {
             Card(
               elevation: 4,
               shadowColor: Colors.transparent,
-              color: const Color.fromARGB(44, 147, 246, 150),
+              color: const Color.fromARGB(167, 200, 230, 201),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),
               ),

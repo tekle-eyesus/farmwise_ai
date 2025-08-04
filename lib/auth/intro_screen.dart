@@ -1,182 +1,151 @@
+import 'package:farmwise_ai/auth/pages/intro_page_one.dart';
+import 'package:farmwise_ai/auth/pages/intro_page_two.dart';
 import 'package:farmwise_ai/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class IntroScreen extends StatelessWidget {
+class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
 
   @override
+  State<IntroScreen> createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen> {
+  PageController _pageController = PageController();
+  bool isFirst = true;
+
+  @override
   Widget build(BuildContext context) {
-    const List<Map<String, String>> features = [
-      {
-        'title': 'Disease Detection',
-        'description':
-            'Detect plant leaf diseases in coffee, mango, and tomato crops using on-device machine learning.',
-      },
-      {
-        'title': 'Personalized Advice',
-        'description':
-            'Get personalized agricultural advice tailored to your crops and detected diseases.',
-      },
-      {
-        'title': 'Multimedia Resources',
-        'description':
-            'Access multimedia resources and best practices to empower farmers and support sustainable farming.',
-      }
-    ];
-    return Scaffold(
-      backgroundColor: Colors.green.shade100,
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 370,
-              child: Container(
-                margin: EdgeInsets.only(
-                  bottom: 10,
-                ),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/intro-image.png"),
-                  ),
-                ),
-              ),
-            ),
-            // the title
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/icons/farm.png",
-                  width: 35,
-                  height: 35,
-                  color: Colors.green.shade900,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 34,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: "Farm",
-                        style: TextStyle(
-                          color: Colors.green.shade800,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      TextSpan(
-                        text: "Wise",
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.green.shade400,
-                        ),
-                      ),
-                      TextSpan(
-                        text: " AI",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                "Empowering farmers with AI-driven insights for healthier crops and sustainable agriculture.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: ListView.builder(
-                itemCount: features.length,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemBuilder: (context, index) {
-                  final feature = features[index];
-                  return Card(
-                    shadowColor: Colors.transparent,
-                    margin: const EdgeInsets.symmetric(vertical: 3),
-                    elevation: 2,
-                    color: Colors.green.shade200,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            feature['title']!,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
-                              color: Colors.green.shade800,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            feature['description']!,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey.shade800,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              child: SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade700,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "Get Started",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+    return Stack(
+      children: [
+        PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            if (index == 1) {
+              setState(() {
+                isFirst = false;
+              });
+            } else {
+              setState(() {
+                isFirst = true;
+              });
+            }
+          },
+          children: const [
+            PageOne(),
+            PageTwo(),
           ],
         ),
-      ),
+        Container(
+          alignment: const Alignment(0, 0.80),
+          child: SmoothPageIndicator(
+              controller: _pageController, // PageController
+              count: 2,
+              effect: const WormEffect(), // your preferred effect
+              onDotClicked: (index) {
+                _pageController.jumpToPage(index);
+              }),
+        ),
+        if (isFirst)
+          Container(
+            alignment: const Alignment(0.9, 0.93),
+            child: IconButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Colors.yellow.withOpacity(0.45))),
+              onPressed: () {
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeIn,
+                );
+              },
+              icon: const Icon(
+                Icons.navigate_next,
+              ),
+            ),
+          ),
+        if (!isFirst)
+          Container(
+            alignment: const Alignment(0.9, 0.93),
+            child: TextButton(
+              style: ButtonStyle(
+                padding: WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                ),
+                backgroundColor: WidgetStatePropertyAll(
+                  Colors.yellow.withOpacity(0.45),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MainScreen();
+                    },
+                  ),
+                );
+              },
+              child: const Text(
+                "Get Started",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 38, 27, 58),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        if (!isFirst)
+          Container(
+            alignment: const Alignment(-0.9, 0.93),
+            child: IconButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Colors.yellow.withOpacity(0.45))),
+              onPressed: () {
+                _pageController.previousPage(
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeIn,
+                );
+              },
+              icon: const Icon(
+                Icons.navigate_before,
+              ),
+            ),
+          ),
+        if (isFirst)
+          Positioned(
+            top: 48,
+            right: 10,
+            child: TextButton(
+              style: const ButtonStyle(
+                padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                backgroundColor: MaterialStatePropertyAll(
+                  Color.fromARGB(252, 227, 220, 26),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MainScreen();
+                    },
+                  ),
+                );
+              },
+              child: Text(
+                "Skip",
+                style: TextStyle(
+                  color: Colors.green.shade900,
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

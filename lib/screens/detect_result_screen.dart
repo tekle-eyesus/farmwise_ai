@@ -1,28 +1,39 @@
 import 'dart:io';
-import 'package:farmwise_ai/data/tomato_disease_data.dart';
+import 'package:farmwise_ai/data/disease_dummy_data.dart';
+import 'package:farmwise_ai/models/detection_result_model.dart';
 import 'package:farmwise_ai/screens/online_video_section.dart';
+import 'package:farmwise_ai/services/local_storage_service.dart';
+import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:farmwise_ai/widgets/disease_confidence_chart.dart';
+import 'package:farmwise_ai/widgets/expert_advice_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class DetectResultScreen extends StatelessWidget {
+  final String cropName;
   final File image;
-  final List detectionResult;
+  final List<Map<String, dynamic>> detectionResult;
 
   const DetectResultScreen({
+    required this.cropName,
     required this.image,
     required this.detectionResult,
   });
 
   @override
   Widget build(BuildContext context) {
-    final result = detectionResult[0]; // assuming top result
+    final result = detectionResult[0];
     final label = result['label'];
-    final confidence = (result['confidence'] * 100).toStringAsFixed(2);
-    final DiseaseInfo disease = tomatoDiseases[label]!;
+    final confidence = result['confidence'];
+    final Map<String, DiseaseInfo>? cropMap =
+        cropDiseases[cropName.toLowerCase()];
+    final DiseaseInfo? disease = cropMap?["${label.split('(')[0].trim()}"];
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Colors.green.shade100,
         title: Text(
           "Detection Result",
           style: TextStyle(
@@ -32,8 +43,16 @@ class DetectResultScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: () {
-              // TODO: implement save logic
+            onPressed: () async {
+              final result = SavedDetectionResult(
+                cropName: cropName,
+                imagePath: image.path,
+                detectionResult: detectionResult,
+                savedAt: DateTime.now(),
+              );
+
+              await LocalStorageService.saveResult(result);
+              showCustomSnackBar(context, "Result saved successfully!");
             },
           ),
         ],
@@ -57,16 +76,18 @@ class DetectResultScreen extends StatelessWidget {
                   top: 10,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(203, 153, 8, 8),
+                      color: label == "Healthy"
+                          ? Colors.green
+                          : const Color.fromARGB(188, 244, 40, 25),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 7),
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 7),
                     child: Text(
                       label,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: const Color.fromARGB(255, 241, 168, 168),
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -76,24 +97,32 @@ class DetectResultScreen extends StatelessWidget {
                   right: 10,
                   child: CircularPercentIndicator(
                     radius: 30.0,
-                    lineWidth: 5.0,
+                    lineWidth: 7.0,
                     animation: true,
-                    percent: double.parse(confidence) / 100,
-                    center: Text(
-                      double.parse(confidence) == 100.00
-                          ? "${confidence.toString().split(".")[0]}%"
-                          : "${result[confidence]}%",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13.0,
-                        color: Colors.white,
+                    animationDuration: 2300,
+                    percent: result['confidence'] / 100,
+                    linearGradient: LinearGradient(
+                      colors: [
+                        const Color.fromARGB(255, 8, 60, 55),
+                        Colors.lightGreenAccent
+                      ],
+                    ),
+                    center: CircleAvatar(
+                      radius: 23,
+                      backgroundColor: const Color.fromARGB(191, 0, 0, 0),
+                      child: Text(
+                        confidence.toStringAsFixed(1) + "%",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     circularStrokeCap: CircularStrokeCap.round,
-                    progressColor: const Color.fromARGB(255, 219, 235, 5),
                     footer: Container(
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(157, 174, 175, 175),
+                        color: Colors.lightGreenAccent,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 7),
@@ -117,23 +146,36 @@ class DetectResultScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    disease.title,
+                    disease!.title,
                     style: TextStyle(
                       fontSize: 27,
                       fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade800,
                     ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    disease.description,
-                    style: TextStyle(
-                      fontSize: 16,
+                  MarkdownBody(
+                    data: disease.description,
+                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                        .copyWith(
+                      p: const TextStyle(fontSize: 16, height: 1.4),
                     ),
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 7,
+            ),
+            DiseaseConfidenceChart(
+              results: detectionResult.map((e) {
+                return {
+                  'label': e['label'],
+                  'confidence': e['confidence'] ?? 0.0,
+                };
+              }).toList(),
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
@@ -155,11 +197,13 @@ class DetectResultScreen extends StatelessWidget {
                       margin: EdgeInsets.symmetric(vertical: 1),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
-                        color: Colors.green.shade100,
+                        color: const Color.fromARGB(167, 200, 230, 201),
                       ),
                       child: ListTile(
-                        leading: Icon(
-                          Icons.approval,
+                        leading: Image.asset(
+                          "assets/icons/right.png",
+                          width: 38,
+                          height: 38,
                         ),
                         title: Text(
                           r.title,
@@ -168,11 +212,18 @@ class DetectResultScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        subtitle: Text(
-                          r.subtitle,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.green.shade900,
+                        subtitle: MarkdownBody(
+                          data: r.subtitle,
+                          styleSheet: MarkdownStyleSheet.fromTheme(
+                            Theme.of(
+                              context,
+                            ),
+                          ).copyWith(
+                            p: TextStyle(
+                              fontSize: 16,
+                              height: 1.4,
+                              color: Colors.green.shade900,
+                            ),
                           ),
                         ),
                       ),
@@ -181,26 +232,43 @@ class DetectResultScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Resources",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+            if (label != "Unknown")
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Video Resources",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  //videos from youtube,
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  OnlineVideoSection(label: label),
-                ],
+                    //videos from youtube,
+                    OnlineVideoSection(label: label),
+                  ],
+                ),
               ),
-            ),
+            if (label != "Unknown") Divider(),
+            if (label != "Unknown")
+              Container(
+                color: const Color.fromARGB(55, 200, 230, 201),
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    // AI Adice
+                    ExpertAdviceWidget(
+                      detectionResult: detectionResult,
+                      cropName: cropName,
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

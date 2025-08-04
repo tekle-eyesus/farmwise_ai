@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:farmwise_ai/screens/detect_result_screen.dart';
 import 'package:farmwise_ai/services/gemini_chat_service.dart';
+import 'package:farmwise_ai/services/generic_iflite_service.dart';
 import 'package:farmwise_ai/services/tflite_service.dart';
+import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/custom_drawer.dart';
 import 'package:farmwise_ai/widgets/welcome_message.dart';
 import 'package:flutter/material.dart';
@@ -58,20 +60,25 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _scrollToBottom() {
-    Future.delayed(Duration(milliseconds: 200), () {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
+    Future.delayed(
+      const Duration(milliseconds: 200),
+      () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      },
+    );
   }
 
   Future<String?> showCropSelector(BuildContext context, String selectedCrop) {
     final List<Map<String, String>> cropTypes = [
       {'icon': 'assets/icons/tomato.png', 'label': 'Tomato'},
-      {'icon': 'assets/icons/coffee-bean.png', 'label': 'Coffee'},
-      {'icon': 'assets/icons/mangoo.png', 'label': 'Mango'},
+      {'icon': 'assets/icons/potato.png', 'label': 'Potato'},
+      {'icon': 'assets/icons/mango.png', 'label': 'Mango'},
     ];
 
     String tempSelection = selectedCrop; // Default to current selection
@@ -97,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
                       height: 4,
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
-                        color: Colors.grey[400],
+                        color: Colors.green[800],
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -119,6 +126,11 @@ class _MainScreenState extends State<MainScreen> {
                             setState(
                               () {
                                 tempSelection = item['label']!;
+                                //display selected message
+                                showCustomSnackBar(
+                                  context,
+                                  "$tempSelection crop Selected",
+                                );
                               },
                             );
                           },
@@ -176,17 +188,25 @@ class _MainScreenState extends State<MainScreen> {
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
       File image = File(picked.path);
+      showCustomSnackBar(context, " Detecting disease...");
 
-      // Run model
-      var result = await TFLiteService.detectImage(image);
+      // // Make sure to load model before calling detect
+      // await TFLiteService().loadModel(selectedCrop.toLowerCase());
+      // final results = await TFLiteService().detect(selectedCrop, image);
 
-      if (result != null && result.isNotEmpty) {
+      final service = await GenericIfliteService.create(
+        selectedCrop.toLowerCase(),
+      );
+      final results = await service.detect(image);
+
+      if (results.isNotEmpty) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DetectResultScreen(
+              cropName: selectedCrop,
               image: image,
-              detectionResult: result,
+              detectionResult: results,
             ),
           ),
         );
@@ -197,12 +217,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    TFLiteService.loadModel(); // Load model once
+    TFLiteService().loadModel("Tomato");
   }
 
   @override
   void dispose() {
-    TFLiteService.disposeModel(); // Free up resources
+    TFLiteService().disposeAll(); // Free up resources
     super.dispose();
   }
 
@@ -225,17 +245,12 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "FarmWise AI",
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+        title: Text(
+          "FarmWise AI",
+          style: TextStyle(
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400,
+          ),
         ),
         backgroundColor: Colors.green.shade100,
         actions: [
@@ -246,6 +261,8 @@ class _MainScreenState extends State<MainScreen> {
                 setState(() {
                   _messages.removeWhere((item) => true);
                 });
+
+                showCustomSnackBar(context, "chat cleared...");
               },
               child: Image.asset(
                 "assets/icons/add-chat.png",
@@ -311,6 +328,12 @@ class _MainScreenState extends State<MainScreen> {
                                         "assets/icons/farm.png",
                                         width: 27,
                                         height: 27,
+                                      ),
+                                      Lottie.asset(
+                                        "assets/animations/circle.json",
+                                        width: 60,
+                                        height: 60,
+                                        repeat: true,
                                       ),
                                     ],
                                   )
@@ -398,7 +421,7 @@ class _MainScreenState extends State<MainScreen> {
                       child: Row(
                         children: [
                           _buildDetectBtn(
-                            "Detect Disease",
+                            "Detect $selectedCrop Disease",
                             "assets/icons/image.png",
                             _onDetectPressed,
                           ),
@@ -416,20 +439,25 @@ class _MainScreenState extends State<MainScreen> {
                             onTap: () async {
                               String? result =
                                   await showCropSelector(context, selectedCrop);
-                              setState(
-                                () {
-                                  selectedCrop = result!;
-                                },
-                              );
+
+                              setState(() {
+                                selectedCrop = result!;
+                                // _messages.removeWhere((item) => true);
+                              });
+                              // await TFLiteService().loadModel(selectedCrop);
                             },
-                            child: Image.asset(
-                              "assets/icons/menu.png",
-                              width: 20,
-                              height: 20,
+                            child: CircleAvatar(
+                              backgroundColor:
+                                  const Color.fromARGB(104, 200, 230, 201),
+                              child: Image.asset(
+                                "assets/icons/menu.png",
+                                width: 20,
+                                height: 20,
+                              ),
                             ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 7,
                           ),
                           InkWell(
                             onTap: _sendMessage,
@@ -465,8 +493,50 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildDetectBtn(String title, String icon, void Function() detect) {
-    return InkWell(
-      onTap: detect,
+    return PopupMenuButton(
+      offset: Offset(16, -119),
+      color: Colors.grey.shade100,
+      onSelected: (option) => option == "camera"
+          ? showCustomSnackBar(context, " Camera Not Supported Yet...")
+          : detect(),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: "camera",
+          child: Row(
+            children: [
+              Icon(
+                Icons.camera_alt,
+                color: Colors.green.shade900,
+              ),
+              SizedBox(width: 8),
+              Text(
+                "Camera",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: "Gallery",
+          child: Row(
+            children: [
+              Icon(
+                Icons.photo,
+                color: Colors.green.shade900,
+              ),
+              SizedBox(width: 8),
+              Text(
+                "Gallery",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(

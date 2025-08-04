@@ -26,7 +26,7 @@ class GeminiChatService {
 
       return response.text ?? "No response received.";
     } catch (e) {
-      return "Sorry, something went wrong. Please try again.";
+      return "Sorry, something went wrong. Please try again.$e";
     }
   }
 
@@ -54,5 +54,56 @@ You are a specialized agricultural assistant AI with expertise in $crop farming.
 
 👤 User Question: $message
 ''';
+  }
+
+  /// Generates expert agricultural advice from detection results
+  Future<String> getExpertAdvicePrompt({
+    required List<Map<String, dynamic>> detections,
+    required String cropName,
+  }) {
+    final buffer = StringBuffer();
+    buffer.writeln(
+        "You are a certified agricultural expert. Based on the image analysis results, give practical expert advice to a smallholder farmer growing $cropName.\n");
+
+    buffer.writeln("The detection result includes:");
+    for (var detection in detections) {
+      final label = detection['label'] ?? 'Unknown Disease';
+      final confidence = ((detection['confidence'] ?? 0.0)).toStringAsFixed(1);
+      buffer.writeln("- $label: $confidence%");
+    }
+
+    buffer.writeln("\nAdvice must include:");
+    buffer.writeln("1. Immediate treatment or action steps.");
+    buffer.writeln("2. Preventive measures for future.");
+    buffer.writeln(
+        "3. Monitoring tips (e.g., how often to check, what to observe).");
+    buffer.writeln("4. Low-cost or natural treatment options if relevant.");
+    buffer.writeln("5. Keep it short and clear.");
+
+    return Future.value(buffer.toString());
+  }
+
+  /// Gemini-powered advice generation
+  Future<String> getExpertAdvice({
+    required List<Map<String, dynamic>> detections,
+    required String cropName,
+  }) async {
+    try {
+      final prompt = await getExpertAdvicePrompt(
+        detections: detections,
+        cropName: cropName,
+      );
+
+      final content = [Content.text(prompt)];
+      final response = await _model.generateContent(content);
+
+      if (response.text != null && response.text!.isNotEmpty) {
+        return response.text!;
+      } else {
+        return "No expert advice could be generated. Please try again.";
+      }
+    } catch (e) {
+      return "Failed to get expert advice: $e";
+    }
   }
 }

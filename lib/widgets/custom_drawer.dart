@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/screens/saved_results_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -12,14 +13,14 @@ class DrawerWidget extends StatelessWidget {
           // User Profile Section
           UserAccountsDrawerHeader(
             accountName: Text(
-              "John Doe",
+              "Tekleeyesus Munye",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
             accountEmail: Text(
-              "johndoe@example.com",
+              "tekleeysus21@gmail.com",
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -33,11 +34,11 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.green.shade900,
-                  Colors.green.shade800,
+                  const Color.fromARGB(255, 8, 60, 55),
+                  const Color.fromARGB(255, 32, 84, 35),
                 ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
               ),
             ),
           ),
@@ -45,27 +46,35 @@ class DrawerWidget extends StatelessWidget {
             child: ListView(
               children: [
                 ListTile(
-                  leading: Icon(Icons.message),
+                  leading: Icon(
+                    Icons.history,
+                  ),
                   title: Text(
                     "Saved Chats",
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 20,
                     ),
                   ),
                   onTap: () {
                     // Navigate to saved chats screen
                   },
+                  trailing: Icon(
+                    Icons.verified,
+                  ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.scatter_plot_rounded),
+                  leading: Icon(Icons.save_alt_rounded),
                   title: Text(
                     "Saved Detection Results",
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 20,
                     ),
                   ),
                   onTap: () {
-                    // Navigate to saved detections screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => SavedResultsScreen()),
+                    );
                   },
                 ),
               ],

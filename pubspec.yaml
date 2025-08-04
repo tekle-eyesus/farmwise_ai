@@ -43,6 +43,15 @@ dependencies:
   google_generative_ai: ^0.4.6
   lottie: ^3.3.0
   flutter_markdown: ^0.7.7+1
+  tflite_flutter: ^0.9.0
+  tflite_flutter_helper: ^0.2.1
+  image: ^3.3.0
+  fl_chart: ^1.0.0
+  hive_flutter: ^1.1.0
+  hive: ^2.2.3
+  path_provider: ^2.0.15
+  intl: ^0.20.2
+  smooth_page_indicator: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,7 +77,9 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/ml_models/
+    - assets/models/
+    - assets/models/mango_labels.txt
+    - assets/models/mango_model.tflite
     - .env
     - assets/animations/
 

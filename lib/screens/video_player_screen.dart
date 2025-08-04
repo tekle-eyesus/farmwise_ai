@@ -3,7 +3,8 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String videoId;
-  const VideoPlayerScreen({required this.videoId});
+  final String videoTitle;
+  const VideoPlayerScreen({required this.videoId, required this.videoTitle});
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -37,7 +38,22 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       builder: (context, player) {
         return Scaffold(
           appBar: AppBar(title: Text('Video Player')),
-          body: player,
+          body: Column(
+            children: [
+              player,
+              Container(
+                margin: EdgeInsets.all(8),
+                child: Text(
+                  widget.videoTitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 23,
+                  ),
+                ),
+              )
+            ],
+          ),
         );
       },
     );
