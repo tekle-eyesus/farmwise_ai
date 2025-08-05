@@ -1,0 +1,13 @@
+
+# Ignore datasets
+datasets/
+
+# Ignore model directories and files
+models/
+
+# Ignore OS and editor files
+.DS_Store
+Thumbs.db
+__pycache__/
+.vscode/
+*.pyc
