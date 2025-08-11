@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/screens/saved_answers_screen.dart';
 import 'package:farmwise_ai/screens/saved_results_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +58,10 @@ class DrawerWidget extends StatelessWidget {
                   ),
                   onTap: () {
                     // Navigate to saved chats screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => SavedAnswersScreen()),
+                    );
                   },
                   trailing: Icon(
                     Icons.verified,

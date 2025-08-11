@@ -15,7 +15,7 @@ class GeminiChatService {
   Future<String> getResponse({
     required String userMessage,
     required String selectedCrop,
-    List<Map<String, String>> previousMessages = const [],
+    List<Map<String, dynamic>> previousMessages = const [],
   }) async {
     try {
       final prompt = _buildPrompt(userMessage, selectedCrop, previousMessages);
@@ -30,8 +30,8 @@ class GeminiChatService {
     }
   }
 
-  String _buildPrompt(
-      String message, String crop, List<Map<String, String>> previousMessages) {
+  String _buildPrompt(String message, String crop,
+      List<Map<String, dynamic>> previousMessages) {
     return '''
 You are a specialized agricultural assistant AI with expertise in $crop farming.
 

@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:farmwise_ai/models/chat_answer_model.dart';
 import 'package:farmwise_ai/screens/detect_result_screen.dart';
 import 'package:farmwise_ai/services/gemini_chat_service.dart';
 import 'package:farmwise_ai/services/generic_iflite_service.dart';
+import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/services/tflite_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/custom_drawer.dart';
+import 'package:farmwise_ai/widgets/typing_text.dart';
 import 'package:farmwise_ai/widgets/welcome_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -23,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final GeminiChatService _geminiService = GeminiChatService();
-  final List<Map<String, String>> _messages = [];
+  final List<Map<String, dynamic>> _messages = [];
   bool _isLoading = false;
   var selectedCrop = "Tomato";
 
@@ -33,10 +36,8 @@ class _MainScreenState extends State<MainScreen> {
 
     setState(() {
       _messages.add({'role': 'user', 'content': text});
-      _isLoading = true;
-
-      // Optional: add temporary "Typing..." placeholder
       _messages.add({'role': 'bot', 'content': 'typing...'});
+      _isLoading = true;
     });
 
     _controller.clear();
@@ -51,7 +52,6 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       // // Remove "typing..." placeholder
       _messages.removeLast();
-
       _messages.add({'role': 'bot', 'content': reply});
       _isLoading = false;
     });
@@ -183,16 +183,18 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void _onDetectPressed() async {
+  void _onDetectPressed(String option) async {
     final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery);
+    final picked;
+    if (option == "camera") {
+      picked = await picker.pickImage(source: ImageSource.camera);
+    } else {
+      picked = await picker.pickImage(source: ImageSource.gallery);
+    }
+
     if (picked != null) {
       File image = File(picked.path);
       showCustomSnackBar(context, " Detecting disease...");
-
-      // // Make sure to load model before calling detect
-      // await TFLiteService().loadModel(selectedCrop.toLowerCase());
-      // final results = await TFLiteService().detect(selectedCrop, image);
 
       final service = await GenericIfliteService.create(
         selectedCrop.toLowerCase(),
@@ -290,6 +292,8 @@ class _MainScreenState extends State<MainScreen> {
                     itemBuilder: (context, index) {
                       final msg = _messages[index];
                       final isUser = msg['role'] == 'user';
+                      final question = isUser ? msg["content"] : "";
+
                       return Container(
                         alignment: isUser
                             ? Alignment.centerRight
@@ -337,36 +341,129 @@ class _MainScreenState extends State<MainScreen> {
                                       ),
                                     ],
                                   )
-                                : Container(
-                                    margin: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3, vertical: 8),
-                                    child: MarkdownBody(
-                                      data: msg['content'] ?? '',
-                                      styleSheet: MarkdownStyleSheet(
-                                        p: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black87,
-                                            height: 1.5),
-                                        strong: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black),
-                                        em: TextStyle(
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.grey[700]),
-                                        blockquote: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontStyle: FontStyle.italic),
-                                        code: TextStyle(
-                                          backgroundColor: Colors.grey[100],
-                                          fontFamily: 'monospace',
-                                          fontSize: 14,
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 3, vertical: 8),
+                                        child: MarkdownBody(
+                                          data: msg['content'] ?? '',
+                                          styleSheet: MarkdownStyleSheet(
+                                            p: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black87,
+                                                height: 1.5),
+                                            strong: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                            em: TextStyle(
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.grey[700]),
+                                            blockquote: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontStyle: FontStyle.italic),
+                                            code: TextStyle(
+                                              backgroundColor: Colors.grey[100],
+                                              fontFamily: 'monospace',
+                                              fontSize: 14,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Tooltip(
+                                            message: "Copy text",
+                                            child: InkWell(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                12,
+                                              ),
+                                              onTap: () {
+                                                showCustomSnackBar(context,
+                                                    "Text copied to clipboard!");
+                                              },
+                                              child: Image.asset(
+                                                "assets/icons/copy.png",
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 18,
+                                          ),
+                                          Tooltip(
+                                            message: "Listen Audio format",
+                                            child: InkWell(
+                                              onTap: () {
+                                                showCustomSnackBar(context,
+                                                    "Audio Not supported, yet!");
+                                              },
+                                              child: Image.asset(
+                                                "assets/icons/audio-maximum.png",
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 18,
+                                          ),
+                                          Tooltip(
+                                            message: "save chat result",
+                                            child: InkWell(
+                                              onTap: () async {
+                                                final answer = SavedChatAnswer(
+                                                  question: question,
+                                                  modelAnswer:
+                                                      msg['content'] ?? '',
+                                                  savedAt: DateTime.now(),
+                                                );
+
+                                                await LocalStorageService
+                                                    .saveChatAnswer(answer);
+                                                showCustomSnackBar(context,
+                                                    "Answer saved successfully!");
+                                              },
+                                              child: Image.asset(
+                                                "assets/icons/save-alt.png",
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 18,
+                                          ),
+                                          Tooltip(
+                                            message: "Resources",
+                                            child: InkWell(
+                                              onTap: () {
+                                                showCustomSnackBar(context,
+                                                    "Resources to Explore...");
+                                              },
+                                              child: Image.asset(
+                                                "assets/icons/app.png",
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
                       );
                     },
@@ -492,13 +589,12 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildDetectBtn(String title, String icon, void Function() detect) {
+  Widget _buildDetectBtn(
+      String title, String icon, void Function(String option) detect) {
     return PopupMenuButton(
       offset: Offset(16, -119),
       color: Colors.grey.shade100,
-      onSelected: (option) => option == "camera"
-          ? showCustomSnackBar(context, " Camera Not Supported Yet...")
-          : detect(),
+      onSelected: (option) => detect(option),
       itemBuilder: (context) => [
         PopupMenuItem(
           value: "camera",
@@ -506,7 +602,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Icon(
                 Icons.camera_alt,
-                color: Colors.green.shade900,
+                color: Colors.grey.shade600,
               ),
               SizedBox(width: 8),
               Text(
@@ -524,7 +620,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Icon(
                 Icons.photo,
-                color: Colors.green.shade900,
+                color: Colors.grey.shade600,
               ),
               SizedBox(width: 8),
               Text(

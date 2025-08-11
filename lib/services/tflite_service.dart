@@ -52,9 +52,6 @@ class TFLiteService {
         'confidence': (output[0][i] as double) * 100,
       });
     }
-    print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-    print(_labels[crop]);
-    print(results.map((r) => r['label']).toList());
 
     // results.sort((a, b) => (b['confidence']).compareTo(a['confidence']));
     return results;

@@ -1,5 +1,4 @@
 import 'package:farmwise_ai/auth/intro_screen.dart';
-import 'package:farmwise_ai/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -10,6 +9,7 @@ void main() async {
   final appDocDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDocDir.path);
   await Hive.openBox('detection_results');
+  await Hive.openBox("model_answers");
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class SavedDetectionResult {
   final String cropName;
   final String imagePath; // Save image path, not the file itself
@@ -26,7 +24,9 @@ class SavedDetectionResult {
         cropName: map['cropName'],
         imagePath: map['imagePath'],
         detectionResult: List<Map<String, dynamic>>.from(
-          map['detectionResult'].map((e) => Map<String, dynamic>.from(e)),
+          map['detectionResult'].map(
+            (e) => Map<String, dynamic>.from(e),
+          ),
         ),
         savedAt: DateTime.parse(map['savedAt']),
       );
