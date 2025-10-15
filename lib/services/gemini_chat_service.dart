@@ -7,7 +7,7 @@ class GeminiChatService {
 
   GeminiChatService() {
     _model = GenerativeModel(
-      model: 'gemini-1.5-flash-latest',
+      model: 'gemini-flash-latest',
       apiKey: _apiKey,
     );
   }
