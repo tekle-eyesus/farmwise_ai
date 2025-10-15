@@ -66,7 +66,7 @@ class _SavedResultsScreenState extends State<SavedAnswersScreen> {
                 ),
                 onPressed: () async {
                   await LocalStorageService.deleteAnswer(key);
-                  showCustomSnackBar(context, "Deleted successfully");
+                  CustomSnackBar.showSuccess(context, 'Deleted successfully');
                   setState(() {});
                 },
                 icon: Icon(
@@ -78,7 +78,7 @@ class _SavedResultsScreenState extends State<SavedAnswersScreen> {
                 Icons.bolt,
               ),
               onTap: () {
-                showCustomSnackBar(context, "New Screen.");
+                CustomSnackBar.showInfo(context, 'New Screen Dispaly');
               },
             ),
           );

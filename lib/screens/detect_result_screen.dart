@@ -52,7 +52,7 @@ class DetectResultScreen extends StatelessWidget {
               );
 
               await LocalStorageService.saveResult(result);
-              showCustomSnackBar(context, "Result saved successfully!");
+              CustomSnackBar.showSuccess(context, "Result saved successfully!");
             },
           ),
         ],

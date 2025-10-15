@@ -8,7 +8,6 @@ import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/services/tflite_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/custom_drawer.dart';
-import 'package:farmwise_ai/widgets/typing_text.dart';
 import 'package:farmwise_ai/widgets/welcome_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -126,8 +125,7 @@ class _MainScreenState extends State<MainScreen> {
                             setState(
                               () {
                                 tempSelection = item['label']!;
-                                //display selected message
-                                showCustomSnackBar(
+                                CustomSnackBar.showInfo(
                                   context,
                                   "$tempSelection crop Selected",
                                 );
@@ -194,7 +192,7 @@ class _MainScreenState extends State<MainScreen> {
 
     if (picked != null) {
       File image = File(picked.path);
-      showCustomSnackBar(context, " Detecting disease...");
+      CustomSnackBar.showProcessing(context);
 
       final service = await GenericIfliteService.create(
         selectedCrop.toLowerCase(),
@@ -263,8 +261,7 @@ class _MainScreenState extends State<MainScreen> {
                 setState(() {
                   _messages.removeWhere((item) => true);
                 });
-
-                showCustomSnackBar(context, "chat cleared...");
+                CustomSnackBar.showWarning(context, "Chat Cleared.");
               },
               child: Image.asset(
                 "assets/icons/add-chat.png",
@@ -391,7 +388,7 @@ class _MainScreenState extends State<MainScreen> {
                                                 12,
                                               ),
                                               onTap: () {
-                                                showCustomSnackBar(context,
+                                                CustomSnackBar.showInfo(context,
                                                     "Text copied to clipboard!");
                                               },
                                               child: Image.asset(
@@ -408,7 +405,8 @@ class _MainScreenState extends State<MainScreen> {
                                             message: "Listen Audio format",
                                             child: InkWell(
                                               onTap: () {
-                                                showCustomSnackBar(context,
+                                                CustomSnackBar.showWarning(
+                                                    context,
                                                     "Audio Not supported, yet!");
                                               },
                                               child: Image.asset(
@@ -434,7 +432,9 @@ class _MainScreenState extends State<MainScreen> {
 
                                                 await LocalStorageService
                                                     .saveChatAnswer(answer);
-                                                showCustomSnackBar(context,
+
+                                                CustomSnackBar.showSuccess(
+                                                    context,
                                                     "Answer saved successfully!");
                                               },
                                               child: Image.asset(
@@ -451,7 +451,7 @@ class _MainScreenState extends State<MainScreen> {
                                             message: "Resources",
                                             child: InkWell(
                                               onTap: () {
-                                                showCustomSnackBar(context,
+                                                CustomSnackBar.showInfo(context,
                                                     "Resources to Explore...");
                                               },
                                               child: Image.asset(

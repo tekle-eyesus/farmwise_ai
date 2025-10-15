@@ -74,7 +74,7 @@ class _SavedResultsScreenState extends State<SavedResultsScreen> {
                 ),
                 onPressed: () async {
                   await LocalStorageService.deleteResult(key);
-                  showCustomSnackBar(context, "Deleted successfully");
+                  CustomSnackBar.showSuccess(context, "Deleted successfully");
                   setState(() {});
                 },
                 icon: Icon(
