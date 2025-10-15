@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:farmwise_ai/models/chat_answer_model.dart';
+import 'package:farmwise_ai/providers/tts_provider.dart';
 import 'package:farmwise_ai/screens/detect_result_screen.dart';
 import 'package:farmwise_ai/services/gemini_chat_service.dart';
 import 'package:farmwise_ai/services/generic_iflite_service.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -414,20 +416,88 @@ class _MainScreenState extends State<MainScreen> {
                                           const SizedBox(
                                             width: 18,
                                           ),
-                                          Tooltip(
-                                            message: "Listen Audio format",
-                                            child: InkWell(
-                                              onTap: () {
-                                                CustomSnackBar.showWarning(
-                                                    context,
-                                                    "Audio Not supported, yet!");
-                                              },
-                                              child: Image.asset(
-                                                "assets/icons/audio-maximum.png",
-                                                width: 20,
-                                                height: 20,
-                                              ),
-                                            ),
+                                          Consumer<TtsProvider>(
+                                            builder:
+                                                (context, ttsProvider, child) {
+                                              return Tooltip(
+                                                message: ttsProvider.isPlaying
+                                                    ? "Stop audio"
+                                                    : ttsProvider.isPaused
+                                                        ? "Resume audio"
+                                                        : "Listen to audio",
+                                                child: InkWell(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  onTap: () async {
+                                                    final String textToSpeak =
+                                                        msg["content"];
+
+                                                    if (textToSpeak.isEmpty) {
+                                                      CustomSnackBar
+                                                          .showWarning(
+                                                        context,
+                                                        "No text to speak",
+                                                      );
+                                                      return;
+                                                    }
+
+                                                    try {
+                                                      if (ttsProvider
+                                                          .isPlaying) {
+                                                        await ttsProvider
+                                                            .stop(context);
+                                                      } else if (ttsProvider
+                                                          .isPaused) {
+                                                        await ttsProvider
+                                                            .resume(context);
+                                                      } else {
+                                                        await ttsProvider.speak(
+                                                          textToSpeak,
+                                                          context,
+                                                        );
+                                                      }
+                                                    } catch (e) {
+                                                      CustomSnackBar.showError(
+                                                        context,
+                                                        "Audio playback failed",
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/icons/audio-maximum.png",
+                                                        width: 20,
+                                                        height: 20,
+                                                        color: ttsProvider
+                                                                .isPlaying
+                                                            ? Colors.blue
+                                                            : ttsProvider
+                                                                    .isPaused
+                                                                ? Colors.orange
+                                                                : null,
+                                                      ),
+                                                      if (ttsProvider.isLoading)
+                                                        Positioned(
+                                                          right: 0,
+                                                          top: 0,
+                                                          child: Container(
+                                                            width: 8,
+                                                            height: 8,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.blue,
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                           const SizedBox(
                                             width: 18,

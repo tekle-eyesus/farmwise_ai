@@ -1,8 +1,10 @@
 import 'package:farmwise_ai/auth/intro_screen.dart';
+import 'package:farmwise_ai/providers/tts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +13,17 @@ void main() async {
   await Hive.openBox('detection_results');
   await Hive.openBox("model_answers");
   await dotenv.load(fileName: ".env");
-  runApp(MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TtsProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
+
+  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
