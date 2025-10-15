@@ -10,6 +10,7 @@ import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/custom_drawer.dart';
 import 'package:farmwise_ai/widgets/welcome_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -384,12 +385,24 @@ class _MainScreenState extends State<MainScreen> {
                                             message: "Copy text",
                                             child: InkWell(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                12,
-                                              ),
-                                              onTap: () {
-                                                CustomSnackBar.showInfo(context,
-                                                    "Text copied to clipboard!");
+                                                  BorderRadius.circular(12),
+                                              onTap: () async {
+                                                try {
+                                                  await Clipboard.setData(
+                                                    ClipboardData(
+                                                      text: msg["content"],
+                                                    ),
+                                                  );
+                                                  CustomSnackBar.showSuccess(
+                                                    context,
+                                                    "Text copied to clipboard!",
+                                                  );
+                                                } catch (e) {
+                                                  CustomSnackBar.showError(
+                                                    context,
+                                                    "Failed to copy text",
+                                                  );
+                                                }
                                               },
                                               child: Image.asset(
                                                 "assets/icons/copy.png",
@@ -462,6 +475,9 @@ class _MainScreenState extends State<MainScreen> {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
                                       )
                                     ],
                                   ),
