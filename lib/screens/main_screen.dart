@@ -29,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   final ScrollController _scrollController = ScrollController();
   final GeminiChatService _geminiService = GeminiChatService();
   final List<Map<String, dynamic>> _messages = [];
+  String? question;
   bool _isLoading = false;
   var selectedCrop = "Tomato";
 
@@ -291,8 +292,11 @@ class _MainScreenState extends State<MainScreen> {
                     itemCount: _messages.length,
                     itemBuilder: (context, index) {
                       final msg = _messages[index];
-                      final isUser = msg['role'] == 'user';
-                      final question = isUser ? msg["content"] : "";
+                      final isUser = msg['role'].toString() == 'user';
+
+                      if (isUser) {
+                        question = msg["content"];
+                      }
 
                       return Container(
                         alignment: isUser
@@ -507,7 +511,7 @@ class _MainScreenState extends State<MainScreen> {
                                             child: InkWell(
                                               onTap: () async {
                                                 final answer = SavedChatAnswer(
-                                                  question: question,
+                                                  question: question!,
                                                   modelAnswer:
                                                       msg['content'] ?? '',
                                                   savedAt: DateTime.now(),
@@ -517,8 +521,9 @@ class _MainScreenState extends State<MainScreen> {
                                                     .saveChatAnswer(answer);
 
                                                 CustomSnackBar.showSuccess(
-                                                    context,
-                                                    "Answer saved successfully!");
+                                                  context,
+                                                  "Answer saved successfully!",
+                                                );
                                               },
                                               child: Image.asset(
                                                 "assets/icons/save-alt.png",

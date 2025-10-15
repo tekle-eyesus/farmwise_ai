@@ -57,15 +57,11 @@ class DrawerWidget extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Navigate to saved chats screen
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => SavedAnswersScreen()),
                     );
                   },
-                  trailing: Icon(
-                    Icons.verified,
-                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.save_alt_rounded),
