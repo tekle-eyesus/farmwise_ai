@@ -274,18 +274,18 @@ class DetectResultScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            if (label != "Unknown") Divider(),
             if (label != "Unknown")
               Container(
-                color: const Color.fromARGB(55, 200, 230, 201),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
+                margin: const EdgeInsets.symmetric(vertical: 3),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    // AI Adice
                     ExpertAdviceWidget(
                       detectionResult: detectionResult,
                       cropName: cropName,
