@@ -7,6 +7,7 @@ import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/article_section.dart';
 import 'package:farmwise_ai/widgets/disease_confidence_chart.dart';
 import 'package:farmwise_ai/widgets/expert_advice_widget.dart';
+import 'package:farmwise_ai/widgets/recommended_actions_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -183,57 +184,15 @@ class DetectResultScreen extends StatelessWidget {
               }).toList(),
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Recommended Actions",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  ...disease.recommendations.map((Recommendation r) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 1),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        color: const Color.fromARGB(167, 200, 230, 201),
-                      ),
-                      child: ListTile(
-                        leading: Image.asset(
-                          "assets/icons/right.png",
-                          width: 38,
-                          height: 38,
-                        ),
-                        title: Text(
-                          r.title,
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        subtitle: MarkdownBody(
-                          data: r.subtitle,
-                          styleSheet: MarkdownStyleSheet.fromTheme(
-                            Theme.of(
-                              context,
-                            ),
-                          ).copyWith(
-                            p: TextStyle(
-                              fontSize: 16,
-                              height: 1.4,
-                              color: Colors.green.shade900,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                  RecommendedActionsSection(disease: disease),
                 ],
               ),
             ),
