@@ -5,6 +5,7 @@ import 'package:farmwise_ai/screens/online_video_section.dart';
 import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/article_section.dart';
+import 'package:farmwise_ai/widgets/detection_header_section.dart';
 import 'package:farmwise_ai/widgets/disease_confidence_chart.dart';
 import 'package:farmwise_ai/widgets/expert_advice_widget.dart';
 import 'package:farmwise_ai/widgets/recommended_actions_section.dart';
@@ -146,42 +147,43 @@ class DetectResultScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
-              decoration: BoxDecoration(),
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    disease!.title,
-                    style: TextStyle(
-                      fontSize: 27,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  MarkdownBody(
-                    data: disease.description,
-                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
-                        .copyWith(
-                      p: const TextStyle(fontSize: 16, height: 1.4),
-                    ),
+                  DetectionHeaderSection(
+                    disease: disease!,
+                    cropName: cropName,
                   ),
                 ],
               ),
             ),
             const SizedBox(
-              height: 7,
+              height: 2,
             ),
-            DiseaseConfidenceChart(
-              results: detectionResult.map((e) {
-                return {
-                  'label': e['label'],
-                  'confidence': e['confidence'] ?? 0.0,
-                };
-              }).toList(),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DiseaseConfidenceChart(
+                      results: detectionResult.map((e) {
+                    return {
+                      'label': e['label'],
+                      'confidence': e['confidence'] ?? 0.0,
+                    };
+                  }).toList()),
+                ],
+              ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
