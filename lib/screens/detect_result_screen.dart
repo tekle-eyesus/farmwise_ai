@@ -6,12 +6,11 @@ import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/article_section.dart';
 import 'package:farmwise_ai/widgets/detection_header_section.dart';
+import 'package:farmwise_ai/widgets/detection_image_overlay.dart';
 import 'package:farmwise_ai/widgets/disease_confidence_chart.dart';
 import 'package:farmwise_ai/widgets/expert_advice_widget.dart';
 import 'package:farmwise_ai/widgets/recommended_actions_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class DetectResultScreen extends StatelessWidget {
   final String cropName;
@@ -68,84 +67,11 @@ class DetectResultScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  child: Image.file(
-                    image,
-                    height: 220,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  left: 10,
-                  top: 10,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: label == "Healthy"
-                          ? Colors.green
-                          : const Color.fromARGB(188, 244, 40, 25),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 7),
-                    child: Text(
-                      label,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 4,
-                  right: 10,
-                  child: CircularPercentIndicator(
-                    radius: 30.0,
-                    lineWidth: 7.0,
-                    animation: true,
-                    animationDuration: 2300,
-                    percent: result['confidence'] / 100,
-                    linearGradient: LinearGradient(
-                      colors: [
-                        const Color.fromARGB(255, 8, 60, 55),
-                        Colors.lightGreenAccent
-                      ],
-                    ),
-                    center: CircleAvatar(
-                      radius: 23,
-                      backgroundColor: const Color.fromARGB(191, 0, 0, 0),
-                      child: Text(
-                        confidence.toStringAsFixed(1) + "%",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    circularStrokeCap: CircularStrokeCap.round,
-                    footer: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.lightGreenAccent,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 7),
-                      margin: EdgeInsets.only(top: 3),
-                      child: Text(
-                        "confidence",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            DetectionImageOverlay(
+              image: image,
+              label: label,
+              confidence: confidence,
             ),
-            SizedBox(height: 10),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
