@@ -32,12 +32,13 @@ class DetectResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        elevation: 0,
         backgroundColor: Colors.green.shade100,
         title: Text(
           "Detection Result",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
         actions: [
@@ -52,7 +53,10 @@ class DetectResultScreen extends StatelessWidget {
               );
 
               await LocalStorageService.saveResult(result);
-              CustomSnackBar.showSuccess(context, "Result saved successfully!");
+              CustomSnackBar.showSuccess(
+                context,
+                "Result saved successfully!",
+              );
             },
           ),
         ],
@@ -234,18 +238,17 @@ class DetectResultScreen extends StatelessWidget {
             ),
             if (label != "Unknown")
               Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 17),
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Video Resources",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    //videos from youtube,
+                    // Section header is now handled inside OnlineVideoSection
                     OnlineVideoSection(label: label),
                   ],
                 ),
