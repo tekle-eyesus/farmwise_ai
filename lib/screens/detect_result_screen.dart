@@ -4,6 +4,7 @@ import 'package:farmwise_ai/models/detection_result_model.dart';
 import 'package:farmwise_ai/screens/online_video_section.dart';
 import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:farmwise_ai/widgets/article_section.dart';
 import 'package:farmwise_ai/widgets/disease_confidence_chart.dart';
 import 'package:farmwise_ai/widgets/expert_advice_widget.dart';
 import 'package:flutter/material.dart';
@@ -240,7 +241,7 @@ class DetectResultScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade50,
                   borderRadius: BorderRadius.circular(20),
@@ -250,6 +251,26 @@ class DetectResultScreen extends StatelessWidget {
                   children: [
                     // Section header is now handled inside OnlineVideoSection
                     OnlineVideoSection(label: label),
+                  ],
+                ),
+              ),
+            if (label != "Unknown")
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ArticleSection(
+                      diseaseLabel: label,
+                      cropName: cropName,
+                    ),
                   ],
                 ),
               ),
