@@ -1,4 +1,3 @@
-import 'package:farmwise_ai/widgets/intro_features.dart';
 import 'package:flutter/material.dart';
 
 class PageTwo extends StatelessWidget {
@@ -6,118 +5,157 @@ class PageTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<Map<String, String>> features = [
+    final features = [
       {
+        'icon': Icons.health_and_safety_rounded,
         'title': 'Disease Detection',
-        'description':
-            'Detect plant leaf diseases in potato, mango, and tomato crops using on-device machine learning.',
+        'description': 'Identify plant diseases instantly using AI technology',
       },
       {
-        'title': 'Personalized Advice',
-        'description':
-            'Get personalized agricultural advice tailored to your crops and detected diseases.',
+        'icon': Icons.psychology_rounded,
+        'title': 'Expert Advice',
+        'description': 'Get personalized recommendations for your crops',
       },
       {
-        'title': 'Multimedia Resources',
-        'description':
-            'Access multimedia resources and best practices to empower farmers and support sustainable farming.',
-      }
+        'icon': Icons.video_library_rounded,
+        'title': 'Learning Resources',
+        'description': 'Access videos and guides for better farming',
+      },
     ];
+
     return Container(
-      padding: const EdgeInsets.all(0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color.fromARGB(255, 212, 237, 212),
-            const Color.fromARGB(255, 147, 206, 148)
-          ],
-        ),
-      ),
+      color: Colors.white,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 370,
-            child: Container(
-              margin: EdgeInsets.only(
-                bottom: 10,
+          // Image Section
+          Container(
+            height: 280,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/intro-image.png"),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.green.shade200.withOpacity(0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 4),
                 ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+              child: Image.asset(
+                "assets/images/intro-image.png",
+                fit: BoxFit.cover,
+                width: double.infinity,
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DefaultTextStyle(
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "What",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 23,
-                          ),
-                        ),
-                        TextSpan(
-                          text: " FarmWise AI",
-                          style: TextStyle(
-                            color: Colors.green.shade900,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 25,
-                          ),
-                        ),
-                        TextSpan(
-                          text: " Can Do for You?",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 23,
-                          ),
-                        ),
-                      ],
+
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header
+                  DefaultTextStyle(
+                    style: TextStyle(),
+                    child: Text(
+                      "What FarmWise AI\nCan Do For You",
+                      style: TextStyle(
+                        fontSize: 33,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.green.shade800,
+                        height: 1.3,
+                      ),
                     ),
                   ),
-                ),
-                const DefaultTextStyle(
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 19,
-                    fontStyle: FontStyle.italic,
+
+                  const SizedBox(height: 8),
+                  DefaultTextStyle(
+                    style: TextStyle(),
+                    child: Text(
+                      "AI-powered tools for modern farming",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    "Empowering Farmers. AI for Every Leaf",
-                    textAlign: TextAlign.center,
+                  const SizedBox(height: 32),
+                  Expanded(
+                    child: Column(
+                      children: features.map((feature) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade50,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Colors.green.shade100,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green.shade100,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    feature['icon'] as IconData,
+                                    color: Colors.green.shade600,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      DefaultTextStyle(
+                                        style: TextStyle(),
+                                        child: Text(
+                                          feature['title'].toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.green.shade800,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      DefaultTextStyle(
+                                        style: TextStyle(),
+                                        child: Text(
+                                          feature['description'].toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ...features.map((feature) {
-                  return Features(
-                      title: feature["title"]!, desc: feature["description"]!);
-                }),
-              ],
+                ],
+              ),
             ),
           ),
         ],
