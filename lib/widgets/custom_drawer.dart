@@ -1,5 +1,6 @@
 import 'package:farmwise_ai/screens/saved_answers_screen.dart';
 import 'package:farmwise_ai/screens/saved_results_screen.dart';
+import 'package:farmwise_ai/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -75,6 +76,21 @@ class DrawerWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => SavedResultsScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text(
+                    "Settings",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => AppSettingScreen()),
                     );
                   },
                 ),
