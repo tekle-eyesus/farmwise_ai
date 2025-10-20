@@ -549,25 +549,8 @@ class _MainScreenState extends State<MainScreen> {
                                           const SizedBox(
                                             width: 18,
                                           ),
-                                          Tooltip(
-                                            message: "Resources",
-                                            child: InkWell(
-                                              onTap: () {
-                                                CustomSnackBar.showInfo(context,
-                                                    "Resources to Explore...");
-                                              },
-                                              child: Image.asset(
-                                                "assets/icons/app.png",
-                                                width: 20,
-                                                height: 20,
-                                              ),
-                                            ),
-                                          ),
                                         ],
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                      )
                                     ],
                                   ),
                       );
@@ -717,11 +700,6 @@ class _MainScreenState extends State<MainScreen> {
                   size: 22,
                 ),
               ),
-
-              // Icon(
-              //   Icons.camera_alt,
-              //   color: Colors.grey.shade600,
-              // ),
               SizedBox(width: 8),
               Text(
                 "Camera",
