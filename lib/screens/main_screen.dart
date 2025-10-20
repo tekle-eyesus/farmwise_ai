@@ -705,10 +705,23 @@ class _MainScreenState extends State<MainScreen> {
           value: "camera",
           child: Row(
             children: [
-              Icon(
-                Icons.camera_alt,
-                color: Colors.grey.shade600,
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.green,
+                  size: 22,
+                ),
               ),
+
+              // Icon(
+              //   Icons.camera_alt,
+              //   color: Colors.grey.shade600,
+              // ),
               SizedBox(width: 8),
               Text(
                 "Camera",
@@ -723,9 +736,17 @@ class _MainScreenState extends State<MainScreen> {
           value: "Gallery",
           child: Row(
             children: [
-              Icon(
-                Icons.photo,
-                color: Colors.grey.shade600,
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.red.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.photo,
+                  color: Colors.red,
+                  size: 22,
+                ),
               ),
               SizedBox(width: 8),
               Text(
