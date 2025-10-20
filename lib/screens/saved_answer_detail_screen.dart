@@ -37,7 +37,19 @@ class _SavedAnswerDetailScreenState extends State<SavedAnswerDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green.shade100,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(255, 8, 60, 55),
+                const Color.fromARGB(255, 32, 84, 35),
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
+          ),
+        ),
+        foregroundColor: Colors.white,
         elevation: 0,
         title: const Text(
           'Saved Answer Detail',

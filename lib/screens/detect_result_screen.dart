@@ -35,7 +35,19 @@ class DetectResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.green.shade100,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(255, 8, 60, 55),
+                const Color.fromARGB(255, 32, 84, 35),
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
+          ),
+        ),
+        foregroundColor: Colors.white,
         title: Text(
           "Detection Result",
           style: TextStyle(
@@ -45,7 +57,10 @@ class DetectResultScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: Icon(
+              Icons.save,
+              color: Colors.green.shade200,
+            ),
             onPressed: () async {
               final result = SavedDetectionResult(
                 cropName: cropName,

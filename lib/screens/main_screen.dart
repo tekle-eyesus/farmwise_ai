@@ -245,6 +245,7 @@ class _MainScreenState extends State<MainScreen> {
               },
               child: Image.asset(
                 "assets/icons/align-right.png",
+                color: Colors.green.shade200,
               ),
             ),
           ),
@@ -256,7 +257,19 @@ class _MainScreenState extends State<MainScreen> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        backgroundColor: Colors.green.shade100,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color.fromARGB(255, 8, 60, 55),
+                const Color.fromARGB(255, 32, 84, 35),
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            ),
+          ),
+        ),
+        foregroundColor: Colors.white,
         actions: [
           Tooltip(
             message: "New Assistance",
@@ -271,6 +284,7 @@ class _MainScreenState extends State<MainScreen> {
                 "assets/icons/add-chat.png",
                 width: 30,
                 height: 30,
+                color: Colors.green.shade200,
               ),
             ),
           ),
