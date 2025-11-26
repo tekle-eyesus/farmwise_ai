@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="farmwise_ai"
+        android:label="farmwise ai"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
