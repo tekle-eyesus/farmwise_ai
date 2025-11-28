@@ -25,17 +25,29 @@ class ContactCard extends StatelessWidget {
 
       if (type == 'phone') {
         url = Uri.parse('tel:$value');
+
+        if (await canLaunchUrl(url)) {
+          await launchUrl(url);
+        } else {
+          _showErrorSnackBar(context, 'Could not launch $type');
+        }
       } else if (type == 'email') {
-        url = Uri.parse(
-            'mailto:$value?subject=FarmWise AI Support&body=Hello, I need assistance with my crop disease detection.');
+        final Uri emailLaunchUri = Uri(
+          scheme: 'mailto',
+          path: '$value',
+          queryParameters: {
+            'subject': 'FarmWise AI Support',
+            'body': 'Hello, I need assistance with my crop disease detection.',
+          },
+        );
+
+        if (await canLaunchUrl(emailLaunchUri)) {
+          await launchUrl(emailLaunchUri);
+        } else {
+          _showErrorSnackBar(context, 'Could not launch $type');
+        }
       } else {
         throw Exception('Unsupported contact type');
-      }
-
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url);
-      } else {
-        _showErrorSnackBar(context, 'Could not launch $type');
       }
     } catch (e) {
       _showErrorSnackBar(context, 'Error opening $type');
