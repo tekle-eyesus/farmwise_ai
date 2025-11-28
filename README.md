@@ -1,5 +1,4 @@
-# FarmWise AI
-
+# <img src="https://raw.githubusercontent.com/tekle-eyesus/farmwise_ai/main/assets/icons/playstore-app-icon.png" alt="logo" width="46" /> FarmWise AI
 **FarmWise AI** is an intelligent mobile application that empowers smallholder farmers with AI-driven crop disease detection and expert farming recommendations. It leverages image recognition and on-device machine learning to identify diseases in tomato, potato, and mango crops, and provides practical mitigation guidance tailored to each case even in offline environments.
 
 
