@@ -40,9 +40,12 @@ class _IntroScreenState extends State<IntroScreen> {
         Container(
           alignment: const Alignment(0, 0.80),
           child: SmoothPageIndicator(
-              controller: _pageController, // PageController
+              controller: _pageController,
               count: 2,
-              effect: const WormEffect(), // your preferred effect
+              effect: WormEffect(
+                dotColor: Colors.green.shade200,
+                activeDotColor: Colors.green.shade600,
+              ),
               onDotClicked: (index) {
                 _pageController.jumpToPage(index);
               }),
