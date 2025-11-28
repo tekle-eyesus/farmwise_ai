@@ -5,6 +5,7 @@ import 'package:farmwise_ai/screens/online_video_section.dart';
 import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/article_section.dart';
+import 'package:farmwise_ai/widgets/contact_support_section.dart';
 import 'package:farmwise_ai/widgets/detection_header_section.dart';
 import 'package:farmwise_ai/widgets/detection_image_overlay.dart';
 import 'package:farmwise_ai/widgets/disease_confidence_chart.dart';
@@ -170,6 +171,25 @@ class DetectResultScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ArticleSection(
+                      diseaseLabel: label,
+                      cropName: cropName,
+                    ),
+                  ],
+                ),
+              ),
+            if (label != "Unknown")
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ContactSupportSection(
                       diseaseLabel: label,
                       cropName: cropName,
                     ),
