@@ -24,14 +24,17 @@ class DrawerWidget extends StatelessWidget {
             accountEmail: Text(
               "tekleeysus21@gmail.com",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
-            currentAccountPicture: Image.asset(
-              "assets/icons/user.png",
-              width: 50,
-              height: 50,
-              color: Colors.grey,
+            currentAccountPicture: ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Image.asset(
+                "assets/icons/profile_pic.png",
+                width: 100,
+                height: 100,
+                fit: BoxFit.fill,
+              ),
             ),
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -48,8 +51,9 @@ class DrawerWidget extends StatelessWidget {
             child: ListView(
               children: [
                 ListTile(
-                  leading: Icon(
+                  leading: _buildListTileIcons(
                     Icons.history,
+                    Colors.green.shade800,
                   ),
                   title: Text(
                     "Saved Chats",
@@ -65,7 +69,10 @@ class DrawerWidget extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.save_alt_rounded),
+                  leading: _buildListTileIcons(
+                    Icons.save_alt_rounded,
+                    Colors.green.shade800,
+                  ),
                   title: Text(
                     "Saved Detection Results",
                     style: TextStyle(
@@ -80,7 +87,10 @@ class DrawerWidget extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.settings),
+                  leading: _buildListTileIcons(
+                    Icons.settings,
+                    Colors.green.shade800,
+                  ),
                   title: Text(
                     "Settings",
                     style: TextStyle(
@@ -98,6 +108,20 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildListTileIcons(IconData icon, Color iconColor) {
+    return Container(
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: Colors.green.withOpacity(0.2),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        icon,
+        color: iconColor,
       ),
     );
   }
