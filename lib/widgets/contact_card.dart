@@ -32,14 +32,13 @@ class ContactCard extends StatelessWidget {
           _showErrorSnackBar(context, 'Could not launch $type');
         }
       } else if (type == 'email') {
-        final Uri emailLaunchUri = Uri(
-          scheme: 'mailto',
-          path: '$value',
-          queryParameters: {
-            'subject': 'FarmWise AI Support',
-            'body': 'Hello, I need assistance with my crop disease detection.',
-          },
-        );
+        final String subject = Uri.encodeComponent('FarmWise AI Support');
+        final String body = Uri.encodeComponent(
+          'Hello, I need assistance with my crop disease detection.',
+        ); // the disease detail info will be added.
+
+        final String uriString = 'mailto:$value?subject=$subject&body=$body';
+        final Uri emailLaunchUri = Uri.parse(uriString);
 
         if (await canLaunchUrl(emailLaunchUri)) {
           await launchUrl(emailLaunchUri);
