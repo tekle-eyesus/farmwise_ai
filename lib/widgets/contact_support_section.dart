@@ -5,11 +5,13 @@ import 'contact_card.dart';
 class ContactSupportSection extends StatefulWidget {
   final String diseaseLabel;
   final String cropName;
+  final List<Map<String, dynamic>> detectionResult;
 
   const ContactSupportSection({
     super.key,
     required this.diseaseLabel,
     required this.cropName,
+    required this.detectionResult,
   });
 
   @override
@@ -241,6 +243,7 @@ class _ContactSupportSectionState extends State<ContactSupportSection> {
                   description: contact['description'],
                   region: contact['region'],
                   availability: contact['availability'],
+                  detectionResult: widget.detectionResult,
                 ),
               );
             },

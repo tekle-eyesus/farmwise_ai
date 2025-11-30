@@ -190,6 +190,7 @@ class DetectResultScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ContactSupportSection(
+                      detectionResult: detectionResult,
                       diseaseLabel: label,
                       cropName: cropName,
                     ),

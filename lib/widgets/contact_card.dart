@@ -8,6 +8,7 @@ class ContactCard extends StatelessWidget {
   final String description;
   final String region;
   final String availability;
+  final List<Map<String, dynamic>> detectionResult;
 
   const ContactCard({
     super.key,
@@ -17,7 +18,23 @@ class ContactCard extends StatelessWidget {
     required this.description,
     required this.region,
     required this.availability,
+    required this.detectionResult,
   });
+
+  String formatDetectionReport(List<dynamic> detectionResult) {
+    final buffer = StringBuffer();
+    buffer.writeln("Crop Disease Detection Report\n");
+
+    for (int i = 0; i < detectionResult.length; i++) {
+      final item = detectionResult[i];
+      final label = item['label'];
+      final confidence = (item['confidence'] as double);
+
+      buffer.writeln("${i + 1}. $label – ${confidence.toStringAsFixed(2)}%");
+    }
+
+    return buffer.toString();
+  }
 
   Future<void> _launchContact(BuildContext context) async {
     try {
@@ -33,9 +50,12 @@ class ContactCard extends StatelessWidget {
         }
       } else if (type == 'email') {
         final String subject = Uri.encodeComponent('FarmWise AI Support');
+
+        final formattedReport = formatDetectionReport(detectionResult);
         final String body = Uri.encodeComponent(
-          'Hello, I need assistance with my crop disease detection.',
-        ); // the disease detail info will be added.
+          'Hello, I need assistance with my crop disease detection.\n\n'
+          '$formattedReport',
+        );
 
         final String uriString = 'mailto:$value?subject=$subject&body=$body';
         final Uri emailLaunchUri = Uri.parse(uriString);
