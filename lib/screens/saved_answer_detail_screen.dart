@@ -245,7 +245,7 @@ class _SavedAnswerDetailScreenState extends State<SavedAnswerDetailScreen> {
                           gradient: LinearGradient(
                             colors: [
                               Colors.blue.shade500,
-                              Colors.indigo.shade600,
+                              Colors.blue.shade500,
                             ],
                           ),
                           shape: BoxShape.circle,
@@ -512,25 +512,49 @@ class _SavedAnswerDetailScreenState extends State<SavedAnswerDetailScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: Colors.green[800],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
             ListTile(
-              leading: const Icon(Icons.copy_rounded),
+              leading: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.copy_all_rounded,
+                  color: Colors.blueGrey.shade500,
+                ),
+              ),
               title: const Text('Copy Answer'),
               onTap: () {
                 Navigator.pop(context);
                 _copyToClipboard(widget.answer);
               },
             ),
-            const Divider(),
             ListTile(
-              leading: Icon(
-                Icons.delete_outline_rounded,
-                color: Colors.red.shade500,
+              leading: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.delete_outline_rounded,
+                  color: Colors.red.shade500,
+                ),
               ),
               title: Text(
                 'Delete',
-                style: TextStyle(
-                  color: Colors.red.shade500,
-                ),
               ),
               onTap: () {
                 Navigator.pop(context);
