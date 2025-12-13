@@ -44,7 +44,27 @@ In many farming communities, timely identification and management of crop diseas
 - **Markdown + Charts Renderer**: Presents confidence scores, video tips, and expert content beautifully.
 
 ---
+## 🛠 Architecture
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as 📱 Flutter App
+    participant TFLite as ⚙️ TFLite Model
+    participant DB as 🗄️ Disease DB
+    participant Gemini as 🧠 Gemini AI
 
+    note right of User: Detection Flow
+    User->>App: Captures Image
+    App->>TFLite: Sends Image for Inference
+    TFLite->>DB: Matches Label
+    TFLite->>Gemini: Sends Detection Summary
+    Gemini-->>App: Returns Detection Result and Dynamic Suggestions
+    
+    note right of User: Chat Flow
+    User->>App: Asks Question
+    App->>Gemini: Sends Query + Context
+    Gemini-->>App: Returns Context-aware Answer
+```
 ## How to Install and Run
 
 ### 1. Prerequisites
