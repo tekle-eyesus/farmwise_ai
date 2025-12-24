@@ -1,7 +1,8 @@
+import 'package:farmwise_ai/auth/login_screen.dart';
 import 'package:farmwise_ai/auth/pages/intro_page_one.dart';
 import 'package:farmwise_ai/auth/pages/intro_page_two.dart';
-import 'package:farmwise_ai/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -14,6 +15,18 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   PageController _pageController = PageController();
   bool isFirst = true;
+
+  Future<void> _completeIntro(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isIntroSeen', true);
+
+    if (context.mounted) {
+      // Navigate to Login, remove Intro from back stack
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,14 +96,15 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
-                  ),
-                );
+                _completeIntro(context);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) {
+                //       return MainScreen();
+                //     },
+                //   ),
+                // );
               },
               child: const Text(
                 "Get Started",
@@ -131,14 +145,15 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) {
+                //       return MainScreen();
+                //     },
+                //   ),
+                // );
+                _completeIntro(context);
               },
               child: Text(
                 "Skip",

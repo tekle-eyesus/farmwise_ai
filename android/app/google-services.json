@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "693673877560",
+    "project_id": "campusapp-df266",
+    "storage_bucket": "campusapp-df266.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693673877560:android:d9d232aba02603f78706cd",
+        "android_client_info": {
+          "package_name": "com.example.campusinfo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdl1XO0rMQcuUKs25sUSxIon52x-Pp6LQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693673877560:android:d93c33f90c70692e8706cd",
+        "android_client_info": {
+          "package_name": "com.example.farmwise_ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdl1XO0rMQcuUKs25sUSxIon52x-Pp6LQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

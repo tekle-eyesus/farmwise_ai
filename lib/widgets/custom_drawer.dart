@@ -1,13 +1,16 @@
+import 'package:farmwise_ai/auth/auth_repository.dart';
 import 'package:farmwise_ai/screens/saved_answers_screen.dart';
 import 'package:farmwise_ai/screens/saved_results_screen.dart';
 import 'package:farmwise_ai/screens/setting_screen.dart';
+import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends ConsumerWidget {
   const DrawerWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,6 +104,26 @@ class DrawerWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => AppSettingScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: _buildListTileIcons(
+                    Icons.logout,
+                    Colors.green.shade800,
+                  ),
+                  title: Text(
+                    "Log out",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  onTap: () {
+                    // Handle logout action here
+                    ref.read(authRepositoryProvider).signOut();
+                    CustomSnackBar.showSuccess(
+                      context,
+                      "Logged out successfully",
                     );
                   },
                 ),
