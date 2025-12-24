@@ -1,4 +1,6 @@
 import 'package:farmwise_ai/auth/auth_repository.dart';
+import 'package:farmwise_ai/profiles/profile_controller.dart';
+import 'package:farmwise_ai/profiles/profile_screen.dart';
 import 'package:farmwise_ai/screens/saved_answers_screen.dart';
 import 'package:farmwise_ai/screens/saved_results_screen.dart';
 import 'package:farmwise_ai/screens/setting_screen.dart';
@@ -11,43 +13,62 @@ class DrawerWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userAsync = ref.watch(userProfileProvider);
+
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // User Profile Section
-          UserAccountsDrawerHeader(
-            accountName: Text(
-              "Tekleeyesus Munye",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+          userAsync.when(
+            data: (user) {
+              final displayName = (user != null && user.firstName.isNotEmpty)
+                  ? "${user.firstName} ${user.lastName}"
+                  : "FarmWise User";
+              final email = user?.email ?? "";
+
+              return UserAccountsDrawerHeader(
+                accountName: Text(
+                  displayName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                accountEmail: Text(
+                  email,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                currentAccountPicture: ClipRRect(
+                  borderRadius: BorderRadius.circular(13),
+                  child: Image.asset(
+                    "assets/icons/profile_pic.png",
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 8, 60, 55),
+                      const Color.fromARGB(255, 32, 84, 35),
+                    ],
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                  ),
+                ),
+              );
+            },
+            loading: () => const UserAccountsDrawerHeader(
+              accountName: Text("Loading..."),
+              accountEmail: Text(""),
+              currentAccountPicture: CircleAvatar(),
             ),
-            accountEmail: Text(
-              "tekleeysus21@gmail.com",
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            currentAccountPicture: ClipRRect(
-              borderRadius: BorderRadius.circular(13),
-              child: Image.asset(
-                "assets/icons/profile_pic.png",
-                width: 100,
-                height: 100,
-                fit: BoxFit.fill,
-              ),
-            ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  const Color.fromARGB(255, 8, 60, 55),
-                  const Color.fromARGB(255, 32, 84, 35),
-                ],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-              ),
+            error: (e, s) => const UserAccountsDrawerHeader(
+              accountName: Text("Error"),
+              accountEmail: Text(""),
             ),
           ),
           Expanded(
@@ -109,6 +130,27 @@ class DrawerWidget extends ConsumerWidget {
                 ),
                 ListTile(
                   leading: _buildListTileIcons(
+                    Icons.person,
+                    Colors.green.shade800,
+                  ),
+                  title: Text(
+                    "My Profile",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context); // Close the drawer first
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: _buildListTileIcons(
                     Icons.logout,
                     Colors.green.shade800,
                   ),
@@ -119,7 +161,6 @@ class DrawerWidget extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
-                    // Handle logout action here
                     ref.read(authRepositoryProvider).signOut();
                     CustomSnackBar.showSuccess(
                       context,
