@@ -4,6 +4,7 @@ import 'package:farmwise_ai/widgets/language_selection_sheet.dart';
 import 'package:farmwise_ai/widgets/settings_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 
 class AppSettingScreen extends StatelessWidget {
   const AppSettingScreen({super.key});
@@ -44,7 +45,13 @@ class AppSettingScreen extends StatelessWidget {
             ),
           ),
         ),
-        title: const Text("App Settings"),
+        title: Text(
+          translation(context).settingsTitle,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         backgroundColor: Colors.deepPurple.shade800,
         foregroundColor: Colors.white,
       ),
@@ -110,7 +117,7 @@ class AppSettingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    "AI-Powered Leaf Disease Diagnosis and Smart Farming Assistant",
+                    translation(context).settingsAppDescription,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
@@ -127,24 +134,24 @@ class AppSettingScreen extends StatelessWidget {
             // Settings Items
             SettingsItemCard(
               icon: Icons.help_outline,
-              title: "Help & FAQ",
-              subtitle: "Find answers to common questions",
+              title: translation(context).settingsHelpTitle,
+              subtitle: translation(context).settingsHelpSubtitle,
               iconColor: Colors.blue,
               onTap: () => _showHelpInfo(context),
             ),
             // const SizedBox(height: 10),
             SettingsItemCard(
               icon: Icons.language,
-              title: "Language",
-              subtitle: "Select your prefered language",
+              title: translation(context).settingsLanguageTitle,
+              subtitle: translation(context).settingsLanguageSubtitle,
               iconColor: Colors.green,
               onTap: () => _showLanguageSelection(context),
             ),
             const SizedBox(height: 10),
             SettingsItemCard(
               icon: Icons.contact_support,
-              title: "Contact Support",
-              subtitle: "Get help from our support team",
+              title: translation(context).settingsContactTitle,
+              subtitle: translation(context).settingsContactSubtitle,
               iconColor: Colors.orange,
               onTap: () async {
                 // call to suport

@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 
 class HelpInfoSheet extends StatefulWidget {
@@ -8,83 +9,70 @@ class HelpInfoSheet extends StatefulWidget {
 }
 
 class _HelpInfoSheetState extends State<HelpInfoSheet> {
-  final List<FAQItem> faqItems = [
-    FAQItem(
-      question: "How accurate is the disease detection?",
-      answer:
-          "FarmWise AI uses advanced machine learning models trained on thousands of plant disease images. The accuracy typically ranges from 85-95% depending on image quality, lighting conditions, and the specific crop. For best results, ensure clear, well-lit photos of affected plant parts.",
-      icon: Icons.auto_awesome_rounded,
-    ),
-    FAQItem(
-      question: "How do I take the best photo for detection?",
-      answer:
-          "For optimal results: 1) Take photos in good natural light, 2) Focus on the affected leaves/fruits/stems, 3) Capture from multiple angles if possible, 4) Ensure the plant part fills most of the frame, 5) Avoid shadows and blurry images. Clear photos significantly improve detection accuracy.",
-      icon: Icons.photo_camera_rounded,
-    ),
-    FAQItem(
-      question: "Which crops and diseases are supported?",
-      answer:
-          "FarmWise AI currently supports major crops including tomatoes, potatoes, corn, wheat, rice, and various fruits. We continuously add new crops and diseases. Check the app's crop selection screen for the complete updated list of supported plants.",
-      icon: Icons.eco_rounded,
-    ),
-    FAQItem(
-      question: "Can I use the app offline?",
-      answer:
-          "Basic disease detection works offline once you've downloaded the required models. However, AI expert advice, video resources, and article recommendations require an internet connection. Saved scans and results remain accessible offline.",
-      icon: Icons.wifi_off_rounded,
-    ),
-    FAQItem(
-      question: "How do I save my scan results?",
-      answer:
-          "After each scan, tap the 'Save Result' button to store the detection in your history. You can access all saved scans from the main menu under 'Saved Results'. This helps you track disease progression and treatment effectiveness over time.",
-      icon: Icons.save_alt_rounded,
-    ),
-    FAQItem(
-      question: "Are the treatment recommendations safe to use?",
-      answer:
-          "All recommendations are based on agricultural best practices and approved treatments. However, always follow local agricultural guidelines and consult with certified agricultural experts before applying any chemicals. Consider environmental conditions and safety precautions.",
-      icon: Icons.medical_services_rounded,
-    ),
-    FAQItem(
-      question: "How often should I scan my crops?",
-      answer:
-          "We recommend weekly scans during growing season for early detection. Increase frequency during high-risk periods like rainy seasons or when neighboring farms report outbreaks. Regular monitoring helps catch diseases before they spread widely.",
-      icon: Icons.calendar_today_rounded,
-    ),
-    FAQItem(
-      question: "Can I share results with agricultural experts?",
-      answer:
-          "Yes! Use the 'Share' feature to send detection results, images, and AI recommendations to agricultural extension officers or farming consultants. This facilitates better collaboration and expert guidance for your specific situation.",
-      icon: Icons.share_rounded,
-    ),
-    FAQItem(
-      question: "How do I update the disease database?",
-      answer:
-          "The app automatically updates its disease database when connected to the internet. Manual updates can be triggered in Settings > App Updates. We regularly add new diseases and improve detection models based on user feedback and agricultural research.",
-      icon: Icons.update_rounded,
-    ),
-    FAQItem(
-      question: "Is my farm data and images secure?",
-      answer:
-          "Yes, we take data privacy seriously. Your farm images and detection results are encrypted and stored securely. We never share your personal farm data with third parties without your explicit consent. You can delete your data anytime from the app settings.",
-      icon: Icons.security_rounded,
-    ),
-    FAQItem(
-      question: "How can I improve detection for rare diseases?",
-      answer:
-          "For uncommon or rare diseases, try scanning multiple affected plants from different angles. If detection confidence is low, contact our support team with clear images - this helps us improve our models for all users.",
-      icon: Icons.help_rounded,
-    ),
-    FAQItem(
-      question: "What should I do if I get conflicting results?",
-      answer:
-          "If you receive conflicting detection results: 1) Rescan with better lighting, 2) Take photos of multiple affected areas, 3) Check the confidence scores, 4) Consult the detailed AI advice, 5) Contact agricultural experts through the app if uncertainty persists.",
-      icon: Icons.warning_rounded,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<FAQItem> faqItems = [
+      FAQItem(
+        question: translation(context).faqAccuracyQuestion,
+        answer: translation(context).faqAccuracyAnswer,
+        icon: Icons.auto_awesome_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqPhotoTipsQuestion,
+        answer: translation(context).faqPhotoTipsAnswer,
+        icon: Icons.photo_camera_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqSupportedCropsQuestion,
+        answer: translation(context).faqSupportedCropsAnswer,
+        icon: Icons.eco_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqOfflineQuestion,
+        answer: translation(context).faqOfflineAnswer,
+        icon: Icons.wifi_off_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqSaveResultsQuestion,
+        answer: translation(context).faqSaveResultsAnswer,
+        icon: Icons.save_alt_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqSafetyQuestion,
+        answer: translation(context).faqSafetyAnswer,
+        icon: Icons.medical_services_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqFrequencyQuestion,
+        answer: translation(context).faqFrequencyAnswer,
+        icon: Icons.calendar_today_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqShareQuestion,
+        answer: translation(context).faqShareAnswer,
+        icon: Icons.share_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqUpdateQuestion,
+        answer: translation(context).faqUpdateAnswer,
+        icon: Icons.update_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqPrivacyQuestion,
+        answer: translation(context).faqPrivacyAnswer,
+        icon: Icons.security_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqRareDiseaseQuestion,
+        answer: translation(context).faqRareDiseaseAnswer,
+        icon: Icons.help_rounded,
+      ),
+      FAQItem(
+        question: translation(context).faqConflictingQuestion,
+        answer: translation(context).faqConflictingAnswer,
+        icon: Icons.warning_rounded,
+      ),
+    ];
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -176,7 +164,7 @@ class _HelpInfoSheetState extends State<HelpInfoSheet> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text("Contact Support"),
+                    child: Text(translation(context).settingsContactTitle),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -191,7 +179,7 @@ class _HelpInfoSheetState extends State<HelpInfoSheet> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text("Close"),
+                    child: Text(translation(context).actionClose),
                   ),
                 ),
               ],
