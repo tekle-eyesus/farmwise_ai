@@ -1,3 +1,6 @@
+import 'package:farmwise_ai/language_classes/language.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:farmwise_ai/main.dart';
 import 'package:flutter/material.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 
@@ -11,67 +14,19 @@ class LanguageSelectionSheet extends StatefulWidget {
 class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
   String _selectedLanguage = 'English';
 
-  final List<Language> _languages = [
-    Language(
-      code: 'en',
-      name: 'English',
-      nativeName: 'English',
-      flag: '🇺🇸',
-    ),
-    Language(
-      code: 'am',
-      name: 'Amharic',
-      nativeName: 'አማርኛ',
-      flag: '🇪🇹',
-    ),
-    Language(
-      code: 'om',
-      name: 'Afan Oromo',
-      nativeName: 'Afaan Oromoo',
-      flag: '🇪🇹',
-    ),
-    Language(
-      code: 'ti',
-      name: 'Tigrinya',
-      nativeName: 'ትግርኛ',
-      flag: '🇪🇹',
-    ),
-    Language(
-      code: 'so',
-      name: 'Somali',
-      nativeName: 'Soomaali',
-      flag: '🇸🇴',
-    ),
-    Language(
-      code: 'sw',
-      name: 'Swahili',
-      nativeName: 'Kiswahili',
-      flag: '🇰🇪',
-    ),
-    Language(
-      code: 'fr',
-      name: 'French',
-      nativeName: 'Français',
-      flag: '🇫🇷',
-    ),
-    Language(
-      code: 'ar',
-      name: 'Arabic',
-      nativeName: 'العربية',
-      flag: '🇸🇦',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedLanguage();
+  }
 
-  void _selectLanguage(Language language) {
+  Future<void> _loadSelectedLanguage() async {
+    Locale locale = await getLocale();
     setState(() {
-      _selectedLanguage = language.name;
+      _selectedLanguage = Language.languageList()
+          .firstWhere((lang) => lang.languageCode == locale.languageCode)
+          .name;
     });
-
-    CustomSnackBar.showSuccess(
-        context, 'Language changed to ${language.name} (Coming Soon)');
-
-    // Close the modal sheet
-    Navigator.pop(context);
   }
 
   @override
@@ -117,7 +72,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Select Language',
+                        translation(context).languageSheetTitle,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -125,7 +80,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
                         ),
                       ),
                       Text(
-                        'Choose your preferred language',
+                        translation(context).languageSheetSubtitle,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.green.shade700,
@@ -145,9 +100,9 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(16),
-              itemCount: _languages.length,
+              itemCount: Language.languageList().length,
               itemBuilder: (context, index) {
-                final language = _languages[index];
+                final language = Language.languageList()[index];
                 final isSelected = _selectedLanguage == language.name;
 
                 return Container(
@@ -156,7 +111,21 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
-                      onTap: () => _selectLanguage(language),
+                      onTap: () async {
+                        Locale _locale = await setLocale(
+                          language.languageCode,
+                        );
+
+                        MyApp.setLocale(context, _locale);
+
+                        CustomSnackBar.showSuccess(
+                          context,
+                          "${translation(context).languageChangedMessage(language.name)}",
+                        );
+
+                        // colse the sheet
+                        Navigator.of(context).pop();
+                      },
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -210,7 +179,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    language.nativeName,
+                                    language.name,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey.shade600,
@@ -269,7 +238,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'Full language support coming in the next update',
+                    translation(context).languageSheetFooter,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey.shade600,
@@ -283,18 +252,4 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
       ),
     );
   }
-}
-
-class Language {
-  final String code;
-  final String name;
-  final String nativeName;
-  final String flag;
-
-  Language({
-    required this.code,
-    required this.name,
-    required this.nativeName,
-    required this.flag,
-  });
 }

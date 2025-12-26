@@ -1,0 +1,157 @@
+// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
+// This is a library that provides messages for a en locale. All the
+// messages from the main program should be duplicated here with the same
+// function name.
+
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+
+import 'package:intl/intl.dart';
+import 'package:intl/message_lookup_by_library.dart';
+
+final messages = new MessageLookup();
+
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+
+class MessageLookup extends MessageLookupByLibrary {
+  String get localeName => 'en';
+
+  static String m0(languageName) => "Language changed to ${languageName}";
+
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "actionClose": MessageLookupByLibrary.simpleMessage("Close"),
+    "drawerError": MessageLookupByLibrary.simpleMessage("Error"),
+    "drawerLoading": MessageLookupByLibrary.simpleMessage("Loading..."),
+    "drawerLogoutSuccess": MessageLookupByLibrary.simpleMessage(
+      "Logged out successfully",
+    ),
+    "drawerMenuLogout": MessageLookupByLibrary.simpleMessage("Log out"),
+    "drawerMenuProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
+    "drawerMenuSavedChats": MessageLookupByLibrary.simpleMessage("Saved Chats"),
+    "drawerMenuSavedDetections": MessageLookupByLibrary.simpleMessage(
+      "Saved Detection Results",
+    ),
+    "drawerMenuSettings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "drawerUserNameDefault": MessageLookupByLibrary.simpleMessage(
+      "SmartCrop User",
+    ),
+    "faqAccuracyAnswer": MessageLookupByLibrary.simpleMessage(
+      "FarmWise AI uses advanced machine learning models trained on thousands of plant disease images. The accuracy typically ranges from 85-95% depending on image quality, lighting conditions, and the specific crop. For best results, ensure clear, well-lit photos of affected plant parts.",
+    ),
+    "faqAccuracyQuestion": MessageLookupByLibrary.simpleMessage(
+      "How accurate is the disease detection?",
+    ),
+    "faqConflictingAnswer": MessageLookupByLibrary.simpleMessage(
+      "If you receive conflicting detection results: 1) Rescan with better lighting, 2) Take photos of multiple affected areas, 3) Check the confidence scores, 4) Consult the detailed AI advice, 5) Contact agricultural experts through the app if uncertainty persists.",
+    ),
+    "faqConflictingQuestion": MessageLookupByLibrary.simpleMessage(
+      "What should I do if I get conflicting results?",
+    ),
+    "faqFrequencyAnswer": MessageLookupByLibrary.simpleMessage(
+      "We recommend weekly scans during growing season for early detection. Increase frequency during high-risk periods like rainy seasons or when neighboring farms report outbreaks. Regular monitoring helps catch diseases before they spread widely.",
+    ),
+    "faqFrequencyQuestion": MessageLookupByLibrary.simpleMessage(
+      "How often should I scan my crops?",
+    ),
+    "faqOfflineAnswer": MessageLookupByLibrary.simpleMessage(
+      "Basic disease detection works offline once you\'ve downloaded the required models. However, AI expert advice, video resources, and article recommendations require an internet connection. Saved scans and results remain accessible offline.",
+    ),
+    "faqOfflineQuestion": MessageLookupByLibrary.simpleMessage(
+      "Can I use the app offline?",
+    ),
+    "faqPhotoTipsAnswer": MessageLookupByLibrary.simpleMessage(
+      "For optimal results: 1) Take photos in good natural light, 2) Focus on the affected leaves/fruits/stems, 3) Capture from multiple angles if possible, 4) Ensure the plant part fills most of the frame, 5) Avoid shadows and blurry images. Clear photos significantly improve detection accuracy.",
+    ),
+    "faqPhotoTipsQuestion": MessageLookupByLibrary.simpleMessage(
+      "How do I take the best photo for detection?",
+    ),
+    "faqPrivacyAnswer": MessageLookupByLibrary.simpleMessage(
+      "Yes, we take data privacy seriously. Your farm images and detection results are encrypted and stored securely. We never share your personal farm data with third parties without your explicit consent. You can delete your data anytime from the app settings.",
+    ),
+    "faqPrivacyQuestion": MessageLookupByLibrary.simpleMessage(
+      "Is my farm data and images secure?",
+    ),
+    "faqRareDiseaseAnswer": MessageLookupByLibrary.simpleMessage(
+      "For uncommon or rare diseases, try scanning multiple affected plants from different angles. If detection confidence is low, contact our support team with clear images - this helps us improve our models for all users.",
+    ),
+    "faqRareDiseaseQuestion": MessageLookupByLibrary.simpleMessage(
+      "How can I improve detection for rare diseases?",
+    ),
+    "faqSafetyAnswer": MessageLookupByLibrary.simpleMessage(
+      "All recommendations are based on agricultural best practices and approved treatments. However, always follow local agricultural guidelines and consult with certified agricultural experts before applying any chemicals. Consider environmental conditions and safety precautions.",
+    ),
+    "faqSafetyQuestion": MessageLookupByLibrary.simpleMessage(
+      "Are the treatment recommendations safe to use?",
+    ),
+    "faqSaveResultsAnswer": MessageLookupByLibrary.simpleMessage(
+      "After each scan, tap the \'Save Result\' button to store the detection in your history. You can access all saved scans from the main menu under \'Saved Results\'. This helps you track disease progression and treatment effectiveness over time.",
+    ),
+    "faqSaveResultsQuestion": MessageLookupByLibrary.simpleMessage(
+      "How do I save my scan results?",
+    ),
+    "faqShareAnswer": MessageLookupByLibrary.simpleMessage(
+      "Yes! Use the \'Share\' feature to send detection results, images, and AI recommendations to agricultural extension officers or farming consultants. This facilitates better collaboration and expert guidance for your specific situation.",
+    ),
+    "faqShareQuestion": MessageLookupByLibrary.simpleMessage(
+      "Can I share results with agricultural experts?",
+    ),
+    "faqSupportedCropsAnswer": MessageLookupByLibrary.simpleMessage(
+      "FarmWise AI currently supports major crops including tomatoes, potatoes, corn, wheat, rice, and various fruits. We continuously add new crops and diseases. Check the app\'s crop selection screen for the complete updated list of supported plants.",
+    ),
+    "faqSupportedCropsQuestion": MessageLookupByLibrary.simpleMessage(
+      "Which crops and diseases are supported?",
+    ),
+    "faqUpdateAnswer": MessageLookupByLibrary.simpleMessage(
+      "The app automatically updates its disease database when connected to the internet. Manual updates can be triggered in Settings > App Updates. We regularly add new diseases and improve detection models based on user feedback and agricultural research.",
+    ),
+    "faqUpdateQuestion": MessageLookupByLibrary.simpleMessage(
+      "How do I update the disease database?",
+    ),
+    "languageChangedMessage": m0,
+    "languageSheetFooter": MessageLookupByLibrary.simpleMessage(
+      "Full language support coming in the next update",
+    ),
+    "languageSheetSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Choose your preferred language",
+    ),
+    "languageSheetTitle": MessageLookupByLibrary.simpleMessage(
+      "Select Language",
+    ),
+    "sectionCommon": MessageLookupByLibrary.simpleMessage(
+      "--- COMMON ACTIONS ---",
+    ),
+    "sectionDrawer": MessageLookupByLibrary.simpleMessage(
+      "--- CUSTOM DRAWER ---",
+    ),
+    "sectionFaq": MessageLookupByLibrary.simpleMessage("--- FAQ CONTENT ---"),
+    "sectionLanguage": MessageLookupByLibrary.simpleMessage(
+      "--- LANGUAGE SHEET ---",
+    ),
+    "sectionSettings": MessageLookupByLibrary.simpleMessage(
+      "--- SETTINGS SCREEN ---",
+    ),
+    "settingsAppDescription": MessageLookupByLibrary.simpleMessage(
+      "AI-Powered Leaf Disease Diagnosis and Smart Farming Assistant",
+    ),
+    "settingsContactSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Get help from our support team",
+    ),
+    "settingsContactTitle": MessageLookupByLibrary.simpleMessage(
+      "Contact Support",
+    ),
+    "settingsHelpSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Find answers to common questions",
+    ),
+    "settingsHelpTitle": MessageLookupByLibrary.simpleMessage("Help & FAQ"),
+    "settingsLanguageSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Select your preferred language",
+    ),
+    "settingsLanguageTitle": MessageLookupByLibrary.simpleMessage("Language"),
+    "settingsTitle": MessageLookupByLibrary.simpleMessage("App Settings"),
+  };
+}

@@ -1,4 +1,5 @@
 import 'package:farmwise_ai/auth/auth_repository.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:farmwise_ai/profiles/profile_controller.dart';
 import 'package:farmwise_ai/profiles/profile_screen.dart';
 import 'package:farmwise_ai/screens/saved_answers_screen.dart';
@@ -23,7 +24,7 @@ class DrawerWidget extends ConsumerWidget {
             data: (user) {
               final displayName = (user != null && user.firstName.isNotEmpty)
                   ? "${user.firstName} ${user.lastName}"
-                  : "FarmWise User";
+                  : translation(context).drawerUserNameDefault;
               final email = user?.email ?? "";
 
               return UserAccountsDrawerHeader(
@@ -61,13 +62,13 @@ class DrawerWidget extends ConsumerWidget {
                 ),
               );
             },
-            loading: () => const UserAccountsDrawerHeader(
-              accountName: Text("Loading..."),
+            loading: () => UserAccountsDrawerHeader(
+              accountName: Text(translation(context).drawerLoading),
               accountEmail: Text(""),
               currentAccountPicture: CircleAvatar(),
             ),
-            error: (e, s) => const UserAccountsDrawerHeader(
-              accountName: Text("Error"),
+            error: (e, s) => UserAccountsDrawerHeader(
+              accountName: Text(translation(context).drawerError),
               accountEmail: Text(""),
             ),
           ),
@@ -80,7 +81,7 @@ class DrawerWidget extends ConsumerWidget {
                     Colors.green.shade800,
                   ),
                   title: Text(
-                    "Saved Chats",
+                    translation(context).drawerMenuSavedChats,
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -98,7 +99,7 @@ class DrawerWidget extends ConsumerWidget {
                     Colors.green.shade800,
                   ),
                   title: Text(
-                    "Saved Detection Results",
+                    translation(context).drawerMenuSavedDetections,
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -116,7 +117,7 @@ class DrawerWidget extends ConsumerWidget {
                     Colors.green.shade800,
                   ),
                   title: Text(
-                    "Settings",
+                    translation(context).drawerMenuSettings,
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -134,7 +135,7 @@ class DrawerWidget extends ConsumerWidget {
                     Colors.green.shade800,
                   ),
                   title: Text(
-                    "My Profile",
+                    translation(context).drawerMenuProfile,
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -155,7 +156,7 @@ class DrawerWidget extends ConsumerWidget {
                     Colors.green.shade800,
                   ),
                   title: Text(
-                    "Log out",
+                    translation(context).drawerMenuLogout,
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -164,7 +165,7 @@ class DrawerWidget extends ConsumerWidget {
                     ref.read(authRepositoryProvider).signOut();
                     CustomSnackBar.showSuccess(
                       context,
-                      "Logged out successfully",
+                      translation(context).drawerLogoutSuccess,
                     );
                   },
                 ),
