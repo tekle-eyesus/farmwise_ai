@@ -554,6 +554,266 @@ class S {
       args: [],
     );
   }
+
+  /// `--- MAIN CHAT SCREEN ---`
+  String get sectionMain {
+    return Intl.message(
+      '--- MAIN CHAT SCREEN ---',
+      name: 'sectionMain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FarmWise AI`
+  String get mainTitle {
+    return Intl.message('FarmWise AI', name: 'mainTitle', desc: '', args: []);
+  }
+
+  /// `typing...`
+  String get mainTypingStatus {
+    return Intl.message(
+      'typing...',
+      name: 'mainTypingStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Assistance`
+  String get mainNewAssistanceTooltip {
+    return Intl.message(
+      'New Assistance',
+      name: 'mainNewAssistanceTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat Cleared.`
+  String get mainChatCleared {
+    return Intl.message(
+      'Chat Cleared.',
+      name: 'mainChatCleared',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Crop to Assist`
+  String get mainSelectCropTitle {
+    return Intl.message(
+      'Select Crop to Assist',
+      name: 'mainSelectCropTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{cropName} crop Selected`
+  String mainCropSelectedSnackbar(String cropName) {
+    return Intl.message(
+      '$cropName crop Selected',
+      name: 'mainCropSelectedSnackbar',
+      desc: '',
+      args: [cropName],
+    );
+  }
+
+  /// `--- CROP NAMES ---`
+  String get sectionCrops {
+    return Intl.message(
+      '--- CROP NAMES ---',
+      name: 'sectionCrops',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tomato`
+  String get cropTomato {
+    return Intl.message('Tomato', name: 'cropTomato', desc: '', args: []);
+  }
+
+  /// `Potato`
+  String get cropPotato {
+    return Intl.message('Potato', name: 'cropPotato', desc: '', args: []);
+  }
+
+  /// `Mango`
+  String get cropMango {
+    return Intl.message('Mango', name: 'cropMango', desc: '', args: []);
+  }
+
+  /// `--- CHAT ACTIONS & TOOLTIPS ---`
+  String get sectionActions {
+    return Intl.message(
+      '--- CHAT ACTIONS & TOOLTIPS ---',
+      name: 'sectionActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy text`
+  String get actionCopyText {
+    return Intl.message(
+      'Copy text',
+      name: 'actionCopyText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text copied to clipboard!`
+  String get actionTextCopied {
+    return Intl.message(
+      'Text copied to clipboard!',
+      name: 'actionTextCopied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to copy text`
+  String get actionCopyFailed {
+    return Intl.message(
+      'Failed to copy text',
+      name: 'actionCopyFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop audio`
+  String get actionStopAudio {
+    return Intl.message(
+      'Stop audio',
+      name: 'actionStopAudio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume audio`
+  String get actionResumeAudio {
+    return Intl.message(
+      'Resume audio',
+      name: 'actionResumeAudio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Listen to audio`
+  String get actionListenAudio {
+    return Intl.message(
+      'Listen to audio',
+      name: 'actionListenAudio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No text to speak`
+  String get actionNoTextToSpeak {
+    return Intl.message(
+      'No text to speak',
+      name: 'actionNoTextToSpeak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Audio playback failed`
+  String get actionAudioFailed {
+    return Intl.message(
+      'Audio playback failed',
+      name: 'actionAudioFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `save chat result`
+  String get actionSaveChat {
+    return Intl.message(
+      'save chat result',
+      name: 'actionSaveChat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Answer saved successfully!`
+  String get actionSaveSuccess {
+    return Intl.message(
+      'Answer saved successfully!',
+      name: 'actionSaveSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get actionCamera {
+    return Intl.message('Camera', name: 'actionCamera', desc: '', args: []);
+  }
+
+  /// `Gallery`
+  String get actionGallery {
+    return Intl.message('Gallery', name: 'actionGallery', desc: '', args: []);
+  }
+
+  /// `--- INPUT AREA ---`
+  String get sectionInput {
+    return Intl.message(
+      '--- INPUT AREA ---',
+      name: 'sectionInput',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask About Your {cropName} farm...`
+  String inputFieldHint(String cropName) {
+    return Intl.message(
+      'Ask About Your $cropName farm...',
+      name: 'inputFieldHint',
+      desc: '',
+      args: [cropName],
+    );
+  }
+
+  /// `Detect {cropName} Disease`
+  String buttonDetectDisease(String cropName) {
+    return Intl.message(
+      'Detect $cropName Disease',
+      name: 'buttonDetectDisease',
+      desc: '',
+      args: [cropName],
+    );
+  }
+
+  /// `👩‍🌾 I'm your Farm Assistant`
+  String get welcomeAssistantHeader {
+    return Intl.message(
+      '👩‍🌾 I\'m your Farm Assistant',
+      name: 'welcomeAssistantHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask me anything about your {cropName} farm.`
+  String welcomeAssistantSubheader(String cropName) {
+    return Intl.message(
+      'Ask me anything about your $cropName farm.',
+      name: 'welcomeAssistantSubheader',
+      desc: '',
+      args: [cropName],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

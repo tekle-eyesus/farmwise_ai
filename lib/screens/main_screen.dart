@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:farmwise_ai/models/chat_answer_model.dart';
 import 'package:farmwise_ai/providers/tts_provider.dart';
 import 'package:farmwise_ai/screens/detect_result_screen.dart';
@@ -31,7 +32,13 @@ class _MainScreenState extends State<MainScreen> {
   final List<Map<String, dynamic>> _messages = [];
   String? question;
   bool _isLoading = false;
-  var selectedCrop = "Tomato";
+  late String selectedCrop;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedCrop = translation(context).cropTomato;
+  }
 
   void _sendMessage() async {
     final text = _controller.text.trim();
@@ -79,9 +86,18 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<String?> showCropSelector(BuildContext context, String selectedCrop) {
     final List<Map<String, String>> cropTypes = [
-      {'icon': 'assets/icons/tomato.png', 'label': 'Tomato'},
-      {'icon': 'assets/icons/potato.png', 'label': 'Potato'},
-      {'icon': 'assets/icons/mango.png', 'label': 'Mango'},
+      {
+        'icon': 'assets/icons/tomato.png',
+        'label': translation(context).cropTomato
+      },
+      {
+        'icon': 'assets/icons/potato.png',
+        'label': translation(context).cropPotato
+      },
+      {
+        'icon': 'assets/icons/mango.png',
+        'label': translation(context).cropMango
+      },
     ];
 
     String tempSelection = selectedCrop; // Default to current selection
@@ -113,7 +129,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   Text(
-                    "Select Crop to Assist",
+                    translation(context).mainSelectCropTitle,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
@@ -131,7 +147,8 @@ class _MainScreenState extends State<MainScreen> {
                                 tempSelection = item['label']!;
                                 CustomSnackBar.showInfo(
                                   context,
-                                  "$tempSelection crop Selected",
+                                  translation(context)
+                                      .mainCropSelectedSnackbar(tempSelection),
                                 );
                               },
                             );
@@ -197,7 +214,6 @@ class _MainScreenState extends State<MainScreen> {
     if (picked != null) {
       File image = File(picked.path);
       CustomSnackBar.showProcessing(context);
-
       final service = await GenericIfliteService.create(
         selectedCrop.toLowerCase(),
       );
@@ -208,7 +224,7 @@ class _MainScreenState extends State<MainScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => DetectResultScreen(
-              cropName: selectedCrop,
+              cropName: cropNameInEnglish(selectedCrop),
               image: image,
               detectionResult: results,
             ),
@@ -251,7 +267,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         title: Text(
-          "FarmWise AI",
+          translation(context).mainTitle,
           style: TextStyle(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400,
@@ -272,13 +288,14 @@ class _MainScreenState extends State<MainScreen> {
         foregroundColor: Colors.white,
         actions: [
           Tooltip(
-            message: "New Assistance",
+            message: translation(context).mainNewAssistanceTooltip,
             child: InkWell(
               onTap: () {
                 setState(() {
                   _messages.removeWhere((item) => true);
                 });
-                CustomSnackBar.showWarning(context, "Chat Cleared.");
+                CustomSnackBar.showWarning(
+                    context, translation(context).mainChatCleared);
               },
               child: Image.asset(
                 "assets/icons/add-chat.png",
@@ -402,7 +419,8 @@ class _MainScreenState extends State<MainScreen> {
                                             width: 10,
                                           ),
                                           Tooltip(
-                                            message: "Copy text",
+                                            message: translation(context)
+                                                .actionCopyText,
                                             child: InkWell(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -415,12 +433,14 @@ class _MainScreenState extends State<MainScreen> {
                                                   );
                                                   CustomSnackBar.showSuccess(
                                                     context,
-                                                    "Text copied to clipboard!",
+                                                    translation(context)
+                                                        .actionTextCopied,
                                                   );
                                                 } catch (e) {
                                                   CustomSnackBar.showError(
                                                     context,
-                                                    "Failed to copy text",
+                                                    translation(context)
+                                                        .actionCopyFailed,
                                                   );
                                                 }
                                               },
@@ -439,10 +459,13 @@ class _MainScreenState extends State<MainScreen> {
                                                 (context, ttsProvider, child) {
                                               return Tooltip(
                                                 message: ttsProvider.isPlaying
-                                                    ? "Stop audio"
+                                                    ? translation(context)
+                                                        .actionStopAudio
                                                     : ttsProvider.isPaused
-                                                        ? "Resume audio"
-                                                        : "Listen to audio",
+                                                        ? translation(context)
+                                                            .actionResumeAudio
+                                                        : translation(context)
+                                                            .actionListenAudio,
                                                 child: InkWell(
                                                   borderRadius:
                                                       BorderRadius.circular(12),
@@ -454,7 +477,8 @@ class _MainScreenState extends State<MainScreen> {
                                                       CustomSnackBar
                                                           .showWarning(
                                                         context,
-                                                        "No text to speak",
+                                                        translation(context)
+                                                            .actionNoTextToSpeak,
                                                       );
                                                       return;
                                                     }
@@ -477,7 +501,8 @@ class _MainScreenState extends State<MainScreen> {
                                                     } catch (e) {
                                                       CustomSnackBar.showError(
                                                         context,
-                                                        "Audio playback failed",
+                                                        translation(context)
+                                                            .actionAudioFailed,
                                                       );
                                                     }
                                                   },
@@ -521,7 +546,8 @@ class _MainScreenState extends State<MainScreen> {
                                             width: 18,
                                           ),
                                           Tooltip(
-                                            message: "save chat result",
+                                            message: translation(context)
+                                                .actionSaveChat,
                                             child: InkWell(
                                               onTap: () async {
                                                 final answer = SavedChatAnswer(
@@ -536,7 +562,8 @@ class _MainScreenState extends State<MainScreen> {
 
                                                 CustomSnackBar.showSuccess(
                                                   context,
-                                                  "Answer saved successfully!",
+                                                  translation(context)
+                                                      .actionSaveSuccess,
                                                 );
                                               },
                                               child: Image.asset(
@@ -588,7 +615,8 @@ class _MainScreenState extends State<MainScreen> {
                     keyboardType: TextInputType.multiline,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Ask About Your ${selectedCrop} farm...',
+                      hintText:
+                          translation(context).inputFieldHint(selectedCrop),
                       hintStyle: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -606,7 +634,9 @@ class _MainScreenState extends State<MainScreen> {
                       child: Row(
                         children: [
                           _buildDetectBtn(
-                            "Detect $selectedCrop Disease",
+                            translation(context).buttonDetectDisease(
+                              selectedCrop,
+                            ),
                             "assets/icons/image.png",
                             _onDetectPressed,
                           ),
@@ -622,8 +652,10 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           InkWell(
                             onTap: () async {
-                              String? result =
-                                  await showCropSelector(context, selectedCrop);
+                              String? result = await showCropSelector(
+                                context,
+                                selectedCrop,
+                              );
 
                               setState(() {
                                 selectedCrop = result!;
@@ -702,7 +734,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               SizedBox(width: 8),
               Text(
-                "Camera",
+                translation(context).actionCamera,
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -728,7 +760,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               SizedBox(width: 8),
               Text(
-                "Gallery",
+                translation(context).actionGallery,
                 style: TextStyle(
                   fontSize: 18,
                 ),

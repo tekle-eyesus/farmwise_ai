@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
@@ -22,6 +23,9 @@ class GenericIfliteService {
   /// Initialize the model and labels
   static Future<GenericIfliteService> create(String crop) async {
     // 1. Load the Teachable Machine model
+    // change the crop name alwasys to english for loading the model and labels,
+    crop = cropNameInEnglish(crop);
+
     final interpreter = await Interpreter.fromAsset(
       'models/${crop.toLowerCase()}_model.tflite',
     );

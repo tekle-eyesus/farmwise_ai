@@ -20,11 +20,47 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(languageName) => "Language changed to ${languageName}";
+  static String m0(cropName) => "Detect ${cropName} Disease";
+
+  static String m1(cropName) => "Ask About Your ${cropName} farm...";
+
+  static String m2(languageName) => "Language changed to ${languageName}";
+
+  static String m3(cropName) => "${cropName} crop Selected";
+
+  static String m4(cropName) => "Ask me anything about your ${cropName} farm.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "actionAudioFailed": MessageLookupByLibrary.simpleMessage(
+      "Audio playback failed",
+    ),
+    "actionCamera": MessageLookupByLibrary.simpleMessage("Camera"),
     "actionClose": MessageLookupByLibrary.simpleMessage("Close"),
+    "actionCopyFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to copy text",
+    ),
+    "actionCopyText": MessageLookupByLibrary.simpleMessage("Copy text"),
+    "actionGallery": MessageLookupByLibrary.simpleMessage("Gallery"),
+    "actionListenAudio": MessageLookupByLibrary.simpleMessage(
+      "Listen to audio",
+    ),
+    "actionNoTextToSpeak": MessageLookupByLibrary.simpleMessage(
+      "No text to speak",
+    ),
+    "actionResumeAudio": MessageLookupByLibrary.simpleMessage("Resume audio"),
+    "actionSaveChat": MessageLookupByLibrary.simpleMessage("save chat result"),
+    "actionSaveSuccess": MessageLookupByLibrary.simpleMessage(
+      "Answer saved successfully!",
+    ),
+    "actionStopAudio": MessageLookupByLibrary.simpleMessage("Stop audio"),
+    "actionTextCopied": MessageLookupByLibrary.simpleMessage(
+      "Text copied to clipboard!",
+    ),
+    "buttonDetectDisease": m0,
+    "cropMango": MessageLookupByLibrary.simpleMessage("Mango"),
+    "cropPotato": MessageLookupByLibrary.simpleMessage("Potato"),
+    "cropTomato": MessageLookupByLibrary.simpleMessage("Tomato"),
     "drawerError": MessageLookupByLibrary.simpleMessage("Error"),
     "drawerLoading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "drawerLogoutSuccess": MessageLookupByLibrary.simpleMessage(
@@ -112,7 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "faqUpdateQuestion": MessageLookupByLibrary.simpleMessage(
       "How do I update the disease database?",
     ),
-    "languageChangedMessage": m0,
+    "inputFieldHint": m1,
+    "languageChangedMessage": m2,
     "languageSheetFooter": MessageLookupByLibrary.simpleMessage(
       "Full language support coming in the next update",
     ),
@@ -122,15 +159,33 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageSheetTitle": MessageLookupByLibrary.simpleMessage(
       "Select Language",
     ),
+    "mainChatCleared": MessageLookupByLibrary.simpleMessage("Chat Cleared."),
+    "mainCropSelectedSnackbar": m3,
+    "mainNewAssistanceTooltip": MessageLookupByLibrary.simpleMessage(
+      "New Assistance",
+    ),
+    "mainSelectCropTitle": MessageLookupByLibrary.simpleMessage(
+      "Select Crop to Assist",
+    ),
+    "mainTitle": MessageLookupByLibrary.simpleMessage("FarmWise AI"),
+    "mainTypingStatus": MessageLookupByLibrary.simpleMessage("typing..."),
+    "sectionActions": MessageLookupByLibrary.simpleMessage(
+      "--- CHAT ACTIONS & TOOLTIPS ---",
+    ),
     "sectionCommon": MessageLookupByLibrary.simpleMessage(
       "--- COMMON ACTIONS ---",
     ),
+    "sectionCrops": MessageLookupByLibrary.simpleMessage("--- CROP NAMES ---"),
     "sectionDrawer": MessageLookupByLibrary.simpleMessage(
       "--- CUSTOM DRAWER ---",
     ),
     "sectionFaq": MessageLookupByLibrary.simpleMessage("--- FAQ CONTENT ---"),
+    "sectionInput": MessageLookupByLibrary.simpleMessage("--- INPUT AREA ---"),
     "sectionLanguage": MessageLookupByLibrary.simpleMessage(
       "--- LANGUAGE SHEET ---",
+    ),
+    "sectionMain": MessageLookupByLibrary.simpleMessage(
+      "--- MAIN CHAT SCREEN ---",
     ),
     "sectionSettings": MessageLookupByLibrary.simpleMessage(
       "--- SETTINGS SCREEN ---",
@@ -153,5 +208,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "settingsLanguageTitle": MessageLookupByLibrary.simpleMessage("Language"),
     "settingsTitle": MessageLookupByLibrary.simpleMessage("App Settings"),
+    "welcomeAssistantHeader": MessageLookupByLibrary.simpleMessage(
+      "👩‍🌾 I\'m your Farm Assistant",
+    ),
+    "welcomeAssistantSubheader": m4,
   };
 }

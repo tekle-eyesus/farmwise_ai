@@ -34,3 +34,19 @@ Locale _locale(String languageCode) {
 AppLocalizations translation(BuildContext context) {
   return AppLocalizations.of(context)!;
 }
+
+String cropNameInEnglish(String cropName) {
+  switch (cropName.toLowerCase()) {
+    case 'potato':
+    case 'ድንች':
+      return 'Potato';
+    case 'tomato':
+    case 'ቲማቲም':
+      return 'Tomato';
+    case 'mango':
+    case 'ማንጎ':
+      return 'Mango';
+    default:
+      return cropName;
+  }
+}

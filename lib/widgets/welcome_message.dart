@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeMessage extends StatelessWidget {
@@ -17,7 +18,7 @@ class WelcomeMessage extends StatelessWidget {
           ),
           SizedBox(height: 13),
           Text(
-            "👩‍🌾 I'm your Farm Assistant",
+            translation(context).welcomeAssistantHeader,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 23,
@@ -27,7 +28,9 @@ class WelcomeMessage extends StatelessWidget {
           ),
           SizedBox(height: 6),
           Text(
-            'Ask me anything about your $title farm.',
+            translation(context).welcomeAssistantSubheader(
+              title,
+            ),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,

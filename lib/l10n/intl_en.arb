@@ -56,5 +56,62 @@
   "drawerMenuSettings": "Settings",
   "drawerMenuProfile": "My Profile",
   "drawerMenuLogout": "Log out",
-  "drawerLogoutSuccess": "Logged out successfully"
+  "drawerLogoutSuccess": "Logged out successfully",
+  "sectionMain": "--- MAIN CHAT SCREEN ---",
+  "mainTitle": "FarmWise AI",
+  "mainTypingStatus": "typing...",
+  "mainNewAssistanceTooltip": "New Assistance",
+  "mainChatCleared": "Chat Cleared.",
+  "mainSelectCropTitle": "Select Crop to Assist",
+  "mainCropSelectedSnackbar": "{cropName} crop Selected",
+  "@mainCropSelectedSnackbar": {
+    "placeholders": {
+      "cropName": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionCrops": "--- CROP NAMES ---",
+  "cropTomato": "Tomato",
+  "cropPotato": "Potato",
+  "cropMango": "Mango",
+  "sectionActions": "--- CHAT ACTIONS & TOOLTIPS ---",
+  "actionCopyText": "Copy text",
+  "actionTextCopied": "Text copied to clipboard!",
+  "actionCopyFailed": "Failed to copy text",
+  "actionStopAudio": "Stop audio",
+  "actionResumeAudio": "Resume audio",
+  "actionListenAudio": "Listen to audio",
+  "actionNoTextToSpeak": "No text to speak",
+  "actionAudioFailed": "Audio playback failed",
+  "actionSaveChat": "save chat result",
+  "actionSaveSuccess": "Answer saved successfully!",
+  "actionCamera": "Camera",
+  "actionGallery": "Gallery",
+  "sectionInput": "--- INPUT AREA ---",
+  "inputFieldHint": "Ask About Your {cropName} farm...",
+  "@inputFieldHint": {
+    "placeholders": {
+      "cropName": {
+        "type": "String"
+      }
+    }
+  },
+  "buttonDetectDisease": "Detect {cropName} Disease",
+  "@buttonDetectDisease": {
+    "placeholders": {
+      "cropName": {
+        "type": "String"
+      }
+    }
+  },
+  "welcomeAssistantHeader": "👩‍🌾 I'm your Farm Assistant",
+  "welcomeAssistantSubheader": "Ask me anything about your {cropName} farm.",
+  "@welcomeAssistantSubheader": {
+    "placeholders": {
+      "cropName": {
+        "type": "String"
+      }
+    }
+  }
 }
