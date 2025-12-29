@@ -190,6 +190,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sectionSettings": MessageLookupByLibrary.simpleMessage(
       "--- SETTINGS SCREEN ---",
     ),
+    "sectionVoice": MessageLookupByLibrary.simpleMessage(
+      "--- VOICE MODULE ---",
+    ),
     "settingsAppDescription": MessageLookupByLibrary.simpleMessage(
       "AI-Powered Leaf Disease Diagnosis and Smart Farming Assistant",
     ),
@@ -208,6 +211,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "settingsLanguageTitle": MessageLookupByLibrary.simpleMessage("Language"),
     "settingsTitle": MessageLookupByLibrary.simpleMessage("App Settings"),
+    "voiceStatusListening": MessageLookupByLibrary.simpleMessage(
+      "Listening...",
+    ),
+    "voiceStatusTapToTalk": MessageLookupByLibrary.simpleMessage("Tap To Talk"),
     "welcomeAssistantHeader": MessageLookupByLibrary.simpleMessage(
       "👩‍🌾 I\'m your Farm Assistant",
     ),

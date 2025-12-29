@@ -814,6 +814,36 @@ class S {
       args: [cropName],
     );
   }
+
+  /// `--- VOICE MODULE ---`
+  String get sectionVoice {
+    return Intl.message(
+      '--- VOICE MODULE ---',
+      name: 'sectionVoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Listening...`
+  String get voiceStatusListening {
+    return Intl.message(
+      'Listening...',
+      name: 'voiceStatusListening',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap To Talk`
+  String get voiceStatusTapToTalk {
+    return Intl.message(
+      'Tap To Talk',
+      name: 'voiceStatusTapToTalk',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -113,5 +113,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "sectionVoice": "--- VOICE MODULE ---",
+  "voiceStatusListening": "Listening...",
+  "voiceStatusTapToTalk": "Tap To Talk"
 }

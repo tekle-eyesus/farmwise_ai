@@ -1,4 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:permission_handler/permission_handler.dart';
@@ -148,7 +149,9 @@ class _VoiceInputPanelState extends State<VoiceInputPanel> {
           ),
           const SizedBox(height: 20),
           Text(
-            _isListening ? "Listening..." : "Tap To Talk",
+            _isListening
+                ? translation(context).voiceStatusListening
+                : translation(context).voiceStatusTapToTalk,
             style: const TextStyle(
               fontSize: 17,
               color: Colors.grey,

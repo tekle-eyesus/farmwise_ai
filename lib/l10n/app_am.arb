@@ -69,5 +69,7 @@
   "inputFieldHint": "ስለ {cropName} እርሻዎ ይጠይቁ...",
   "buttonDetectDisease": "የ{cropName} በሽታን መርምር",
   "welcomeAssistantHeader": "👩‍🌾 እኔ የእርሻ ረዳትዎ ነኝ",
-  "welcomeAssistantSubheader": "ስለ {cropName} እርሻዎ ማንኛውንም ጥያቄ ይጠይቁኝ።"
+  "welcomeAssistantSubheader": "ስለ {cropName} እርሻዎ ማንኛውንም ጥያቄ ይጠይቁኝ።",
+  "voiceStatusListening": "በማዳመጥ ላይ...",
+  "voiceStatusTapToTalk": "ለመናገር ይንኩ"
 }
