@@ -10,6 +10,7 @@ import 'package:farmwise_ai/services/local_storage_service.dart';
 import 'package:farmwise_ai/services/tflite_service.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:farmwise_ai/widgets/custom_drawer.dart';
+import 'package:farmwise_ai/widgets/voice_input_panel.dart';
 import 'package:farmwise_ai/widgets/welcome_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode(); // Need this to control keyboard
+  bool _showVoicePanel = false; // State to toggle panel
   final ScrollController _scrollController = ScrollController();
   final GeminiChatService _geminiService = GeminiChatService();
   final List<Map<String, dynamic>> _messages = [];
@@ -238,12 +241,34 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     TFLiteService().loadModel("Tomato");
+    // Listen to focus changes to hide/show voice panel
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        setState(() => _showVoicePanel = false);
+      }
+    });
   }
 
   @override
   void dispose() {
     TFLiteService().disposeAll(); // Free up resources
+    _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onMicPressed() {
+    // couses the selected crops to reset
+
+    // FocusScope.of(context).unfocus(); // Hide keyboard
+    // Future.delayed(const Duration(milliseconds: 200), () {
+    //   setState(() {
+    //     _showVoicePanel = true;
+    //   });
+    // });
+
+    setState(() {
+      _showVoicePanel = true;
+    });
   }
 
   @override
@@ -612,6 +637,7 @@ class _MainScreenState extends State<MainScreen> {
                   child: TextField(
                     controller: _controller,
                     maxLines: null,
+                    focusNode: _focusNode,
                     keyboardType: TextInputType.multiline,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -650,6 +676,17 @@ class _MainScreenState extends State<MainScreen> {
                       margin: EdgeInsets.only(bottom: 6),
                       child: Row(
                         children: [
+                          InkWell(
+                            onTap: _onMicPressed, // Use the new logic
+                            child: CircleAvatar(
+                              backgroundColor:
+                                  const Color.fromARGB(104, 200, 230, 201),
+                              child: Icon(Icons.mic, color: Colors.blue),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 7,
+                          ),
                           InkWell(
                             onTap: () async {
                               String? result = await showCropSelector(
@@ -700,7 +737,16 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ],
-                )
+                ),
+                if (_showVoicePanel)
+                  VoiceInputPanel(
+                    textController: _controller,
+                    onClose: () {
+                      setState(
+                        () => _showVoicePanel = false,
+                      );
+                    },
+                  ),
               ],
             ),
           )),
