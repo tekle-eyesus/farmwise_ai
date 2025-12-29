@@ -1,6 +1,9 @@
 import 'package:farmwise_ai/auth/login_screen.dart';
 import 'package:farmwise_ai/auth/pages/intro_page_one.dart';
 import 'package:farmwise_ai/auth/pages/intro_page_two.dart';
+import 'package:farmwise_ai/language_classes/language.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:farmwise_ai/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -15,6 +18,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   PageController _pageController = PageController();
   bool isFirst = true;
+  String _selectedLanguage = 'English';
 
   Future<void> _completeIntro(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
@@ -26,6 +30,21 @@ class _IntroScreenState extends State<IntroScreen> {
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedLanguage();
+  }
+
+  Future<void> _loadSelectedLanguage() async {
+    Locale locale = await getLocale();
+    setState(() {
+      _selectedLanguage = Language.languageList()
+          .firstWhere((lang) => lang.languageCode == locale.languageCode)
+          .name;
+    });
   }
 
   @override
@@ -97,14 +116,6 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
               onPressed: () {
                 _completeIntro(context);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return MainScreen();
-                //     },
-                //   ),
-                // );
               },
               child: const Text(
                 "Get Started",
@@ -145,14 +156,6 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ),
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return MainScreen();
-                //     },
-                //   ),
-                // );
                 _completeIntro(context);
               },
               child: Text(
@@ -163,6 +166,55 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
           ),
+        Positioned(
+          top: 48,
+          left: 10,
+          child: SizedBox(
+            width: 700,
+            height: 36,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: Language.languageList().length,
+              itemBuilder: (context, index) {
+                Language language = Language.languageList()[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      padding: MaterialStatePropertyAll(
+                        EdgeInsets.symmetric(
+                          horizontal: 12,
+                        ),
+                      ),
+                      backgroundColor: _selectedLanguage == language.name
+                          ? MaterialStatePropertyAll(
+                              Color.fromARGB(252, 227, 220, 26),
+                            )
+                          : MaterialStatePropertyAll(
+                              Colors.grey.shade300,
+                            ),
+                    ),
+                    onPressed: () async {
+                      Locale _locale = await setLocale(language.languageCode);
+                      MyApp.setLocale(context, _locale);
+                      setState(
+                        () {
+                          _selectedLanguage = language.name;
+                        },
+                      );
+                    },
+                    child: Text(
+                      language.name,
+                      style: TextStyle(
+                        color: Colors.green.shade900,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
       ],
     );
   }
