@@ -117,8 +117,8 @@ class _IntroScreenState extends State<IntroScreen> {
               onPressed: () {
                 _completeIntro(context);
               },
-              child: const Text(
-                "Get Started",
+              child: Text(
+                translation(context).actionGetStarted,
                 style: TextStyle(
                   color: Color.fromARGB(255, 38, 27, 58),
                   fontWeight: FontWeight.bold,
@@ -159,7 +159,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 _completeIntro(context);
               },
               child: Text(
-                "Skip",
+                translation(context).actionSkip,
                 style: TextStyle(
                   color: Colors.green.shade900,
                 ),

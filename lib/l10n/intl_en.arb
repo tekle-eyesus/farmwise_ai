@@ -133,5 +133,7 @@
   "introPage2Feature2Title": "Expert Advice",
   "introPage2Feature2Desc": "Get personalized recommendations for your crops",
   "introPage2Feature3Title": "Learning Resources",
-  "introPage2Feature3Desc": "Access videos and guides for better farming"
+  "introPage2Feature3Desc": "Access videos and guides for better farming",
+  "actionSkip": "Skip",
+  "actionGetStarted": "Get Started"
 }

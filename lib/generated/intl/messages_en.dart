@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "actionCopyText": MessageLookupByLibrary.simpleMessage("Copy text"),
     "actionGallery": MessageLookupByLibrary.simpleMessage("Gallery"),
+    "actionGetStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
     "actionListenAudio": MessageLookupByLibrary.simpleMessage(
       "Listen to audio",
     ),
@@ -53,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "actionSaveSuccess": MessageLookupByLibrary.simpleMessage(
       "Answer saved successfully!",
     ),
+    "actionSkip": MessageLookupByLibrary.simpleMessage("Skip"),
     "actionStopAudio": MessageLookupByLibrary.simpleMessage("Stop audio"),
     "actionTextCopied": MessageLookupByLibrary.simpleMessage(
       "Text copied to clipboard!",

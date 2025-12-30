@@ -999,6 +999,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Skip`
+  String get actionSkip {
+    return Intl.message('Skip', name: 'actionSkip', desc: '', args: []);
+  }
+
+  /// `Get Started`
+  String get actionGetStarted {
+    return Intl.message(
+      'Get Started',
+      name: 'actionGetStarted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
