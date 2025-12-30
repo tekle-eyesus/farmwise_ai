@@ -844,6 +844,161 @@ class S {
       args: [],
     );
   }
+
+  /// `--- INTRO PAGES ---`
+  String get sectionIntro {
+    return Intl.message(
+      '--- INTRO PAGES ---',
+      name: 'sectionIntro',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to\n`
+  String get introPage1Welcome {
+    return Intl.message(
+      'Welcome to\n',
+      name: 'introPage1Welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart`
+  String get introPage1Smart {
+    return Intl.message('Smart', name: 'introPage1Smart', desc: '', args: []);
+  }
+
+  /// `Crop`
+  String get introPage1Crop {
+    return Intl.message('Crop', name: 'introPage1Crop', desc: '', args: []);
+  }
+
+  /// ` AI`
+  String get introPage1Ai {
+    return Intl.message(' AI', name: 'introPage1Ai', desc: '', args: []);
+  }
+
+  /// `Smart crop care at your fingertips - diagnose, learn, and grow better crops with AI-powered insights.`
+  String get introPage1Description {
+    return Intl.message(
+      'Smart crop care at your fingertips - diagnose, learn, and grow better crops with AI-powered insights.',
+      name: 'introPage1Description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Instant Disease Detection`
+  String get introPage1Feature1 {
+    return Intl.message(
+      'Instant Disease Detection',
+      name: 'introPage1Feature1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Expert Advice`
+  String get introPage1Feature2 {
+    return Intl.message(
+      'AI Expert Advice',
+      name: 'introPage1Feature2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Growth Assistant`
+  String get introPage1Feature3 {
+    return Intl.message(
+      'Growth Assistant',
+      name: 'introPage1Feature3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What FarmWise AI\nCan Do For You`
+  String get introPage2Title {
+    return Intl.message(
+      'What FarmWise AI\nCan Do For You',
+      name: 'introPage2Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI-powered tools for modern farming`
+  String get introPage2Subtitle {
+    return Intl.message(
+      'AI-powered tools for modern farming',
+      name: 'introPage2Subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disease Detection`
+  String get introPage2Feature1Title {
+    return Intl.message(
+      'Disease Detection',
+      name: 'introPage2Feature1Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Identify plant diseases instantly using AI technology`
+  String get introPage2Feature1Desc {
+    return Intl.message(
+      'Identify plant diseases instantly using AI technology',
+      name: 'introPage2Feature1Desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expert Advice`
+  String get introPage2Feature2Title {
+    return Intl.message(
+      'Expert Advice',
+      name: 'introPage2Feature2Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get personalized recommendations for your crops`
+  String get introPage2Feature2Desc {
+    return Intl.message(
+      'Get personalized recommendations for your crops',
+      name: 'introPage2Feature2Desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Learning Resources`
+  String get introPage2Feature3Title {
+    return Intl.message(
+      'Learning Resources',
+      name: 'introPage2Feature3Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Access videos and guides for better farming`
+  String get introPage2Feature3Desc {
+    return Intl.message(
+      'Access videos and guides for better farming',
+      name: 'introPage2Feature3Desc',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

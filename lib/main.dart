@@ -102,7 +102,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       ),
       home: introSeenState.when(
         data: (isIntroSeen) {
-          if (!isIntroSeen) {
+          if (isIntroSeen) {
             return const IntroScreen();
           }
 

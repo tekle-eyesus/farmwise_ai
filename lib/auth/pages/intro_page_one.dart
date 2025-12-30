@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 
 class PageOne extends StatelessWidget {
@@ -92,27 +93,27 @@ class PageOne extends StatelessWidget {
                           height: 1.2,
                         ),
                         children: [
-                          const TextSpan(
-                            text: "Welcome to\n",
+                          TextSpan(
+                            text: translation(context).introPage1Welcome,
                             style: TextStyle(
                               color: Colors.black87,
                             ),
                           ),
                           TextSpan(
-                            text: "Farm",
+                            text: translation(context).introPage1Smart,
                             style: TextStyle(
                               color: Colors.green.shade700,
                             ),
                           ),
                           TextSpan(
-                            text: "Wise",
+                            text: translation(context).introPage1Crop,
                             style: TextStyle(
                               color: Colors.green.shade800,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
-                          const TextSpan(
-                            text: " AI",
+                          TextSpan(
+                            text: translation(context).introPage1Ai,
                             style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w700,
@@ -145,7 +146,7 @@ class PageOne extends StatelessWidget {
                     fontSize: 27,
                   ),
                   child: Text(
-                    "Smart crop care at your fingertips - diagnose, learn, and grow better crops with AI-powered insights.",
+                    translation(context).introPage1Description,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey.shade700,
@@ -176,17 +177,17 @@ class PageOne extends StatelessWidget {
                     children: [
                       _buildFeatureItem(
                         icon: Icons.photo_camera_rounded,
-                        text: "Instant Disease Detection",
+                        text: translation(context).introPage1Feature1,
                       ),
                       const SizedBox(height: 12),
                       _buildFeatureItem(
                         icon: Icons.psychology_rounded,
-                        text: "AI Expert Advice",
+                        text: translation(context).introPage1Feature2,
                       ),
                       const SizedBox(height: 12),
                       _buildFeatureItem(
                         icon: Icons.video_library_rounded,
-                        text: "Video Guides",
+                        text: translation(context).introPage1Feature3,
                       ),
                     ],
                   ),

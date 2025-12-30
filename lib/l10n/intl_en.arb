@@ -116,5 +116,22 @@
   },
   "sectionVoice": "--- VOICE MODULE ---",
   "voiceStatusListening": "Listening...",
-  "voiceStatusTapToTalk": "Tap To Talk"
+  "voiceStatusTapToTalk": "Tap To Talk",
+  "sectionIntro": "--- INTRO PAGES ---",
+  "introPage1Welcome": "Welcome to\n",
+  "introPage1Smart": "Smart",
+  "introPage1Crop": "Crop",
+  "introPage1Ai": " AI",
+  "introPage1Description": "Smart crop care at your fingertips - diagnose, learn, and grow better crops with AI-powered insights.",
+  "introPage1Feature1": "Instant Disease Detection",
+  "introPage1Feature2": "AI Expert Advice",
+  "introPage1Feature3": "Growth Assistant",
+  "introPage2Title": "What FarmWise AI\nCan Do For You",
+  "introPage2Subtitle": "AI-powered tools for modern farming",
+  "introPage2Feature1Title": "Disease Detection",
+  "introPage2Feature1Desc": "Identify plant diseases instantly using AI technology",
+  "introPage2Feature2Title": "Expert Advice",
+  "introPage2Feature2Desc": "Get personalized recommendations for your crops",
+  "introPage2Feature3Title": "Learning Resources",
+  "introPage2Feature3Desc": "Access videos and guides for better farming"
 }

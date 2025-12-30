@@ -149,6 +149,46 @@ class MessageLookup extends MessageLookupByLibrary {
       "How do I update the disease database?",
     ),
     "inputFieldHint": m1,
+    "introPage1Ai": MessageLookupByLibrary.simpleMessage(" AI"),
+    "introPage1Crop": MessageLookupByLibrary.simpleMessage("Crop"),
+    "introPage1Description": MessageLookupByLibrary.simpleMessage(
+      "Smart crop care at your fingertips - diagnose, learn, and grow better crops with AI-powered insights.",
+    ),
+    "introPage1Feature1": MessageLookupByLibrary.simpleMessage(
+      "Instant Disease Detection",
+    ),
+    "introPage1Feature2": MessageLookupByLibrary.simpleMessage(
+      "AI Expert Advice",
+    ),
+    "introPage1Feature3": MessageLookupByLibrary.simpleMessage(
+      "Growth Assistant",
+    ),
+    "introPage1Smart": MessageLookupByLibrary.simpleMessage("Smart"),
+    "introPage1Welcome": MessageLookupByLibrary.simpleMessage("Welcome to\n"),
+    "introPage2Feature1Desc": MessageLookupByLibrary.simpleMessage(
+      "Identify plant diseases instantly using AI technology",
+    ),
+    "introPage2Feature1Title": MessageLookupByLibrary.simpleMessage(
+      "Disease Detection",
+    ),
+    "introPage2Feature2Desc": MessageLookupByLibrary.simpleMessage(
+      "Get personalized recommendations for your crops",
+    ),
+    "introPage2Feature2Title": MessageLookupByLibrary.simpleMessage(
+      "Expert Advice",
+    ),
+    "introPage2Feature3Desc": MessageLookupByLibrary.simpleMessage(
+      "Access videos and guides for better farming",
+    ),
+    "introPage2Feature3Title": MessageLookupByLibrary.simpleMessage(
+      "Learning Resources",
+    ),
+    "introPage2Subtitle": MessageLookupByLibrary.simpleMessage(
+      "AI-powered tools for modern farming",
+    ),
+    "introPage2Title": MessageLookupByLibrary.simpleMessage(
+      "What FarmWise AI\nCan Do For You",
+    ),
     "languageChangedMessage": m2,
     "languageSheetFooter": MessageLookupByLibrary.simpleMessage(
       "Full language support coming in the next update",
@@ -181,6 +221,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sectionFaq": MessageLookupByLibrary.simpleMessage("--- FAQ CONTENT ---"),
     "sectionInput": MessageLookupByLibrary.simpleMessage("--- INPUT AREA ---"),
+    "sectionIntro": MessageLookupByLibrary.simpleMessage("--- INTRO PAGES ---"),
     "sectionLanguage": MessageLookupByLibrary.simpleMessage(
       "--- LANGUAGE SHEET ---",
     ),
