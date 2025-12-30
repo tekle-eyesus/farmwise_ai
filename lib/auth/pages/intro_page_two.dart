@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 
 class PageTwo extends StatelessWidget {
@@ -8,18 +9,18 @@ class PageTwo extends StatelessWidget {
     final features = [
       {
         'icon': Icons.health_and_safety_rounded,
-        'title': 'Disease Detection',
-        'description': 'Identify plant diseases instantly using AI technology',
+        'title': translation(context).introPage2Feature1Title,
+        'description': translation(context).introPage2Feature1Desc,
       },
       {
         'icon': Icons.psychology_rounded,
-        'title': 'Expert Advice',
-        'description': 'Get personalized recommendations for your crops',
+        'title': translation(context).introPage2Feature2Title,
+        'description': translation(context).introPage2Feature2Desc,
       },
       {
         'icon': Icons.video_library_rounded,
-        'title': 'Learning Resources',
-        'description': 'Access videos and guides for better farming',
+        'title': translation(context).introPage2Feature3Title,
+        'description': translation(context).introPage2Feature3Desc,
       },
     ];
 
@@ -66,7 +67,7 @@ class PageTwo extends StatelessWidget {
                   DefaultTextStyle(
                     style: TextStyle(),
                     child: Text(
-                      "What FarmWise AI\nCan Do For You",
+                      translation(context).introPage2Title,
                       style: TextStyle(
                         fontSize: 33,
                         fontWeight: FontWeight.w700,
@@ -80,7 +81,7 @@ class PageTwo extends StatelessWidget {
                   DefaultTextStyle(
                     style: TextStyle(),
                     child: Text(
-                      "AI-powered tools for modern farming",
+                      translation(context).introPage2Subtitle,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade600,
