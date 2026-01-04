@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,8 +30,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   void _register() async {
     if (_formKey.currentState!.validate()) {
       if (!_isTermsAccepted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Please accept terms and conditions')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(translation(context).registerTermsError)));
         return;
       }
 
@@ -44,7 +46,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           );
 
       if (success && mounted) {
-        CustomSnackBar.showSuccess(context, "Registration successful");
+        CustomSnackBar.showSuccess(
+            context, translation(context).registerSuccess);
         Navigator.of(context).pop();
       }
     }
@@ -116,8 +119,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        "Sign Up",
+                      Text(
+                        translation(context).loginActionSignUp,
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -125,8 +128,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const Text(
-                        "Create your new account",
+                      Text(
+                        translation(context).registerSubtitle,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
@@ -135,37 +138,47 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       const SizedBox(height: 30),
                       TextFormField(
                         controller: _firstNameController,
-                        decoration: _buildInputDecoration('First Name'),
-                        validator: (val) =>
-                            val!.isEmpty ? 'Enter first name' : null,
+                        decoration: _buildInputDecoration(
+                            translation(context).registerFirstName),
+                        validator: (val) => val!.isEmpty
+                            ? translation(context).registerFirstNameHint
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _lastNameController,
-                        decoration: _buildInputDecoration('Last Name'),
-                        validator: (val) =>
-                            val!.isEmpty ? 'Enter last name' : null,
+                        decoration: _buildInputDecoration(
+                            translation(context).registerLastName),
+                        validator: (val) => val!.isEmpty
+                            ? translation(context).registerLastNameHint
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _emailController,
-                        decoration: _buildInputDecoration('Email'),
+                        decoration: _buildInputDecoration(
+                            translation(context).registerEmail),
                         keyboardType: TextInputType.emailAddress,
-                        validator: (val) => val!.isEmpty ? 'Enter email' : null,
+                        validator: (val) => val!.isEmpty
+                            ? translation(context).registerEmailHint
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _phoneController,
-                        decoration: _buildInputDecoration('Phone Number'),
+                        decoration: _buildInputDecoration(
+                            translation(context).registerPhone),
                         keyboardType: TextInputType.phone,
-                        validator: (val) => val!.isEmpty ? 'Enter phone' : null,
+                        validator: (val) => val!.isEmpty
+                            ? translation(context).registerPhoneHint
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: _isPasswordObscure,
                         decoration: _buildInputDecoration(
-                          'Password',
+                          translation(context).registerPassword,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isPasswordObscure
@@ -181,7 +194,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                         ),
                         validator: (val) => val!.length < 6
-                            ? 'Password must be 6+ chars'
+                            ? translation(context).registerPasswordValidation
                             : null,
                       ),
                       const SizedBox(height: 16),
@@ -189,7 +202,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         controller: _confirmPasswordController,
                         obscureText: _isConfirmPasswordObscure,
                         decoration: _buildInputDecoration(
-                          'Confirm Password',
+                          translation(context).registerConfirmPassword,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isConfirmPasswordObscure
@@ -206,7 +219,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                         ),
                         validator: (val) => val != _passwordController.text
-                            ? 'Passwords do not match'
+                            ? translation(context).registerPasswordMatchError
                             : null,
                       ),
                       const SizedBox(height: 20),
@@ -225,9 +238,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          const Expanded(
+                          Expanded(
                             child: Text(
-                              "I accept Terms and Conditions",
+                              translation(context).registerTermsLabel,
                               style: TextStyle(fontSize: 14),
                             ),
                           ),
@@ -246,9 +259,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             elevation: 2,
                           ),
                           onPressed: _register,
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
+                          child: Text(
+                            translation(context).registerActionButton,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -260,15 +273,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Already have an account? ",
-                            style: TextStyle(color: Colors.grey),
+                          Text(
+                            translation(context).registerAlreadyAccountPrompt,
+                            style: const TextStyle(color: Colors.grey),
                           ),
                           GestureDetector(
                             onTap: () => Navigator.of(context).pop(),
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
+                            child: Text(
+                              translation(context).registerActionLogin,
+                              style: const TextStyle(
                                 color: primaryGreen,
                                 fontWeight: FontWeight.bold,
                               ),
