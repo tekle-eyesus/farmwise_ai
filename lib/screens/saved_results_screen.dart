@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:farmwise_ai/data/disease_dummy_data.dart';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:farmwise_ai/utils/date_utils.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,8 @@ class _SavedResultsScreenState extends State<SavedResultsScreen> {
         ),
         foregroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Saved Scans',
+        title: Text(
+          translation(context).scansTitle,
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -99,7 +100,7 @@ class _SavedResultsScreenState extends State<SavedResultsScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            'No Saved Scans',
+            translation(context).scansEmptyState,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -110,7 +111,7 @@ class _SavedResultsScreenState extends State<SavedResultsScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              'Your plant disease detection scans will appear here for future reference',
+              translation(context).scansEmptySubtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -125,7 +126,7 @@ class _SavedResultsScreenState extends State<SavedResultsScreen> {
               Navigator.pop(context); // Go back to camera screen
             },
             icon: const Icon(Icons.camera_alt_rounded),
-            label: const Text('Start New Scan'),
+            label: Text(translation(context).scansActionStartNew),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green.shade600,
               foregroundColor: Colors.white,
