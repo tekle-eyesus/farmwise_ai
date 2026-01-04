@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './profile_controller.dart';
@@ -14,7 +15,7 @@ class ProfileScreen extends ConsumerWidget {
       backgroundColor: Colors.grey[50],
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text("My Profile",
+        title: Text(translation(context).profileTitle,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -23,9 +24,12 @@ class ProfileScreen extends ConsumerWidget {
       ),
       body: userAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text("Error: $err")),
+        error: (err, stack) => Center(
+            child: Text(translation(context).profileError(err.toString()))),
         data: (user) {
-          if (user == null) return const Center(child: Text("User not found"));
+          if (user == null)
+            return Center(
+                child: Text(translation(context).profileUserNotFound));
 
           return SingleChildScrollView(
             child: Column(
@@ -95,8 +99,15 @@ class ProfileScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       _buildInfoTile(
-                          Icons.phone, "Phone Number", user.phoneNumber),
-                      _buildInfoTile(Icons.email, "Email Address", user.email),
+                          Icons.phone,
+                          translation(context).profilePhoneLabel,
+                          user.phoneNumber,
+                          context),
+                      _buildInfoTile(
+                          Icons.email,
+                          translation(context).profileEmailLabel,
+                          user.email,
+                          context),
                     ],
                   ),
                 ),
@@ -120,7 +131,7 @@ class ProfileScreen extends ConsumerWidget {
                         size: 20,
                         color: Colors.white,
                       ),
-                      label: const Text("Edit Profile",
+                      label: Text(translation(context).profileActionEdit,
                           style: TextStyle(fontSize: 16)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF0F5132),
@@ -142,7 +153,8 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String label, String value) {
+  Widget _buildInfoTile(
+      IconData icon, String label, String value, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(16),
@@ -175,7 +187,7 @@ class ProfileScreen extends ConsumerWidget {
                   style: TextStyle(fontSize: 12, color: Colors.grey[500])),
               const SizedBox(height: 4),
               Text(
-                value.isEmpty ? "Not set" : value,
+                value.isEmpty ? translation(context).profileValueNotSet : value,
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
