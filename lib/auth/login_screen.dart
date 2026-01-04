@@ -1,3 +1,4 @@
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,8 +62,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(height: 20),
 
                     // 3. Title
-                    const Text(
-                      "Login to Your Account",
+                    Text(
+                      translation(context).loginTitle,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -74,7 +75,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        hintText: 'Email Address',
+                        hintText: translation(context).loginEmailHint,
                         filled: true,
                         fillColor: Colors.grey[100],
                         contentPadding: const EdgeInsets.symmetric(
@@ -94,7 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       controller: _passwordController,
                       obscureText: _isObscure,
                       decoration: InputDecoration(
-                        hintText: 'Password',
+                        hintText: translation(context).loginPasswordHint,
                         filled: true,
                         fillColor: Colors.grey[100],
                         contentPadding: const EdgeInsets.symmetric(
@@ -147,14 +148,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             if (success && mounted) {
                               CustomSnackBar.showSuccess(
                                 context,
-                                "Login successful",
+                                translation(context).loginSuccess,
                               );
                             }
                           });
                         },
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(
+                        child: Text(
+                          translation(context).loginActionSignIn,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -168,8 +169,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: () {
                         // Logic for forgot password
                       },
-                      child: const Text(
-                        "Forgot Password?",
+                      child: Text(
+                        translation(context).loginForgotPassword,
                         style: TextStyle(
                             color: primaryGreen, fontWeight: FontWeight.w600),
                       ),
@@ -180,9 +181,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "First Time User? ",
-                          style: TextStyle(color: Colors.grey),
+                        Text(
+                          translation(context).loginFirstTimePrompt,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -192,8 +193,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               ),
                             );
                           },
-                          child: const Text(
-                            "Sign Up",
+                          child: Text(
+                            translation(context).loginActionSignUp,
                             style: TextStyle(
                               color: primaryGreen,
                               fontWeight: FontWeight.bold,
