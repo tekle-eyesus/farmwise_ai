@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:farmwise_ai/language_classes/language_constants.dart';
 import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,8 +75,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   size: 22,
                 ),
               ),
-              title: const Text(
-                'Photo Library',
+              title: Text(
+                translation(context).editProfilePhotoLibrary,
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () => _getImage(ImageSource.gallery),
@@ -93,8 +94,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   size: 22,
                 ),
               ),
-              title: const Text(
-                'Camera',
+              title: Text(
+                translation(context).editProfileCamera,
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () => _getImage(ImageSource.camera),
@@ -133,9 +134,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     if (success && mounted) {
       Navigator.pop(context);
-      CustomSnackBar.showSuccess(context, "Profile updated successfully");
+      CustomSnackBar.showSuccess(
+          context, translation(context).editProfileSuccess);
     } else if (mounted) {
-      CustomSnackBar.showError(context, "Failed to update profile");
+      CustomSnackBar.showError(
+          context, translation(context).editProfileFailure);
     }
   }
 
@@ -145,7 +148,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Profile"),
+        title: Text(translation(context).editProfileTitle),
         elevation: 0,
       ),
       body: Stack(
@@ -201,14 +204,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                _buildTextField(
-                    "First Name", _fnameController, Icons.person_outline),
+                _buildTextField(translation(context).editProfileFirstName,
+                    _fnameController, Icons.person_outline),
                 const SizedBox(height: 15),
-                _buildTextField(
-                    "Last Name", _lnameController, Icons.person_outline),
+                _buildTextField(translation(context).editProfileLastName,
+                    _lnameController, Icons.person_outline),
                 const SizedBox(height: 15),
-                _buildTextField(
-                    "Phone Number", _phoneController, Icons.phone_android),
+                _buildTextField(translation(context).editProfilePhone,
+                    _phoneController, Icons.phone_android),
                 const SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,
@@ -222,7 +225,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text("Save Changes",
+                    child: Text(translation(context).editProfileActionSave,
                         style: TextStyle(fontSize: 16)),
                   ),
                 ),
@@ -238,12 +241,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Column(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CircularProgressIndicator(color: Colors.green),
                       SizedBox(height: 10),
-                      Text("Saving..."),
+                      Text(translation(context).editProfileSaving),
                     ],
                   ),
                 ),
