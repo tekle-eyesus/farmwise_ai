@@ -1,10 +1,10 @@
-# <img src="https://raw.githubusercontent.com/tekle-eyesus/farmwise_ai/main/assets/icons/playstore-app-icon.png" alt="logo" width="46" /> FarmWise AI
-**FarmWise AI** is an intelligent mobile application that empowers smallholder farmers with AI-driven crop disease detection and expert farming recommendations. It leverages image recognition and on-device machine learning to identify diseases in tomato, potato, and mango crops, and provides practical mitigation guidance tailored to each case even in offline environments.
+# <img src="https://raw.githubusercontent.com/tekle-eyesus/farmwise_ai/main/assets/icons/playstore-app-icon.png" alt="logo" width="46" /> SmartCrop AI
 
+**SmartCrop AI** is an intelligent mobile application that empowers smallholder farmers with AI-driven crop disease detection and expert farming recommendations. It leverages image recognition and on-device machine learning to identify diseases in tomato, potato, and mango crops, and provides practical mitigation guidance tailored to each case even in offline environments.
 
 ## 🌿 App Overview
 
-In many farming communities, timely identification and management of crop diseases is a major challenge. While existing tools exist, they are often expensive, require constant internet access, or are not user-friendly. **FarmWise AI** fills this gap with a lightweight, offline-first assistant that combines:
+In many farming communities, timely identification and management of crop diseases is a major challenge. While existing tools exist, they are often expensive, require constant internet access, or are not user-friendly. **SmartCrop AI** fills this gap with a lightweight, offline-first assistant that combines:
 
 - **Convolutional Neural Networks (CNN)** for accurate image classification.
 - **On-device TensorFlow Lite (TFLite)** inference for performance and privacy.
@@ -44,7 +44,9 @@ In many farming communities, timely identification and management of crop diseas
 - **Markdown + Charts Renderer**: Presents confidence scores, video tips, and expert content beautifully.
 
 ---
+
 ## 🛠 Architecture
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -59,12 +61,13 @@ sequenceDiagram
     TFLite->>DB: Matches Label
     TFLite->>Gemini: Sends Detection Summary
     Gemini-->>App: Returns Detection Result and Dynamic Suggestions
-    
+
     note right of User: Chat Flow
     User->>App: Asks Question
     App->>Gemini: Sends Query + Context
     Gemini-->>App: Returns Context-aware Answer
 ```
+
 ## How to Install and Run
 
 ### 1. Prerequisites
@@ -79,15 +82,21 @@ sequenceDiagram
 git clone https://github.com/tekle-eyesus/farmwise_ai.git
 cd farmwise_ai
 ```
+
 ### 3. Install dependencies
+
 ```bash
 flutter pub get
 ```
+
 ### 4. Run the app
+
 ```bash
 flutter run
 ```
+
 ## Technologies Used
+
 | Technology           | Purpose                            |
 | -------------------- | ---------------------------------- |
 | Flutter              | Cross-platform UI development      |
@@ -100,14 +109,16 @@ flutter run
 | FL Chart             | Display confidence charts          |
 
 ## TFLite Models
+
 Each crop uses a custom-trained CNN model exported to ".tflite:"
-| Crop   | Classes (Diseases)               | Input Size | Accuracy |
+| Crop | Classes (Diseases) | Input Size | Accuracy |
 | ------ | -------------------------------- | ---------- | -------- |
-| Tomato | 11 disease classes + healthy     | 256x256    | \~96%    |
-| Potato | 3 classes                        | 256x256    | \~95%    |
-| Mango  | 9 classes incl. unknown/non-leaf | 256x256    | \~94%    |
+| Tomato | 11 disease classes + healthy | 256x256 | \~96% |
+| Potato | 3 classes | 256x256 | \~95% |
+| Mango | 9 classes incl. unknown/non-leaf | 256x256 | \~94% |
 
 Models are trained in TensorFlow/Keras using data from Kaggle dataset sources, then optimized and quantized for mobile deployment.
 
 ## Contribution
+
 This project is a **capstone submission** for the **FTL Ethiopia Machine Learning 2 Bootcamp** (2025 cohort).
