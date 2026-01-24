@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 
 class ForgotPasswordSheet extends StatefulWidget {
@@ -36,15 +37,15 @@ class _ForgotPasswordSheetState extends State<ForgotPasswordSheet> {
         Navigator.pop(context);
         CustomSnackBar.showSuccess(
           context,
-          "Password reset link sent! Check your email (and spam folder).",
+          translation(context).forgotPasswordSuccess,
         );
       }
     } on FirebaseAuthException catch (e) {
-      String errorMessage = "An error occurred";
+      String errorMessage = translation(context).forgotPasswordErrorGeneral;
       if (e.code == 'user-not-found') {
-        errorMessage = "No user found with this email.";
+        errorMessage = translation(context).forgotPasswordErrorNoUser;
       } else if (e.code == 'invalid-email') {
-        errorMessage = "Invalid email format.";
+        errorMessage = translation(context).forgotPasswordErrorInvalidFormat;
       }
 
       if (mounted) {
@@ -52,7 +53,11 @@ class _ForgotPasswordSheetState extends State<ForgotPasswordSheet> {
       }
     } catch (e) {
       if (mounted) {
-        CustomSnackBar.showError(context, "Error: ${e.toString()}");
+        // CustomSnackBar.showError(context, "Error: ${e.toString()}");
+        CustomSnackBar.showError(
+          context,
+          translation(context).forgotPasswordErrorUnexpected,
+        );
       }
     } finally {
       if (mounted) {
@@ -81,15 +86,15 @@ class _ForgotPasswordSheetState extends State<ForgotPasswordSheet> {
               children: [
                 Icon(Icons.lock_reset, color: primaryGreen, size: 28),
                 const SizedBox(width: 10),
-                const Text(
-                  "Reset Password",
+                Text(
+                  translation(context).forgotPasswordTitle,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             const SizedBox(height: 10),
             Text(
-              "Enter your email address and we will send you a link to reset your password.",
+              translation(context).forgotPasswordSubtitle,
               style: TextStyle(color: Colors.grey[600], fontSize: 14),
             ),
             const SizedBox(height: 20),
@@ -99,7 +104,7 @@ class _ForgotPasswordSheetState extends State<ForgotPasswordSheet> {
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                labelText: "Email Address",
+                labelText: translation(context).forgotPasswordEmailLabel,
                 prefixIcon: const Icon(Icons.email_outlined),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -111,10 +116,10 @@ class _ForgotPasswordSheetState extends State<ForgotPasswordSheet> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please enter your email";
+                  return translation(context).forgotPasswordEmailEmpty;
                 }
                 if (!value.contains('@')) {
-                  return "Please enter a valid email";
+                  return translation(context).forgotPasswordEmailInvalid;
                 }
                 return null;
               },
@@ -140,12 +145,12 @@ class _ForgotPasswordSheetState extends State<ForgotPasswordSheet> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: Colors.green,
                           strokeWidth: 2,
                         ),
                       )
-                    : const Text(
-                        "Send Reset Link",
+                    : Text(
+                        translation(context).forgotPasswordActionSend,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
