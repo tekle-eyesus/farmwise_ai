@@ -1,4 +1,4 @@
-import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 
 class HelpInfoSheet extends StatefulWidget {
@@ -119,7 +119,7 @@ class _HelpInfoSheetState extends State<HelpInfoSheet> {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  "Help & FAQ",
+                  translation(context).settingsHelpTitle,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
@@ -130,7 +130,7 @@ class _HelpInfoSheetState extends State<HelpInfoSheet> {
             ),
             const SizedBox(height: 16),
             Text(
-              "Find answers to commonly asked questions about our app",
+              translation(context).settingsHelpSubtitle,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey.shade600,

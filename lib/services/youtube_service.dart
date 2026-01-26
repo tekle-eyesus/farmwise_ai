@@ -7,7 +7,7 @@ class YouTubeService {
     try {
       final apiKey = dotenv.env['YOUTUBE_API_KEY']!;
       final response = await http.get(Uri.parse(
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoDuration=short&maxResults=5&q=$query&key=$apiKey',
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=$query&safeSearch=moderate&key=$apiKey',
       ));
 
       final data = jsonDecode(response.body);

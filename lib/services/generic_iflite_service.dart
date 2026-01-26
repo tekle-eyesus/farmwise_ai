@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
+// NOT USED IN THE CURRENT APP VERSION //
 class GenericIfliteService {
   final Interpreter _interpreter;
   final List<String> _labels;

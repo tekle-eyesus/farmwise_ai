@@ -2,6 +2,7 @@ class UserModel {
   final String uid;
   final String firstName;
   final String lastName;
+  final String profilePic;
   final String email;
   final String phoneNumber;
   final bool isTermsAccepted;
@@ -13,6 +14,7 @@ class UserModel {
     required this.isTermsAccepted,
     required this.firstName,
     required this.lastName,
+    this.profilePic = '',
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +22,7 @@ class UserModel {
       'uid': uid,
       'firstName': firstName,
       'lastName': lastName,
+      'profilePic': profilePic,
       'email': email,
       'phoneNumber': phoneNumber,
       'isTermsAccepted': isTermsAccepted,
@@ -31,6 +34,7 @@ class UserModel {
       uid: map['uid'] ?? '',
       firstName: map['firstName'] ?? '',
       lastName: map['lastName'] ?? '',
+      profilePic: map['profilePic'] ?? '',
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       isTermsAccepted: map['isTermsAccepted'] ?? false,

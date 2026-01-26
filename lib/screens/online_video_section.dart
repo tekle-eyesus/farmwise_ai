@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import '../services/youtube_service.dart';
 import '../widgets/video_card.dart';
 
@@ -25,8 +26,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
   Future<void> _loadVideos() async {
     try {
       final results = await YouTubeService.fetchVideos(
-        '${widget.label} treatment for farmers agriculture',
-      );
+          '${widget.label} treatment for farmers agriculture');
       setState(() {
         _videos = results;
         _isLoading = false;
@@ -66,7 +66,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  "Video Resources",
+                  translation(context).videoTitle,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -82,7 +82,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
                       size: 20,
                       color: Colors.grey.shade600,
                     ),
-                    tooltip: 'Refresh videos',
+                    tooltip: translation(context).videoRefreshTooltip,
                   ),
               ],
             ),
@@ -116,7 +116,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Loading helpful videos...',
+              translation(context).videoLoading,
               style: TextStyle(
                 color: Colors.grey.shade600,
                 fontSize: 14,
@@ -147,7 +147,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Failed to load videos',
+            translation(context).videoErrorLoad,
             style: TextStyle(
               color: Colors.red.shade700,
               fontWeight: FontWeight.w600,
@@ -157,7 +157,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
           ElevatedButton.icon(
             onPressed: _loadVideos,
             icon: const Icon(Icons.refresh_rounded, size: 16),
-            label: const Text('Try Again'),
+            label: Text(translation(context).videoActionTryAgain),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red.shade500,
               foregroundColor: Colors.white,
@@ -191,7 +191,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
           ),
           const SizedBox(height: 8),
           Text(
-            'No videos found',
+            translation(context).videoEmptyState,
             style: TextStyle(
               color: Colors.grey.shade600,
               fontWeight: FontWeight.w600,
@@ -199,7 +199,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Try searching with different keywords',
+            translation(context).videoEmptySubtitle,
             style: TextStyle(
               color: Colors.grey.shade500,
               fontSize: 12,
@@ -237,7 +237,7 @@ class _OnlineVideoSectionState extends State<OnlineVideoSection> {
         ),
         const SizedBox(height: 8),
         Text(
-          'Swipe for more videos →',
+          translation(context).videoSwipeHint,
           style: TextStyle(
             color: Colors.grey.shade500,
             fontSize: 12,

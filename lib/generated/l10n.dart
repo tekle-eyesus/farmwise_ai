@@ -65,6 +65,16 @@ class S {
     );
   }
 
+  /// `No`
+  String get no {
+    return Intl.message('No', name: 'no', desc: '', args: []);
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message('Yes', name: 'yes', desc: '', args: []);
+  }
+
   /// `Close`
   String get actionClose {
     return Intl.message('Close', name: 'actionClose', desc: '', args: []);
@@ -230,10 +240,10 @@ class S {
     );
   }
 
-  /// `FarmWise AI uses advanced machine learning models trained on thousands of plant disease images. The accuracy typically ranges from 85-95% depending on image quality, lighting conditions, and the specific crop. For best results, ensure clear, well-lit photos of affected plant parts.`
+  /// `SmartCrop AI uses advanced machine learning models trained on thousands of plant disease images. The accuracy typically ranges from 85-95% depending on image quality, lighting conditions, and the specific crop. For best results, ensure clear, well-lit photos of affected plant parts.`
   String get faqAccuracyAnswer {
     return Intl.message(
-      'FarmWise AI uses advanced machine learning models trained on thousands of plant disease images. The accuracy typically ranges from 85-95% depending on image quality, lighting conditions, and the specific crop. For best results, ensure clear, well-lit photos of affected plant parts.',
+      'SmartCrop AI uses advanced machine learning models trained on thousands of plant disease images. The accuracy typically ranges from 85-95% depending on image quality, lighting conditions, and the specific crop. For best results, ensure clear, well-lit photos of affected plant parts.',
       name: 'faqAccuracyAnswer',
       desc: '',
       args: [],
@@ -270,10 +280,10 @@ class S {
     );
   }
 
-  /// `FarmWise AI currently supports major crops including tomatoes, potatoes, corn, wheat, rice, and various fruits. We continuously add new crops and diseases. Check the app's crop selection screen for the complete updated list of supported plants.`
+  /// `SmartCrop AI currently supports major crops including tomatoes, potatoes, corn, wheat, rice, and various fruits. We continuously add new crops and diseases. Check the app's crop selection screen for the complete updated list of supported plants.`
   String get faqSupportedCropsAnswer {
     return Intl.message(
-      'FarmWise AI currently supports major crops including tomatoes, potatoes, corn, wheat, rice, and various fruits. We continuously add new crops and diseases. Check the app\'s crop selection screen for the complete updated list of supported plants.',
+      'SmartCrop AI currently supports major crops including tomatoes, potatoes, corn, wheat, rice, and various fruits. We continuously add new crops and diseases. Check the app\'s crop selection screen for the complete updated list of supported plants.',
       name: 'faqSupportedCropsAnswer',
       desc: '',
       args: [],
@@ -565,9 +575,9 @@ class S {
     );
   }
 
-  /// `FarmWise AI`
+  /// `SmartCrop AI`
   String get mainTitle {
-    return Intl.message('FarmWise AI', name: 'mainTitle', desc: '', args: []);
+    return Intl.message('SmartCrop AI', name: 'mainTitle', desc: '', args: []);
   }
 
   /// `typing...`
@@ -745,11 +755,31 @@ class S {
     );
   }
 
-  /// `Answer saved successfully!`
+  /// `Remove from Saved`
+  String get actionRemoveChat {
+    return Intl.message(
+      'Remove from Saved',
+      name: 'actionRemoveChat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat saved successfully`
   String get actionSaveSuccess {
     return Intl.message(
-      'Answer saved successfully!',
+      'Chat saved successfully',
       name: 'actionSaveSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Removed from saved chats`
+  String get actionSaveRemoveSuccess {
+    return Intl.message(
+      'Removed from saved chats',
+      name: 'actionSaveRemoveSuccess',
       desc: '',
       args: [],
     );
@@ -920,10 +950,10 @@ class S {
     );
   }
 
-  /// `What FarmWise AI\nCan Do For You`
+  /// `What SmartCrop AI\nCan Do For You`
   String get introPage2Title {
     return Intl.message(
-      'What FarmWise AI\nCan Do For You',
+      'What SmartCrop AI\nCan Do For You',
       name: 'introPage2Title',
       desc: '',
       args: [],
@@ -1010,6 +1040,1213 @@ class S {
     return Intl.message(
       'Get Started',
       name: 'actionGetStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- SAVED INSIGHTS SCREEN ---`
+  String get sectionSaved {
+    return Intl.message(
+      '--- SAVED INSIGHTS SCREEN ---',
+      name: 'sectionSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saved Insights`
+  String get savedTitle {
+    return Intl.message(
+      'Saved Insights',
+      name: 'savedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Saved Insights Yet`
+  String get savedEmptyState {
+    return Intl.message(
+      'No Saved Insights Yet',
+      name: 'savedEmptyState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save important advice to access it offline later.`
+  String get savedEmptySubtitle {
+    return Intl.message(
+      'Save important advice to access it offline later.',
+      name: 'savedEmptySubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deleted successfully`
+  String get savedDeleteSuccess {
+    return Intl.message(
+      'Deleted successfully',
+      name: 'savedDeleteSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Analysis`
+  String get savedActionView {
+    return Intl.message(
+      'View Analysis',
+      name: 'savedActionView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Insight?`
+  String get savedDialogDeleteTitle {
+    return Intl.message(
+      'Delete Insight?',
+      name: 'savedDialogDeleteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This action cannot be undone. Are you sure?`
+  String get savedDialogDeleteBody {
+    return Intl.message(
+      'This action cannot be undone. Are you sure?',
+      name: 'savedDialogDeleteBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- INSIGHT DETAILS SCREEN ---`
+  String get sectionDetails {
+    return Intl.message(
+      '--- INSIGHT DETAILS SCREEN ---',
+      name: 'sectionDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insight Details`
+  String get detailsTitle {
+    return Intl.message(
+      'Insight Details',
+      name: 'detailsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Zoom`
+  String get detailsZoom {
+    return Intl.message('Zoom', name: 'detailsZoom', desc: '', args: []);
+  }
+
+  /// `YOUR QUESTION`
+  String get detailsQuestionLabel {
+    return Intl.message(
+      'YOUR QUESTION',
+      name: 'detailsQuestionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Analysis`
+  String get detailsAnalysisLabel {
+    return Intl.message(
+      'AI Analysis',
+      name: 'detailsAnalysisLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy Analysis`
+  String get detailsActionCopy {
+    return Intl.message(
+      'Copy Analysis',
+      name: 'detailsActionCopy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analysis copied!`
+  String get detailsCopySuccess {
+    return Intl.message(
+      'Analysis copied!',
+      name: 'detailsCopySuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image Preview`
+  String get detailsImagePreview {
+    return Intl.message(
+      'Image Preview',
+      name: 'detailsImagePreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- LOGIN SCREEN ---`
+  String get sectionLogin {
+    return Intl.message(
+      '--- LOGIN SCREEN ---',
+      name: 'sectionLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login to Your Account`
+  String get loginTitle {
+    return Intl.message(
+      'Login to Your Account',
+      name: 'loginTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get loginEmailHint {
+    return Intl.message(
+      'Email Address',
+      name: 'loginEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get loginPasswordHint {
+    return Intl.message(
+      'Password',
+      name: 'loginPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login successful`
+  String get loginSuccess {
+    return Intl.message(
+      'Login successful',
+      name: 'loginSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign In`
+  String get loginActionSignIn {
+    return Intl.message(
+      'Sign In',
+      name: 'loginActionSignIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot Password?`
+  String get loginForgotPassword {
+    return Intl.message(
+      'Forgot Password?',
+      name: 'loginForgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Time User? `
+  String get loginFirstTimePrompt {
+    return Intl.message(
+      'First Time User? ',
+      name: 'loginFirstTimePrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get loginActionSignUp {
+    return Intl.message(
+      'Sign Up',
+      name: 'loginActionSignUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- REGISTER SCREEN ---`
+  String get sectionRegister {
+    return Intl.message(
+      '--- REGISTER SCREEN ---',
+      name: 'sectionRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get registerTitle {
+    return Intl.message('Sign Up', name: 'registerTitle', desc: '', args: []);
+  }
+
+  /// `Create your new account`
+  String get registerSubtitle {
+    return Intl.message(
+      'Create your new account',
+      name: 'registerSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Name`
+  String get registerFirstName {
+    return Intl.message(
+      'First Name',
+      name: 'registerFirstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter first name`
+  String get registerFirstNameHint {
+    return Intl.message(
+      'Enter first name',
+      name: 'registerFirstNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get registerLastName {
+    return Intl.message(
+      'Last Name',
+      name: 'registerLastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter last name`
+  String get registerLastNameHint {
+    return Intl.message(
+      'Enter last name',
+      name: 'registerLastNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get registerEmail {
+    return Intl.message('Email', name: 'registerEmail', desc: '', args: []);
+  }
+
+  /// `Enter email`
+  String get registerEmailHint {
+    return Intl.message(
+      'Enter email',
+      name: 'registerEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get registerPhone {
+    return Intl.message(
+      'Phone Number',
+      name: 'registerPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone`
+  String get registerPhoneHint {
+    return Intl.message(
+      'Enter phone',
+      name: 'registerPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get registerPassword {
+    return Intl.message(
+      'Password',
+      name: 'registerPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be 6+ chars`
+  String get registerPasswordValidation {
+    return Intl.message(
+      'Password must be 6+ chars',
+      name: 'registerPasswordValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get registerConfirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'registerConfirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get registerPasswordMatchError {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'registerPasswordMatchError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I accept Terms and Conditions`
+  String get registerTermsLabel {
+    return Intl.message(
+      'I accept Terms and Conditions',
+      name: 'registerTermsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please accept terms and conditions`
+  String get registerTermsError {
+    return Intl.message(
+      'Please accept terms and conditions',
+      name: 'registerTermsError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration successful`
+  String get registerSuccess {
+    return Intl.message(
+      'Registration successful',
+      name: 'registerSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get registerActionButton {
+    return Intl.message(
+      'Register',
+      name: 'registerActionButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account? `
+  String get registerAlreadyAccountPrompt {
+    return Intl.message(
+      'Already have an account? ',
+      name: 'registerAlreadyAccountPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get registerActionLogin {
+    return Intl.message(
+      'Login',
+      name: 'registerActionLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- PROFILE SCREEN ---`
+  String get sectionProfile {
+    return Intl.message(
+      '--- PROFILE SCREEN ---',
+      name: 'sectionProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Profile`
+  String get profileTitle {
+    return Intl.message('My Profile', name: 'profileTitle', desc: '', args: []);
+  }
+
+  /// `Error: {err}`
+  String profileError(String err) {
+    return Intl.message(
+      'Error: $err',
+      name: 'profileError',
+      desc: '',
+      args: [err],
+    );
+  }
+
+  /// `User not found`
+  String get profileUserNotFound {
+    return Intl.message(
+      'User not found',
+      name: 'profileUserNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get profilePhoneLabel {
+    return Intl.message(
+      'Phone Number',
+      name: 'profilePhoneLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get profileEmailLabel {
+    return Intl.message(
+      'Email Address',
+      name: 'profileEmailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get profileActionEdit {
+    return Intl.message(
+      'Edit Profile',
+      name: 'profileActionEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not set`
+  String get profileValueNotSet {
+    return Intl.message(
+      'Not set',
+      name: 'profileValueNotSet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- EDIT PROFILE SCREEN ---`
+  String get sectionEditProfile {
+    return Intl.message(
+      '--- EDIT PROFILE SCREEN ---',
+      name: 'sectionEditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get editProfileTitle {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfileTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Photo Library`
+  String get editProfilePhotoLibrary {
+    return Intl.message(
+      'Photo Library',
+      name: 'editProfilePhotoLibrary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get editProfileCamera {
+    return Intl.message(
+      'Camera',
+      name: 'editProfileCamera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile updated successfully`
+  String get editProfileSuccess {
+    return Intl.message(
+      'Profile updated successfully',
+      name: 'editProfileSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to update profile`
+  String get editProfileFailure {
+    return Intl.message(
+      'Failed to update profile',
+      name: 'editProfileFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Name`
+  String get editProfileFirstName {
+    return Intl.message(
+      'First Name',
+      name: 'editProfileFirstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get editProfileLastName {
+    return Intl.message(
+      'Last Name',
+      name: 'editProfileLastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get editProfilePhone {
+    return Intl.message(
+      'Phone Number',
+      name: 'editProfilePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Changes`
+  String get editProfileActionSave {
+    return Intl.message(
+      'Save Changes',
+      name: 'editProfileActionSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving...`
+  String get editProfileSaving {
+    return Intl.message(
+      'Saving...',
+      name: 'editProfileSaving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `------------------ SAVED SCANS SCREEN --------------------`
+  String get sectionSavedScans {
+    return Intl.message(
+      '------------------ SAVED SCANS SCREEN --------------------',
+      name: 'sectionSavedScans',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saved Scans`
+  String get scansTitle {
+    return Intl.message('Saved Scans', name: 'scansTitle', desc: '', args: []);
+  }
+
+  /// `No Saved Scans`
+  String get scansEmptyState {
+    return Intl.message(
+      'No Saved Scans',
+      name: 'scansEmptyState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your plant disease detection scans will appear here for future reference.`
+  String get scansEmptySubtitle {
+    return Intl.message(
+      'Your plant disease detection scans will appear here for future reference.',
+      name: 'scansEmptySubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start New Scan`
+  String get scansActionStartNew {
+    return Intl.message(
+      'Start New Scan',
+      name: 'scansActionStartNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat History`
+  String get historyChatTitle {
+    return Intl.message(
+      'Chat History',
+      name: 'historyChatTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Scans`
+  String get scansTotalCount {
+    return Intl.message(
+      'Total Scans',
+      name: 'scansTotalCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 scan} other{{count} scans}}`
+  String scansCount(num count) {
+    return Intl.plural(
+      count,
+      one: '1 scan',
+      other: '$count scans',
+      name: 'scansCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Unknown`
+  String get scansUnknown {
+    return Intl.message('Unknown', name: 'scansUnknown', desc: '', args: []);
+  }
+
+  /// `{percent} confidence`
+  String scansConfidenceLabel(String percent) {
+    return Intl.message(
+      '$percent confidence',
+      name: 'scansConfidenceLabel',
+      desc: '',
+      args: [percent],
+    );
+  }
+
+  /// `Scan deleted`
+  String get scansDeletedSnackbar {
+    return Intl.message(
+      'Scan deleted',
+      name: 'scansDeletedSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete scan`
+  String get scansDeleteTooltip {
+    return Intl.message(
+      'Delete scan',
+      name: 'scansDeleteTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Scan`
+  String get scansDeleteDialogTitle {
+    return Intl.message(
+      'Delete Scan',
+      name: 'scansDeleteDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this scan result?`
+  String get scansDeleteDialogBody {
+    return Intl.message(
+      'Are you sure you want to delete this scan result?',
+      name: 'scansDeleteDialogBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- CONVERSATION HISTORY ---`
+  String get sectionHistory {
+    return Intl.message(
+      '--- CONVERSATION HISTORY ---',
+      name: 'sectionHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversation History`
+  String get historyTitle {
+    return Intl.message(
+      'Conversation History',
+      name: 'historyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No history yet`
+  String get historyEmpty {
+    return Intl.message(
+      'No history yet',
+      name: 'historyEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Untitled Conversation`
+  String get historyUntitled {
+    return Intl.message(
+      'Untitled Conversation',
+      name: 'historyUntitled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversation deleted.`
+  String get historyDeleted {
+    return Intl.message(
+      'Conversation deleted.',
+      name: 'historyDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown date`
+  String get historyUnknownDate {
+    return Intl.message(
+      'Unknown date',
+      name: 'historyUnknownDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start a conversation first.`
+  String get mainStartConversationFirst {
+    return Intl.message(
+      'Start a conversation first.',
+      name: 'mainStartConversationFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat saved & cleared.`
+  String get mainChatSavedAndCleared {
+    return Intl.message(
+      'Chat saved & cleared.',
+      name: 'mainChatSavedAndCleared',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversation loaded`
+  String get historyConversationLoaded {
+    return Intl.message(
+      'Conversation loaded',
+      name: 'historyConversationLoaded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Crop`
+  String get commonCrop {
+    return Intl.message('Crop', name: 'commonCrop', desc: '', args: []);
+  }
+
+  /// `--- FORGOT PASSWORD ---`
+  String get sectionForgotPassword {
+    return Intl.message(
+      '--- FORGOT PASSWORD ---',
+      name: 'sectionForgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset Password`
+  String get forgotPasswordTitle {
+    return Intl.message(
+      'Reset Password',
+      name: 'forgotPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email address and we will send you a link to reset your password.`
+  String get forgotPasswordSubtitle {
+    return Intl.message(
+      'Enter your email address and we will send you a link to reset your password.',
+      name: 'forgotPasswordSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get forgotPasswordEmailLabel {
+    return Intl.message(
+      'Email Address',
+      name: 'forgotPasswordEmailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your email`
+  String get forgotPasswordEmailEmpty {
+    return Intl.message(
+      'Please enter your email',
+      name: 'forgotPasswordEmailEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid email`
+  String get forgotPasswordEmailInvalid {
+    return Intl.message(
+      'Please enter a valid email',
+      name: 'forgotPasswordEmailInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Reset Link`
+  String get forgotPasswordActionSend {
+    return Intl.message(
+      'Send Reset Link',
+      name: 'forgotPasswordActionSend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password reset link sent! Check your email.`
+  String get forgotPasswordSuccess {
+    return Intl.message(
+      'Password reset link sent! Check your email.',
+      name: 'forgotPasswordSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred`
+  String get forgotPasswordErrorGeneral {
+    return Intl.message(
+      'An error occurred',
+      name: 'forgotPasswordErrorGeneral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No user found with this email.`
+  String get forgotPasswordErrorNoUser {
+    return Intl.message(
+      'No user found with this email.',
+      name: 'forgotPasswordErrorNoUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid email format.`
+  String get forgotPasswordErrorInvalidFormat {
+    return Intl.message(
+      'Invalid email format.',
+      name: 'forgotPasswordErrorInvalidFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred. Please try again.`
+  String get forgotPasswordErrorUnexpected {
+    return Intl.message(
+      'An unexpected error occurred. Please try again.',
+      name: 'forgotPasswordErrorUnexpected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- DETECTION RESULT SCREEN ---`
+  String get sectionDetection {
+    return Intl.message(
+      '--- DETECTION RESULT SCREEN ---',
+      name: 'sectionDetection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analysis Result`
+  String get detTitle {
+    return Intl.message(
+      'Analysis Result',
+      name: 'detTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove from saved`
+  String get detActionRemove {
+    return Intl.message(
+      'Remove from saved',
+      name: 'detActionRemove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save result`
+  String get detActionSave {
+    return Intl.message(
+      'Save result',
+      name: 'detActionSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Result removed from saved scans.`
+  String get detMsgRemoved {
+    return Intl.message(
+      'Result removed from saved scans.',
+      name: 'detMsgRemoved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Result saved successfully!`
+  String get detMsgSaved {
+    return Intl.message(
+      'Result saved successfully!',
+      name: 'detMsgSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthy`
+  String get detStatusHealthy {
+    return Intl.message(
+      'Healthy',
+      name: 'detStatusHealthy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get detStatusUnknown {
+    return Intl.message(
+      'Unknown',
+      name: 'detStatusUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Severity: `
+  String get detLabelSeverity {
+    return Intl.message(
+      'Severity: ',
+      name: 'detLabelSeverity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Affected Area: `
+  String get detLabelAffectedArea {
+    return Intl.message(
+      'Affected Area: ',
+      name: 'detLabelAffectedArea',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- VIDEO RESOURCES ---`
+  String get sectionVideos {
+    return Intl.message(
+      '--- VIDEO RESOURCES ---',
+      name: 'sectionVideos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{cropName} treatment for farmers agriculture`
+  String videoSearchQuery(String cropName) {
+    return Intl.message(
+      '$cropName treatment for farmers agriculture',
+      name: 'videoSearchQuery',
+      desc: '',
+      args: [cropName],
+    );
+  }
+
+  /// `Video Resources`
+  String get videoTitle {
+    return Intl.message(
+      'Video Resources',
+      name: 'videoTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh videos`
+  String get videoRefreshTooltip {
+    return Intl.message(
+      'Refresh videos',
+      name: 'videoRefreshTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading helpful videos...`
+  String get videoLoading {
+    return Intl.message(
+      'Loading helpful videos...',
+      name: 'videoLoading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load videos`
+  String get videoErrorLoad {
+    return Intl.message(
+      'Failed to load videos',
+      name: 'videoErrorLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try Again`
+  String get videoActionTryAgain {
+    return Intl.message(
+      'Try Again',
+      name: 'videoActionTryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No videos found`
+  String get videoEmptyState {
+    return Intl.message(
+      'No videos found',
+      name: 'videoEmptyState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try searching with different keywords`
+  String get videoEmptySubtitle {
+    return Intl.message(
+      'Try searching with different keywords',
+      name: 'videoEmptySubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Swipe for more videos →`
+  String get videoSwipeHint {
+    return Intl.message(
+      'Swipe for more videos →',
+      name: 'videoSwipeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--- ERROR DIALOGS ---`
+  String get sectionErrors {
+    return Intl.message(
+      '--- ERROR DIALOGS ---',
+      name: 'sectionErrors',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Image`
+  String get errorInvalidImageTitle {
+    return Intl.message(
+      'Invalid Image',
+      name: 'errorInvalidImageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We could not identify a supported crop in this image.\n\nPlease upload a clear photo of:\n• Wheat, Potato, Pepper\n• Orange, Maize, or Apple`
+  String get errorInvalidImageBody {
+    return Intl.message(
+      'We could not identify a supported crop in this image.\n\nPlease upload a clear photo of:\n• Wheat, Potato, Pepper\n• Orange, Maize, or Apple',
+      name: 'errorInvalidImageBody',
       desc: '',
       args: [],
     );

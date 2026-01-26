@@ -1,7 +1,8 @@
-import 'package:farmwise_ai/language_classes/language_constants.dart';
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smartcrop_ai/widgets/forgot_password_sheet.dart';
 import 'auth_controller.dart';
 import 'register_screen.dart';
 
@@ -74,6 +75,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(height: 40),
                     TextField(
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         hintText: translation(context).loginEmailHint,
                         filled: true,
@@ -167,12 +169,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(height: 15),
                     TextButton(
                       onPressed: () {
-                        // Logic for forgot password
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(20)),
+                          ),
+                          builder: (context) => const ForgotPasswordSheet(),
+                        );
                       },
                       child: Text(
                         translation(context).loginForgotPassword,
                         style: TextStyle(
-                            color: primaryGreen, fontWeight: FontWeight.w600),
+                          color: primaryGreen,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
 

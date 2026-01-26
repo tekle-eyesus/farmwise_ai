@@ -1,4 +1,4 @@
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'auth_repository.dart';

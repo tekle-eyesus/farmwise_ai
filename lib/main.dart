@@ -1,9 +1,9 @@
-import 'package:farmwise_ai/auth/auth_repository.dart';
-import 'package:farmwise_ai/auth/intro_screen.dart';
-import 'package:farmwise_ai/auth/login_screen.dart';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
-import 'package:farmwise_ai/providers/tts_provider.dart';
-import 'package:farmwise_ai/screens/main_screen.dart';
+import 'package:smartcrop_ai/auth/auth_repository.dart';
+import 'package:smartcrop_ai/auth/intro_screen.dart';
+import 'package:smartcrop_ai/auth/login_screen.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/providers/tts_provider.dart';
+import 'package:smartcrop_ai/screens/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -22,6 +22,7 @@ void main() async {
   await Hive.initFlutter(appDocDir.path);
   await Hive.openBox('detection_results');
   await Hive.openBox("model_answers");
+  await Hive.openBox('chat_history');
   await dotenv.load(fileName: ".env");
 
   // Firebase
@@ -89,7 +90,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     final introSeenState = ref.watch(introSeenProvider);
 
     return MaterialApp(
-      title: 'FarmWise AI',
+      title: 'SmartCrop AI',
       debugShowCheckedModeBanner: false,
       locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

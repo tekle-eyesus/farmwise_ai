@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -172,7 +172,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               ? FileImage(_pickedImage!) as ImageProvider
                               : (widget.user.profilePic != null &&
                                       widget.user.profilePic!.isNotEmpty)
-                                  ? Image.network(widget.user.profilePic!).image
+                                  ? NetworkImage(widget.user.profilePic!)
                                   : null,
                           child: (_pickedImage == null &&
                                   (widget.user.profilePic == null ||

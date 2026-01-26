@@ -1,4 +1,4 @@
-import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './profile_controller.dart';
@@ -15,17 +15,27 @@ class ProfileScreen extends ConsumerWidget {
       backgroundColor: Colors.grey[50],
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(translation(context).profileTitle,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text(
+          translation(context).profileTitle,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: userAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(
-            child: Text(translation(context).profileError(err.toString()))),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        error: (err, stack) {
+          print("mainerror: $err");
+          return Center(
+              child: Text(translation(context).profileError(err.toString())));
+        },
         data: (user) {
           if (user == null)
             return Center(

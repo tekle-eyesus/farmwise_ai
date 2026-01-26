@@ -1,8 +1,10 @@
-import 'package:farmwise_ai/language_classes/language.dart' as lang;
-import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'dart:io';
+import 'package:smartcrop_ai/language_classes/language.dart' as lang;
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mime/mime.dart';
 
 class GeminiChatService {
   final _apiKey = dotenv.env['GEMINI_API_KEY']!;
@@ -19,25 +21,84 @@ class GeminiChatService {
     required String userMessage,
     required String selectedCrop,
     List<Map<String, dynamic>> previousMessages = const [],
+    File? imageFile,
+    required String locationName,
+    required String weatherData,
   }) async {
+    Locale locale = await getLocale();
+    String selectedLanguage = lang.Language.languageList()
+        .firstWhere((lang) => lang.languageCode == locale.languageCode)
+        .name;
+
     try {
-      Locale locale = await getLocale();
-      String selectedLanguage = lang.Language.languageList()
-          .firstWhere((lang) => lang.languageCode == locale.languageCode)
-          .name;
+      if (imageFile != null) {
+        final bytes = await imageFile.readAsBytes();
+        final mimeType = lookupMimeType(imageFile.path) ?? 'image/jpeg';
 
-      final prompt = _buildPrompt(
-        userMessage,
-        selectedCrop,
-        previousMessages,
-        selectedLanguage,
-      );
+        // 1. Construct the robust prompt with all context variables
+        final imagePrompt = '''
+You are SmartCrop AI, an expert agricultural consultant for farmers in **Ethiopia**. 
+You are analyzing an image uploaded by a farmer.
 
-      final response = await _model.generateContent([
-        Content.text(prompt),
-      ]);
+🛑 **STRICT LANGUAGE CONTROL:**
+- **Target Language:** $selectedLanguage
+- **Rule 1:** You MUST provide your entire response in **$selectedLanguage** ONLY.
+- **Rule 2:** Ignore the language the user types in. Even if the user asks in English, answer in **$selectedLanguage**.
 
-      return response.text ?? "No response received.";
+📍 **ENVIRONMENTAL CONTEXT (Crucial for Advice):**
+- **Location:** $locationName
+- **Current Weather & Forecast:** $weatherData
+- **Instruction:** Use this weather data to adjust your recommendations. (e.g., If rain is forecast, advise NOT to spray chemicals. If hot/dry, advise on irrigation).
+
+📸 **IMAGE ANALYSIS TASK:**
+1. **Relevance Check:** First, verify if the image is of a plant, crop, soil, or farm pest. If the image is unrelated (e.g., a person, car, building), politely refuse in **$selectedLanguage** saying you can only analyze agricultural images.
+2. **Diagnosis:** Identify the crop, growth stage, and any signs of disease, pests, or nutrient deficiency.
+3. **User Intent:** The user might have asked a specific question below. Address it specifically. If the user said nothing, provide a comprehensive health check.
+
+👤 **USER INPUT:**
+- **User Question/Note:** "${userMessage.isEmpty ? 'No specific question asked. Please provide a general health analysis.' : userMessage}"
+- **Previous Context:** ${previousMessages.map((m) => "${m['role']}: ${m['content']}").join(' | ')}
+
+🧠 **ADVISORY LOGIC:**
+Based on the **Visual Evidence** AND the **Weather Context**:
+1. **Diagnosis:** What is wrong? (Or confirm it is healthy).
+2. **Immediate Action:** What should the farmer do TODAY? 
+   - *Logic:* If prescribing a spray, check the `$weatherData`. Is it safe to spray? If not, warn them.
+3. **Treatment:** Step-by-step cure (Organic first, then Chemical).
+
+⚠️ **SAFETY & FORMATTING:**
+- If suggesting chemicals, mention safety gear and pre-harvest intervals.
+- Use **Bold** for key terms.
+- Use Bullet points for steps.
+- **Conciseness:** Be direct. Do not introduce yourself. Go straight to the diagnosis.
+''';
+
+        // 2. Build Content
+        final content = [
+          Content.multi(
+            [
+              TextPart(imagePrompt),
+              DataPart(mimeType, bytes),
+            ],
+          )
+        ];
+
+        final response = await _model.generateContent(content);
+        return response.text ?? "No response received.";
+      } else {
+        final prompt = _buildPrompt(
+          userMessage,
+          selectedCrop,
+          previousMessages,
+          selectedLanguage,
+        );
+
+        final response = await _model.generateContent([
+          Content.text(prompt),
+        ]);
+
+        return response.text ?? "No response received.";
+      }
     } catch (e) {
       return "Sorry, something went wrong. Please try again.$e";
     }
@@ -93,54 +154,61 @@ ${previousMessages.map((m) => "${m['role']}: ${m['content']}").join('\n')}
 ''';
   }
 
-  /// Generates expert agricultural advice from detection results
-  Future<String> getExpertAdvicePrompt({
-    required List<Map<String, dynamic>> detections,
-    required String cropName,
-  }) {
-    final buffer = StringBuffer();
-    buffer.writeln(
-        "You are a certified agricultural expert. Based on the image analysis results, give practical expert advice to a smallholder farmer growing $cropName.\n");
-
-    buffer.writeln("The detection result includes:");
-    for (var detection in detections) {
-      final label = detection['label'] ?? 'Unknown Disease';
-      final confidence = ((detection['confidence'] ?? 0.0)).toStringAsFixed(1);
-      buffer.writeln("- $label: $confidence%");
-    }
-
-    buffer.writeln("\nAdvice must include:");
-    buffer.writeln("1. Immediate treatment or action steps.");
-    buffer.writeln("2. Preventive measures for future.");
-    buffer.writeln(
-        "3. Monitoring tips (e.g., how often to check, what to observe).");
-    buffer.writeln("4. Low-cost or natural treatment options if relevant.");
-    buffer.writeln("5. Keep it short and clear.");
-
-    return Future.value(buffer.toString());
-  }
-
-  /// Gemini-powered advice generation
-  Future<String> getExpertAdvice({
-    required List<Map<String, dynamic>> detections,
-    required String cropName,
-  }) async {
+// Inside your class
+  Future<String> identifyCrop(File imageFile) async {
     try {
-      final prompt = await getExpertAdvicePrompt(
-        detections: detections,
-        cropName: cropName,
-      );
+      final bytes = await imageFile.readAsBytes();
+      final mimeType = lookupMimeType(imageFile.path) ?? 'image/jpeg';
 
-      final content = [Content.text(prompt)];
+      // 1. Strict System Prompt
+      final prompt = '''
+    You are an agricultural image classifier.
+    
+    TARGET CROPS: [Wheat, Potato, Pepper, Orange, Maize, Apple]
+
+    TASK:
+    1. Analyze the uploaded image.
+    2. Determine if it is a leaf, fruit, or plant of one of the TARGET CROPS.
+    3. If it is one of them, return ONLY the crop name (e.g., "Wheat").
+    4. If it is NOT one of these crops, or if it is a non-plant object (person, car, animal, blur), return "INVALID".
+
+    OUTPUT FORMAT:
+    Return a single word string. Do not add punctuation.
+    ''';
+
+      final content = [
+        Content.multi([
+          TextPart(prompt),
+          DataPart(mimeType, bytes),
+        ])
+      ];
+
+      // 2. Generate
       final response = await _model.generateContent(content);
+      final text = response.text?.trim() ?? "INVALID";
 
-      if (response.text != null && response.text!.isNotEmpty) {
-        return response.text!;
-      } else {
-        return "No expert advice could be generated. Please try again.";
+      // 3. Clean up result just in case
+      // (Gemini might sometimes say "The crop is Wheat", we just want "Wheat")
+      for (String crop in [
+        "Wheat",
+        "Potato",
+        "Pepper",
+        "Orange",
+        "Maize",
+        "Apple"
+      ]) {
+        if (text.toLowerCase().contains(crop.toLowerCase())) {
+          return crop;
+        }
       }
+
+      return "INVALID";
     } catch (e) {
-      return "Failed to get expert advice: $e";
+      print("Gemini Identification Error: $e");
+      // Fallback: If internet fails or Gemini fails, we might want to
+      // allow the user to proceed manually or return INVALID.
+      // Returning "ERROR" allows the UI to handle it.
+      return "ERROR";
     }
   }
 }

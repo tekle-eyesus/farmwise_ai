@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
+// NOT USED IN THE CURRENT APP VERSION //
 class TFLiteService {
   static final TFLiteService _instance = TFLiteService._internal();
   factory TFLiteService() => _instance;

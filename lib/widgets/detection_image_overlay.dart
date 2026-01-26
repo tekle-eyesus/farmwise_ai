@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -6,17 +7,19 @@ class DetectionImageOverlay extends StatelessWidget {
   final File image;
   final String label;
   final double confidence;
+  final Map<dynamic, dynamic>? segmentationData;
 
   const DetectionImageOverlay({
     super.key,
     required this.image,
     required this.label,
     required this.confidence,
+    required this.segmentationData,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bool isHealthy = label.toLowerCase() == "healthy";
+    final bool isHealthy = label.toLowerCase().contains("healthy");
     final double confidencePercent = confidence / 100;
 
     return Stack(
@@ -156,6 +159,23 @@ class DetectionImageOverlay extends StatelessWidget {
             ),
           ),
         ),
+        // fot segmentation overlay
+        if (segmentationData != null)
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Text(
+                "Leaf area: ${segmentationData!["leaf_area"].toString()} px²",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
         // bootom shadow
         Positioned(
           bottom: 0,

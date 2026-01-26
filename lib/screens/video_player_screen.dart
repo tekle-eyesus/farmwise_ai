@@ -1,4 +1,3 @@
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../services/youtube_service.dart';
@@ -105,7 +104,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 fontSize: 20,
               ),
             ),
-            backgroundColor: Colors.green.shade100,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color.fromARGB(255, 8, 60, 55),
+                    const Color.fromARGB(255, 32, 84, 35),
+                  ],
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                ),
+              ),
+            ),
+            foregroundColor: Colors.white,
             elevation: 0,
           ),
           body: Column(
@@ -192,32 +203,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 ),
               ),
               const Spacer(),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      // Add to favorites/saved
-                      CustomSnackBar.showInfo(context, "Added to saved videos");
-                    },
-                    icon: Icon(
-                      Icons.bookmark_border_rounded,
-                      color: Colors.grey.shade600,
-                    ),
-                    tooltip: 'Save video',
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // Share functionality
-                      CustomSnackBar.showInfo(context, "Share video");
-                    },
-                    icon: Icon(
-                      Icons.share_rounded,
-                      color: Colors.grey.shade600,
-                    ),
-                    tooltip: 'Share video',
-                  ),
-                ],
-              ),
             ],
           ),
         ],

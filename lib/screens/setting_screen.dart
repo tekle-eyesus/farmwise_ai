@@ -1,10 +1,10 @@
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
-import 'package:farmwise_ai/widgets/help_info_sheet.dart';
-import 'package:farmwise_ai/widgets/language_selection_sheet.dart';
-import 'package:farmwise_ai/widgets/settings_item_card.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
+import 'package:smartcrop_ai/widgets/help_info_sheet.dart';
+import 'package:smartcrop_ai/widgets/language_selection_sheet.dart';
+import 'package:smartcrop_ai/widgets/settings_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 
 class AppSettingScreen extends StatelessWidget {
   const AppSettingScreen({super.key});
@@ -97,7 +97,7 @@ class AppSettingScreen extends StatelessWidget {
                       ],
                     ).createShader(bounds),
                     child: Text(
-                      "farmwise AI",
+                      "SmartCrop AI",
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w700,
@@ -139,7 +139,7 @@ class AppSettingScreen extends StatelessWidget {
               iconColor: Colors.blue,
               onTap: () => _showHelpInfo(context),
             ),
-            // const SizedBox(height: 10),
+            const SizedBox(height: 10),
             SettingsItemCard(
               icon: Icons.language,
               title: translation(context).settingsLanguageTitle,

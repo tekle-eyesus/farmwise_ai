@@ -1,5 +1,5 @@
-name: farmwise_ai
-description: "A new Flutter project."
+name: smartcrop_ai
+description: "Mobile app for smart crop management and disease detection."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -39,7 +39,7 @@ dependencies:
   percent_indicator: ^4.2.5
   flutter_dotenv: ^5.2.1
   youtube_player_flutter: ^9.1.1
-  http: ^1.4.0
+  http: ^1.6.0
   google_generative_ai: ^0.4.6
   lottie: ^3.3.0
   flutter_markdown: ^0.7.7+1
@@ -67,6 +67,11 @@ dependencies:
     sdk: flutter
   permission_handler: ^12.0.1
   avatar_glow: ^3.0.1
+  mime: ^1.0.6
+  geolocator: ^10.1.0
+  geocoding: ^4.0.0
+  audioplayers: ^6.5.1
+  cached_network_image: ^3.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

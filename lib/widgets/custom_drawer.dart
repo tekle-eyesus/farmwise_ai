@@ -1,16 +1,20 @@
-import 'package:farmwise_ai/auth/auth_repository.dart';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
-import 'package:farmwise_ai/profiles/profile_controller.dart';
-import 'package:farmwise_ai/profiles/profile_screen.dart';
-import 'package:farmwise_ai/screens/saved_answers_screen.dart';
-import 'package:farmwise_ai/screens/saved_results_screen.dart';
-import 'package:farmwise_ai/screens/setting_screen.dart';
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:smartcrop_ai/auth/auth_repository.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/profiles/profile_controller.dart';
+import 'package:smartcrop_ai/profiles/profile_screen.dart';
+import 'package:smartcrop_ai/screens/chat_history_screen.dart';
+import 'package:smartcrop_ai/screens/saved_answers_screen.dart';
+import 'package:smartcrop_ai/screens/saved_results_screen.dart';
+import 'package:smartcrop_ai/screens/setting_screen.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DrawerWidget extends ConsumerWidget {
-  const DrawerWidget({super.key});
+  final Function(List<Map<String, dynamic>> messages, String? docId)
+      onChatHistorySelected;
+  const DrawerWidget({super.key, required this.onChatHistorySelected});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,11 +47,28 @@ class DrawerWidget extends ConsumerWidget {
                 ),
                 currentAccountPicture: ClipRRect(
                   borderRadius: BorderRadius.circular(13),
-                  child: Image.asset(
-                    "assets/icons/profile_pic.png",
+                  child: CachedNetworkImage(
+                    imageUrl: user?.profilePic ??
+                        'https://www.gravatar.com/avatar/placeholder?d=mp&s=200',
                     width: 100,
                     height: 100,
                     fit: BoxFit.fill,
+                    placeholder: (context, url) => const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                 ),
                 decoration: BoxDecoration(
@@ -87,6 +108,7 @@ class DrawerWidget extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => SavedAnswersScreen()),
@@ -105,6 +127,7 @@ class DrawerWidget extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => SavedResultsScreen()),
@@ -123,10 +146,45 @@ class DrawerWidget extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => AppSettingScreen()),
                     );
+                  },
+                ),
+                ListTile(
+                  leading: _buildListTileIcons(
+                    Icons.history,
+                    Colors.green.shade800,
+                  ),
+                  title: Text(
+                    translation(context).historyChatTitle,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  onTap: () async {
+                    // 1. Close the Drawer first
+                    Navigator.pop(context);
+
+                    // 2. Open History Screen and WAIT for result
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChatHistoryScreen(),
+                      ),
+                    );
+
+                    // Check for the new Map structure
+                    if (result != null && result is Map) {
+                      final messages =
+                          result['messages'] as List<Map<String, dynamic>>;
+                      final docId = result['id'] as String;
+
+                      // Pass both back to MainScreen
+                      onChatHistorySelected(messages, docId);
+                    }
                   },
                 ),
                 ListTile(
@@ -141,7 +199,7 @@ class DrawerWidget extends ConsumerWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context); // Close the drawer first
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

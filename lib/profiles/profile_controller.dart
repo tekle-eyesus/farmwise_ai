@@ -5,24 +5,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user_model.dart';
 import '../services/cloudinary_service.dart';
 
-final currentUserIdProvider = Provider<String?>((ref) {
-  return FirebaseAuth.instance.currentUser?.uid;
+final authStateProvider = StreamProvider<User?>((ref) {
+  return FirebaseAuth.instance.authStateChanges();
 });
 
 final userProfileProvider = StreamProvider<UserModel?>((ref) {
-  final uid = ref.watch(currentUserIdProvider);
-  if (uid == null) return Stream.value(null);
+  final userAsync = ref.watch(authStateProvider);
 
-  return FirebaseFirestore.instance
-      .collection('users')
-      .doc(uid)
-      .snapshots()
-      .map((snapshot) {
-    if (snapshot.exists && snapshot.data() != null) {
-      return UserModel.fromMap(snapshot.data()!);
-    }
-    return null;
-  });
+  return userAsync.when(
+    data: (user) {
+      if (user == null) return Stream.value(null);
+
+      return FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.exists && snapshot.data() != null) {
+          return UserModel.fromMap(snapshot.data()!);
+        }
+        return null;
+      });
+    },
+    loading: () => Stream.value(null),
+    error: (_, __) => Stream.value(null),
+  );
 });
 
 final profileControllerProvider =

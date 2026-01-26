@@ -1,8 +1,8 @@
-import 'package:farmwise_ai/language_classes/language.dart';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
-import 'package:farmwise_ai/main.dart';
+import 'package:smartcrop_ai/language_classes/language.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/main.dart';
 import 'package:flutter/material.dart';
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 
 class LanguageSelectionSheet extends StatefulWidget {
   const LanguageSelectionSheet({super.key});

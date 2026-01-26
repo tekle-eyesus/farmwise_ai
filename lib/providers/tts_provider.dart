@@ -1,4 +1,4 @@
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../services/tts_service.dart';
@@ -7,22 +7,24 @@ class TtsProvider with ChangeNotifier {
   final TtsService _ttsService = TtsService();
   bool _isLoading = false;
 
-  bool get isLoading => _isLoading;
+  // Combine internal loading state with service loading state
+  bool get isLoading => _isLoading || _ttsService.isLoading;
   bool get isPlaying => _ttsService.isPlaying;
   bool get isPaused => _ttsService.isPaused;
 
-  Future<void> speak(String text, BuildContext context) async {
+  /// Updated to accept languageCode
+  Future<void> speak(
+      String text, BuildContext context, String languageCode) async {
     if (text.isEmpty) return;
 
     _isLoading = true;
     notifyListeners();
 
     try {
-      await _ttsService.speak(text);
-      CustomSnackBar.showSuccess(context, "Playing audio...");
+      // Pass the language code (e.g., 'am' or 'en')
+      await _ttsService.speak(text, languageCode);
     } catch (e) {
-      CustomSnackBar.showError(
-          context, "Failed to play audio: ${e.toString()}");
+      CustomSnackBar.showError(context, "Audio Error: ${e.toString()}");
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -30,33 +32,18 @@ class TtsProvider with ChangeNotifier {
   }
 
   Future<void> stop(BuildContext context) async {
-    try {
-      await _ttsService.stop();
-      CustomSnackBar.showInfo(context, "Audio stopped");
-      notifyListeners();
-    } catch (e) {
-      CustomSnackBar.showError(context, "Failed to stop audio");
-    }
+    await _ttsService.stop();
+    notifyListeners();
   }
 
   Future<void> pause(BuildContext context) async {
-    try {
-      await _ttsService.pause();
-      CustomSnackBar.showInfo(context, "Audio paused");
-      notifyListeners();
-    } catch (e) {
-      CustomSnackBar.showError(context, "Failed to pause audio");
-    }
+    await _ttsService.pause();
+    notifyListeners();
   }
 
   Future<void> resume(BuildContext context) async {
-    try {
-      await _ttsService.resume();
-      CustomSnackBar.showInfo(context, "Audio resumed");
-      notifyListeners();
-    } catch (e) {
-      CustomSnackBar.showError(context, "Failed to resume audio");
-    }
+    await _ttsService.resume();
+    notifyListeners();
   }
 
   @override

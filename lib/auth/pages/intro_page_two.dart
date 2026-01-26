@@ -1,4 +1,4 @@
-import 'package:farmwise_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
 import 'package:flutter/material.dart';
 
 class PageTwo extends StatelessWidget {

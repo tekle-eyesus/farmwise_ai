@@ -1,14 +1,16 @@
+import 'dart:io';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:farmwise_ai/utils/date_utils.dart';
-import 'package:farmwise_ai/utils/snackbar_helper.dart';
-import '../services/local_storage_service.dart';
+import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 
 class SavedAnswerDetailScreen extends StatefulWidget {
   final String question;
   final String answer;
   final DateTime savedAt;
+  final String? imagePath;
   final String entryKey;
 
   const SavedAnswerDetailScreen({
@@ -16,6 +18,7 @@ class SavedAnswerDetailScreen extends StatefulWidget {
     required this.question,
     required this.answer,
     required this.savedAt,
+    this.imagePath,
     required this.entryKey,
   });
 
@@ -25,391 +28,236 @@ class SavedAnswerDetailScreen extends StatefulWidget {
 }
 
 class _SavedAnswerDetailScreenState extends State<SavedAnswerDetailScreen> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final bool hasImage = widget.imagePath != null &&
+        widget.imagePath!.isNotEmpty &&
+        File(widget.imagePath!).existsSync();
+
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                const Color.fromARGB(255, 8, 60, 55),
-                const Color.fromARGB(255, 32, 84, 35),
-              ],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Saved Answer Detail',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: _showActionMenu,
-            icon: const Icon(Icons.more_vert_rounded),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Question Card
-            _buildQuestionCard(),
-            // Answer Card
-            _buildAnswerCard(),
-            // Metadata
-            _buildMetadata(),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green.shade100,
-        onPressed: _scrollToTop,
-        mini: true,
-        child: Icon(
-          Icons.arrow_upward_rounded,
-          color: Colors.green.shade900,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildQuestionCard() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.green.shade50,
-                  Colors.green.shade100.withOpacity(0.7),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.green.shade100.withOpacity(0.4),
-                  blurRadius: 15,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(13),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.green.shade400,
-                              Colors.green.shade600,
-                            ],
-                          ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.green.shade300.withOpacity(0.4),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.person_rounded,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'YOUR QUESTION',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.green.shade700,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Farmer\'s Query',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.green.shade900,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.green.shade100,
-                        width: 1,
-                      ),
+      backgroundColor: Colors.grey[50],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            foregroundColor: Colors.white,
+            expandedHeight: hasImage ? 300.0 : 100.0,
+            floating: false,
+            pinned: true,
+            backgroundColor: const Color.fromARGB(255, 8, 60, 55),
+            flexibleSpace: FlexibleSpaceBar(
+              title: hasImage
+                  ? null
+                  : Text(
+                      translation(context).detailsTitle,
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    child: Text(
-                      widget.question,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        height: 1.6,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAnswerCard() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.blue.shade50,
-                  Colors.indigo.shade50.withOpacity(0.7),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blue.shade100.withOpacity(0.4),
-                  blurRadius: 15,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(13),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.blue.shade500,
-                              Colors.blue.shade500,
-                            ],
-                          ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue.shade300.withOpacity(0.4),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.auto_awesome_rounded,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'FARMWISE AI',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue.shade700,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Expert Analysis',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.blue.shade900,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.blue.shade200,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+              background: hasImage
+                  ? GestureDetector(
+                      onTap: () =>
+                          _openFullScreenImage(context, widget.imagePath!),
+                      child: Hero(
+                        tag: 'saved_img_${widget.entryKey}',
+                        child: Stack(
+                          fit: StackFit.expand,
                           children: [
-                            Icon(
-                              Icons.verified_rounded,
-                              size: 14,
-                              color: Colors.blue.shade600,
+                            Image.file(
+                              File(widget.imagePath!),
+                              fit: BoxFit.cover,
                             ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'AI Powered',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.blue.shade700,
+                            const DecoratedBox(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.black54,
+                                    Colors.transparent,
+                                  ],
+                                  stops: [0.0, 0.4],
+                                ),
+                              ),
+                            ),
+                            // "Tap to Zoom" indicator
+                            Positioned(
+                              bottom: 12,
+                              right: 12,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.black54,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.zoom_in,
+                                        color: Colors.white, size: 16),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      translation(context).detailsZoom,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
+                    )
+                  : Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 8, 60, 55),
+                            Color.fromARGB(255, 32, 84, 35),
+                          ],
+                          begin: Alignment.bottomRight,
+                          end: Alignment.topLeft,
+                        ),
+                      ),
+                    ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Date Header
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_today_rounded,
+                          size: 16, color: Colors.grey[600]),
+                      const SizedBox(width: 8),
+                      Text(
+                        DateUtilsHelper.formatReadable(widget.savedAt),
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
+
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: const Color.fromARGB(
+                          255, 235, 245, 235), // Light green tint
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.blue.shade100,
-                        width: 1,
+                          color: const Color.fromARGB(255, 200, 230, 200)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          translation(context).detailsQuestionLabel,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green[800],
+                            letterSpacing: 1.0,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.question,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        translation(context).detailsAnalysisLabel,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[800],
+                        ),
                       ),
+                      IconButton(
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: widget.answer));
+                          CustomSnackBar.showSuccess(
+                            context,
+                            translation(context).detailsCopySuccess,
+                          );
+                        },
+                        icon: const Icon(Icons.copy_rounded),
+                        tooltip: translation(context).detailsActionCopy,
+                        color: Colors.green[700],
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blue.shade50,
+                          color: Colors.black.withOpacity(0.05),
                           blurRadius: 10,
-                          offset: const Offset(0, 2),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),
                     child: MarkdownBody(
                       data: widget.answer,
+                      selectable: true,
                       styleSheet: MarkdownStyleSheet(
-                        p: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey.shade800,
-                          height: 1.7,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        strong: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          // color: Colors.blue.shade900,
-                          fontSize: 16,
-                        ),
-                        em: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.grey.shade700,
-                          fontSize: 16,
-                        ),
-                        blockquotePadding: const EdgeInsets.all(16),
-                        blockquoteDecoration: BoxDecoration(
-                          color: Colors.blue.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border(
-                            left: BorderSide(
-                              color: Colors.blue.shade300,
-                              width: 4,
-                            ),
-                          ),
-                        ),
+                        p: const TextStyle(
+                            fontSize: 16, height: 1.6, color: Colors.black87),
+                        h1: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                        h2: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
+                        strong: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black), // Bold text color
+                        listBullet:
+                            TextStyle(color: Colors.green[700], fontSize: 16),
                         code: TextStyle(
-                          backgroundColor: Colors.grey.shade100,
-                          fontFamily: 'monospace',
-                          fontSize: 14,
-                          color: Colors.blue.shade800,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        codeblockPadding: const EdgeInsets.all(16),
-                        codeblockDecoration: BoxDecoration(
-                          color: Colors.grey.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.grey.shade200,
-                          ),
-                        ),
-                        h1: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          height: 1.3,
-                        ),
-                        h2: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.blue.shade800,
-                          height: 1.3,
-                        ),
-                        h3: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blue.shade700,
-                          height: 1.3,
-                        ),
-                        listBullet: TextStyle(
-                          color: Colors.blue.shade600,
-                          fontSize: 16,
+                            backgroundColor: Colors.grey[200],
+                            fontFamily: 'Courier',
+                            fontSize: 14),
+                        blockquote: const TextStyle(
+                            color: Colors.grey, fontStyle: FontStyle.italic),
+                        blockquoteDecoration: BoxDecoration(
+                          color: Colors.grey[50],
+                          border: Border(
+                              left: BorderSide(color: Colors.grey, width: 4)),
                         ),
                       ),
                     ),
                   ),
+
+                  const SizedBox(height: 40),
                 ],
               ),
             ),
@@ -419,201 +267,28 @@ class _SavedAnswerDetailScreenState extends State<SavedAnswerDetailScreen> {
     );
   }
 
-  Widget _buildMetadata() {
-    return Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.grey.shade100,
-              Colors.grey.shade100,
-            ],
+  // Helper to open full screen image
+  void _openFullScreenImage(BuildContext context, String path) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            iconTheme: const IconThemeData(color: Colors.white),
+            title: Text(translation(context).detailsImagePreview,
+                style: TextStyle(color: Colors.white)),
           ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade200.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-          border: Border.all(
-            color: Colors.grey.shade400,
-            width: 1,
-          ),
-        ),
-        child: Row(children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.grey.shade400,
-                  Colors.deepPurple.shade500,
-                ],
-              ),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.access_time_rounded,
-              color: Colors.white,
-              size: 20,
+          body: Center(
+            child: InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: Image.file(File(path)),
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'SAVED ON',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey.shade700,
-                  letterSpacing: 1.1,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                DateUtilsHelper.formatReadable(widget.savedAt),
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey.shade900,
-                ),
-              ),
-            ],
-          ))
-        ]));
-  }
-
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  void _showActionMenu() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
-      builder: (context) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                margin: const EdgeInsets.only(bottom: 16),
-                decoration: BoxDecoration(
-                  color: Colors.green[800],
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.copy_all_rounded,
-                  color: Colors.blueGrey.shade500,
-                ),
-              ),
-              title: const Text('Copy Answer'),
-              onTap: () {
-                Navigator.pop(context);
-                _copyToClipboard(widget.answer);
-              },
-            ),
-            ListTile(
-              leading: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.delete_outline_rounded,
-                  color: Colors.red.shade500,
-                ),
-              ),
-              title: Text(
-                'Delete',
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                _deleteAnswer();
-              },
-            ),
-          ],
         ),
       ),
     );
-  }
-
-  void _copyToClipboard(String text) async {
-    try {
-      await Clipboard.setData(
-        ClipboardData(
-          text: text,
-        ),
-      );
-      CustomSnackBar.showSuccess(
-        context,
-        "Text copied to clipboard!",
-      );
-    } catch (e) {
-      CustomSnackBar.showError(
-        context,
-        "Failed to copy text",
-      );
-    }
-  }
-
-  void _deleteAnswer() async {
-    final shouldDelete = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Answer'),
-        content: const Text('This action cannot be undone.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
-    );
-
-    if (shouldDelete ?? false) {
-      await LocalStorageService.deleteAnswer(widget.entryKey);
-      CustomSnackBar.showSuccess(context, 'Answer deleted');
-      if (mounted) {
-        Navigator.pop(context);
-      }
-    }
   }
 }

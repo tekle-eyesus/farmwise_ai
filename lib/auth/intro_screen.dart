@@ -1,9 +1,9 @@
-import 'package:farmwise_ai/auth/login_screen.dart';
-import 'package:farmwise_ai/auth/pages/intro_page_one.dart';
-import 'package:farmwise_ai/auth/pages/intro_page_two.dart';
-import 'package:farmwise_ai/language_classes/language.dart';
-import 'package:farmwise_ai/language_classes/language_constants.dart';
-import 'package:farmwise_ai/main.dart';
+import 'package:smartcrop_ai/auth/login_screen.dart';
+import 'package:smartcrop_ai/auth/pages/intro_page_one.dart';
+import 'package:smartcrop_ai/auth/pages/intro_page_two.dart';
+import 'package:smartcrop_ai/language_classes/language.dart';
+import 'package:smartcrop_ai/language_classes/language_constants.dart';
+import 'package:smartcrop_ai/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
