@@ -7,6 +7,7 @@ import 'package:smartcrop_ai/screens/online_video_section.dart';
 import 'package:smartcrop_ai/services/local_storage_service.dart';
 import 'package:smartcrop_ai/utils/snackbar_helper.dart';
 import 'package:smartcrop_ai/widgets/article_section.dart';
+import 'package:smartcrop_ai/widgets/contact_support_section.dart';
 import 'package:smartcrop_ai/widgets/detection_header_section.dart';
 import 'package:smartcrop_ai/widgets/detection_image_overlay.dart';
 import 'package:smartcrop_ai/widgets/disease_confidence_chart.dart';
@@ -246,6 +247,15 @@ class _DetectResultScreenState extends State<DetectResultScreen> {
                   cropName: widget.cropName,
                 ),
               ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ContactSupportSection(
+                diseaseLabel: displayLabel,
+                cropName: widget.cropName,
+                detectionResult: widget.apiResponse.rawJson,
+              ),
+            ),
 
             const SizedBox(height: 30),
           ],
